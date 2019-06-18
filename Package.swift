@@ -2,11 +2,11 @@
 import PackageDescription
 
 let package = Package(
-    name: "AWSSDKSwift",
+    name: "AWSSDKAppleOS",
+    platforms: [ .iOS("12.2"), .macOS(.v10_14), .tvOS("12.2") ],
     products: [
-        .executable(name: "aws-sdk-swift-codegen", targets: ["CodeGenerator"]),
-        .library(name: "AWSSDKSwift", targets: ["ACM","ACMPCA","APIGateway","AlexaForBusiness","Amplify","AppMesh","AppStream","AppSync","ApplicationAutoScaling","ApplicationDiscoveryService","Athena","AutoScaling","AutoScalingPlans","Batch","Budgets","Chime","Cloud9","CloudDirectory","CloudFormation","CloudFront","CloudHSM","CloudHSMV2","CloudSearch","CloudSearchDomain","CloudTrail","CloudWatch","CloudWatchEvents","CloudWatchLogs","CodeBuild","CodeCommit","CodeDeploy","CodePipeline","CodeStar","CognitoIdentity","CognitoIdentityProvider","CognitoSync","Comprehend","ComprehendMedical","ConfigService","Connect","CostExplorer","CostandUsageReportService","DAX","DLM","DataPipeline","DataSync","DatabaseMigrationService","DeviceFarm","DirectConnect","DirectoryService","DynamoDB","DynamoDBStreams","EC2","ECR","ECS","EFS","EKS","ELB","ELBV2","EMR","ElastiCache","ElasticBeanstalk","ElasticTranscoder","ElasticsearchService","FMS","FSx","Firehose","GameLift","Glacier","GlacierMiddleware","GlobalAccelerator","Glue","Greengrass","GuardDuty","Health","IAM","ImportExport","Inspector","IoT","IoT1ClickDevicesService","IoT1ClickProjects","IoTAnalytics","IoTDataPlane","IoTJobsDataPlane","KMS","Kafka","Kinesis","KinesisAnalytics","KinesisAnalyticsV2","KinesisVideo","KinesisVideoArchivedMedia","KinesisVideoMedia","Lambda","LexModelBuildingService","LexRuntimeService","LicenseManager","Lightsail","MQ","MTurk","MachineLearning","Macie","MarketplaceCommerceAnalytics","MarketplaceEntitlementService","MarketplaceMetering","MediaConnect","MediaConvert","MediaLive","MediaPackage","MediaStore","MediaStoreData","MediaTailor","MigrationHub","Mobile","MobileAnalytics","Neptune","OpsWorks","OpsWorksCM","Organizations","PI","Pinpoint","PinpointEmail","PinpointSMSVoice","Polly","Pricing","QuickSight","RAM","RDS","RDSDataService","Redshift","Rekognition","ResourceGroups","ResourceGroupsTaggingAPI","RoboMaker","Route53","Route53Domains","Route53Resolver","S3","S3Control","S3Middleware","SES","SFN","SMS","SNS","SQS","SSM","STS","SWF","SageMaker","SageMakerRuntime","SecretsManager","SecurityHub","ServerlessApplicationRepository","ServiceCatalog","ServiceDiscovery","Shield","Signer","SimpleDB","Snowball","StorageGateway","Support","TranscribeService","Transfer","Translate","WAF","WAFRegional","WorkDocs","WorkMail","WorkSpaces","XRay"]),
-
+        /*.library(name: "AWSSDKSwift", targets: ["ACM","ACMPCA","APIGateway","AlexaForBusiness","Amplify","AppMesh","AppStream","AppSync","ApplicationAutoScaling","ApplicationDiscoveryService","Athena","AutoScaling","AutoScalingPlans","Batch","Budgets","Chime","Cloud9","CloudDirectory","CloudFormation","CloudFront","CloudHSM","CloudHSMV2","CloudSearch","CloudSearchDomain","CloudTrail","CloudWatch","CloudWatchEvents","CloudWatchLogs","CodeBuild","CodeCommit","CodeDeploy","CodePipeline","CodeStar","CognitoIdentity","CognitoIdentityProvider","CognitoSync","Comprehend","ComprehendMedical","ConfigService","Connect","CostExplorer","CostandUsageReportService","DAX","DLM","DataPipeline","DataSync","DatabaseMigrationService","DeviceFarm","DirectConnect","DirectoryService","DynamoDB","DynamoDBStreams","EC2","ECR","ECS","EFS","EKS","ELB","ELBV2","EMR","ElastiCache","ElasticBeanstalk","ElasticTranscoder","ElasticsearchService","FMS","FSx","Firehose","GameLift","Glacier","GlacierMiddleware","GlobalAccelerator","Glue","Greengrass","GuardDuty","Health","IAM","ImportExport","Inspector","IoT","IoT1ClickDevicesService","IoT1ClickProjects","IoTAnalytics","IoTDataPlane","IoTJobsDataPlane","KMS","Kafka","Kinesis","KinesisAnalytics","KinesisAnalyticsV2","KinesisVideo","KinesisVideoArchivedMedia","KinesisVideoMedia","Lambda","LexModelBuildingService","LexRuntimeService","LicenseManager","Lightsail","MQ","MTurk","MachineLearning","Macie","MarketplaceCommerceAnalytics","MarketplaceEntitlementService","MarketplaceMetering","MediaConnect","MediaConvert","MediaLive","MediaPackage","MediaStore","MediaStoreData","MediaTailor","MigrationHub","Mobile","MobileAnalytics","Neptune","OpsWorks","OpsWorksCM","Organizations","PI","Pinpoint","PinpointEmail","PinpointSMSVoice","Polly","Pricing","QuickSight","RAM","RDS","RDSDataService","Redshift","Rekognition","ResourceGroups","ResourceGroupsTaggingAPI","RoboMaker","Route53","Route53Domains","Route53Resolver","S3","S3Control","S3Middleware","SES","SFN","SMS","SNS","SQS","SSM","STS","SWF","SageMaker","SageMakerRuntime","SecretsManager","SecurityHub","ServerlessApplicationRepository","ServiceCatalog","ServiceDiscovery","Shield","Signer","SimpleDB","Snowball","StorageGateway","Support","TranscribeService","Transfer","Translate","WAF","WAFRegional","WorkDocs","WorkMail","WorkSpaces","XRay"]),
+*/
         .library(name: "ACM", targets: ["ACM"]),
         .library(name: "ACMPCA", targets: ["ACMPCA"]),
         .library(name: "APIGateway", targets: ["APIGateway"]),
@@ -176,12 +176,9 @@ let package = Package(
         .library(name: "XRay", targets: ["XRay"])
     ],
     dependencies: [
-        .package(url: "https://github.com/swift-aws/aws-sdk-swift-core.git", .branch("nio2.0")),
-        .package(url: "https://github.com/SwiftyJSON/SwiftyJSON.git", .upToNextMajor(from: "4.1.0"))
+        .package(url: "https://github.com/swift-aws/aws-sdk-appleos-core.git", .upToNextMajor(from:"0.1.0")),
     ],
     targets: [
-        .target(name: "CodeGenerator", dependencies: ["AWSSDKSwiftCore", "SwiftyJSON"]),
-
         .target(name: "ACM", dependencies: ["AWSSDKSwiftCore"], path: "./Sources/AWSSDKSwift/Services/ACM"),
         .target(name: "ACMPCA", dependencies: ["AWSSDKSwiftCore"], path: "./Sources/AWSSDKSwift/Services/ACMPCA"),
         .target(name: "APIGateway", dependencies: ["AWSSDKSwiftCore"], path: "./Sources/AWSSDKSwift/Services/APIGateway"),
@@ -351,7 +348,5 @@ let package = Package(
         .target(name: "XRay", dependencies: ["AWSSDKSwiftCore"], path: "./Sources/AWSSDKSwift/Services/XRay"),
         .target(name: "GlacierMiddleware", dependencies: ["AWSSDKSwiftCore"], path: "./Sources/AWSSDKSwift/Middlewares/Glacier"),
         .target(name: "S3Middleware", dependencies: ["AWSSDKSwiftCore"], path: "./Sources/AWSSDKSwift/Middlewares/S3"),
-
-        .testTarget(name: "AWSSDKSwiftTests", dependencies: ["DynamoDB", "S3"])
     ]
 )

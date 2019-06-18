@@ -3,11 +3,11 @@
     "pins": [
       {
         "package": "AWSSDKSwiftCore",
-        "repositoryURL": "https://github.com/swift-aws/aws-sdk-swift-core.git",
+        "repositoryURL": "https://github.com/swift-aws/aws-sdk-appleos-core.git",
         "state": {
-          "branch": "nio2.0",
-          "revision": "015aafe3a573d6d0ebb24847dcacddf0c2f9fd1d",
-          "version": null
+          "branch": null,
+          "revision": "aa8411143ac5b0084209bc76416cbe46962fad2c",
+          "version": "0.1.0"
         }
       },
       {
@@ -38,21 +38,12 @@
         }
       },
       {
-        "package": "swift-nio-ssl",
-        "repositoryURL": "https://github.com/apple/swift-nio-ssl.git",
+        "package": "swift-nio-transport-services",
+        "repositoryURL": "https://github.com/apple/swift-nio-transport-services.git",
         "state": {
           "branch": null,
-          "revision": "dc23a24fbe5d59429eacf45a9add82fdf6ab90e6",
-          "version": "2.1.0"
-        }
-      },
-      {
-        "package": "SwiftyJSON",
-        "repositoryURL": "https://github.com/SwiftyJSON/SwiftyJSON.git",
-        "state": {
-          "branch": null,
-          "revision": "2b6054efa051565954e1d2b9da831680026cd768",
-          "version": "4.3.0"
+          "revision": "d59370d89af5e647fa14779b693cb5378602aa6d",
+          "version": "1.0.3"
         }
       }
     ]
