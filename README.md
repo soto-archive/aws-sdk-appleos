@@ -1,19 +1,18 @@
-# aws-sdk-swift
+# AWSSDK AppleOS
 
-AWS SDK for the Swift programming language.
-This library doesn't depend on Objective-C Runtime, So you can use this with Linux.
+Version of the AWS SDK for the Swift programming language that supports Apple platforms (including iOS) as first class citizens.
 
-[<img src="https://travis-ci.org/swift-aws/aws-sdk-swift.svg?branch=master">](https://travis-ci.org/swift-aws/aws-sdk-swift)
+[<img src="http://img.shields.io/badge/swift-5.0-brightgreen.svg" alt="Swift 5.0" />](https://swift.org)
+[<img src="https://travis-ci.org/swift-aws/aws-sdk-appleos.svg?branch=master">](https://travis-ci.org/swift-aws/aws-sdk-appleos)
 
 
 ## Supported Platforms and Swift Versions
 
-| | **Swift 4.2** | **Swift 5.0** |
-|---|:---:|:---:|
-|**macOS**        | ○ | ○ |
-|**Ubuntu 14.04** | ○ | ○ |
-|**Ubuntu 16.04** | ○ | ○ |
-|**Ubuntu 18.04** | ○ |   |
+| **Platform** | **Version** |
+|---|:---:|
+|**iOS**        | v12.2 |
+|**macOS** | v10.14 |
+|**tvOS** | v12.2 |
 
 ## Documentation
 
@@ -31,7 +30,7 @@ import PackageDescription
 let package = Package(
     name: "MyAWSApp",
     dependencies: [
-        .package(url: "https://github.com/swift-aws/aws-sdk-swift.git", from: "3.0.0")
+        .package(url: "https://github.com/swift-aws/aws-sdk-appleos.git", from: "0.0.1")
     ],
     targets: [
       .target(
@@ -65,18 +64,6 @@ If you find a security vulnerability, please contact <yuki@miketokyo.com> and re
 ## Configuring Credentials
 
 Before using the SDK, ensure that you've configured credentials.
-
-### Via EC2 Instance Profile
-
-If you are running your code on an AWS EC2 instance, you [can setup an IAM role as the server's Instance Profile](https://docs.aws.amazon.com/codedeploy/latest/userguide/getting-started-create-iam-instance-profile.html) to automatically grant credentials via the metadata service.
-
-There are no code changes or configurations to specify in the code, it will automatically pull and use them.
-
-### Via ECS Container credentials
-
-If you are running your code as an AWS ECS container task, you [can setup an IAM role for your container task](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-iam-roles.html#create_task_iam_policy_and_role) to automatically grant credentials via the metadata service.
-
-There are no code changes or configurations to specify in the code, it will automatically pull and use them.
 
 ### Load Credentials from shared credential file.
 
@@ -194,84 +181,6 @@ do {
      }
 } catch { print(error) }
 ```
-## upgrading from <3.0.x
-
-The simplest way to upgrade from an existing 1.0 or 2.0 implementation is to call `.wait()` on existing synchronous calls.
-
-However it is recommend to rewrite your synchronous code to work with the returned future objects. It is no longer necessary to use a DispatchQueue.
-
-## Using the `aws-sdk-swift` with Vapor
-
-Integration with vapor is pretty straight forward.
-
-```swift
-import Vapor
-import HTTP
-import SES
-
-final class MyController {
-
-     func sendUserEmailFromJSON(_ req: Request) throws -> Future<HTTPStatus> {
-
-          return try req.content.decode(EmailData.self).map { emailData in
-              return emailData
-          }.flatMap(to: HTTPStatus.self) { emailData -> Future<HTTPStatus> in
-              do {
-                  let client = SES(
-                      accessKeyId: "Your-Access-Key",
-                      secretAccessKey: "Your-Secret-Key",
-                      region: .uswest1
-                  )
-
-                  let sendEmailRequest = SES.SendEmailRequest(
-                      destination: emailData.address,
-                      message: emailData.message
-                  )
-
-                  return try client.sendEmail(sendEmailRequest)
-                    .hopTo(eventLoop: req.eventLoop)
-                    .map { response -> HTTPResponseStatus in
-                      // print(response)
-                      return HTTPStatus.ok
-                  }
-              } catch {
-                  // print(error)
-                  return req.eventLoop.newSucceededFuture(result: HTTPStatus.internalServerError)
-              }
-          }
-     }
-}
-```
-
-## Using the `aws-sdk-swift` with the swift REPL (os X)
-
-
-```swift
-
-$ brew install libressl
-$ swift -I .build/debug -L/usr/local/Cellar/libressl/2.7.2/lib -lssl -lcrypto -I/usr/local/Cellar/libressl/2.7.2/include
-1> import Foundation
-2> import S3
-
-do {
-    let bucket = "my-bucket"
-
-    let s3 = S3(
-        accessKeyId: "Your-Access-Key",
-        secretAccessKey: "Your-Secret-Key",
-        region: .uswest1
-    )
-
-    // Create Bucket, Put an Object, Get the Object
-    let createBucketRequest = S3.CreateBucketRequest(bucket: bucket)
-
-    try s3.createBucket(createBucketRequest).whenSuccess { response in
-        print(response)
-    }
-} catch { print(error) }
-
-```
-
 ## Speed Up Compilation
 
 By specifying only those modules necessary for your application, only those modules will compile which makes for fast compilation.
