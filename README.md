@@ -51,11 +51,11 @@ Not supported yet
 
 ## Contributing
 
-All developers should feel welcome and encouraged to contribute to `aws-sdk-swift`.
+All developers should feel welcome and encouraged to contribute to `aws-sdk-swift`. 
 
 As contributors and maintainers of this project, and in the interest of fostering an open and welcoming community, we pledge to respect all people who contribute through reporting issues, posting feature requests, updating documentation, submitting pull requests or patches, and other activities.
 
-To contribute a feature or idea to `aws-sdk-swift`, submit an issue and fill in the template. If the request is approved, you or one of the members of the community can start working on it.
+To contribute a feature or idea to `aws-sdk-swift`, submit an issue and fill in the template. If the request is approved, you or one of the members of the community can start working on it. It is prefereable that pull requests are made in the original swift repositories and not the appleos versions of the code. If you have a change that is specific to apple OS then make a pull request to the appleos branch in repositories `aws-sdk-swift` or `aws-sdk-swift-core`.  
 
 If you find a bug, please submit a pull request with a failing test case displaying the bug or create an issue.
 
