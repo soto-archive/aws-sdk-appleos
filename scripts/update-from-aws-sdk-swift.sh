@@ -22,6 +22,9 @@ if [ "$remote_exists" = "false" ]; then
     git remote set-url --push upstream nopush
 fi
 
+echo "Get latest from github"
+git pull
+
 echo "Fetch from upstream"
 git fetch upstream
 
