@@ -22,23 +22,29 @@ Visit the `aws-sdk-swift` [documentation](http://htmlpreview.github.io/?https://
 
 ### Swift Package Manager
 
-Package.swift
+AWS SDK Apple OS uses the Swift Package manager. It is recommended you create a swift package that only includes the AWS services you are interested in. The easiest method to do this is create an empty folder, enter this folder and type ```swift package init```. This will create a Package.swift file. Add the services you are using in the dependency list for your target in the Package.swift file. See below for an example. Make sure you add the line indicating the platforms you are targetting. In future versions of XCode it will be possible to include Swift Package files directly into your project. In the meantime the method to add aws-sdk-appleos into your project is as follows.
+- Create an xcodeproj file. Run ```swift package generate-xcodeproj``` in the same folder as your Package.swift file.
+- Open your project and add the generated xcodeproj in to your project.
+- Include the framework for the services you require in the Embedded Binaries for the project.
+
+Example Package.swift
 
 ```swift
 import PackageDescription
 
 let package = Package(
-    name: "MyAWSApp",
+    name: "MyAWSLib",
+    platforms: [.iOS("12.2"), .macOS(.v10_14)],
     dependencies: [
-        .package(url: "https://github.com/swift-aws/aws-sdk-appleos.git", from: "0.0.1")
+        .package(url: "https://github.com/swift-aws/aws-sdk-appleos.git", from: "0.1.0")
     ],
     targets: [
       .target(
-          name: "MyAWSApp",
+          name: "MyAWSLib",
           dependencies: ["S3", "SES", "CloudFront", "ELBV2", "IAM", "Kinesis"]),
       .testTarget(
           name: "MyAWSToolTests",
-          dependencies: ["MyAWSApp"]),
+          dependencies: ["MyAWSLib"]),
     ]
 )
 ```
@@ -65,27 +71,6 @@ If you find a security vulnerability, please contact <yuki@miketokyo.com> and re
 
 Before using the SDK, ensure that you've configured credentials.
 
-### Load Credentials from shared credential file.
-
-You can [set shared credentials in the home directory for the user running the app](https://docs.aws.amazon.com/ses/latest/DeveloperGuide/create-shared-credentials-file.html)
-
-in ~/.aws/credentials,
-
-```
-[default]
-aws_access_key_id = YOUR_AWS_ACCESS_KEY_ID
-aws_secret_access_key = YOUR_AWS_SECRET_ACCESS_KEY
-```
-
-### Load Credentials from Environment Variable
-
-Alternatively, you can set the following environment variables:
-
-```
-AWS_ACCESS_KEY_ID=YOUR_AWS_ACCESS_KEY_ID
-AWS_SECRET_ACCESS_KEY=YOUR_AWS_SECRET_ACCESS_KEY
-```
-
 ### Pass the Credentials to the AWS Service struct directly
 
 All of the AWS Services's initializers accept `accessKeyId` and `secretAccessKey`
@@ -99,7 +84,7 @@ let ec2 = EC2(
 
 ## Using the `aws-sdk-swift`
 
-AWS Swift Modules can be imported into any swift project. Each module provides a struct that can be initialized, with instance methods to call aws services. See documentation for details on specific services.
+AWS Swift Modules can be imported into any swift project. Each module provides a struct that can be initialized, with instance methods to call aws services. See [documentation](http://htmlpreview.github.io/?https://github.com/swift-aws/aws-sdk-swift/gh-pages/index.html) for details on specific services.
 
 The underlying aws-sdk-swift httpclient returns a [swift-nio EventLoopFuture object](https://apple.github.io/swift-nio/docs/current/NIO/Classes/EventLoopFuture.html). An EvenLoopFuture _is not_ the response, but rather a container object that will be populated with the response sometime later. In this manner calls to aws do not block the main thread.
 
