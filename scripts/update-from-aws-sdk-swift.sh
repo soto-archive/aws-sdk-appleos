@@ -18,7 +18,7 @@ doesRemoteExist() {
 remote_exists=$(doesRemoteExist upstream)
 if [ "$remote_exists" = "false" ]; then
     echo "Create upstream remote"
-    git remote add upstream https://github.com/swift-aws/aws-sdk-swift-core.git
+    git remote add upstream https://github.com/swift-aws/aws-sdk-swift.git
     git remote set-url --push upstream nopush
 fi
 
@@ -30,7 +30,7 @@ git fetch upstream
 
 echo "Update master"
 git checkout master
-git rebase upstream/appleos
+git merge upstream/appleos --allow-unrelated-histories
 
 swift build
 
