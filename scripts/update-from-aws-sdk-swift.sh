@@ -29,6 +29,6 @@ echo "Update master"
 git checkout master
 git rebase upstream/appleos
 
-swift test
+swift build
 
 #git push
