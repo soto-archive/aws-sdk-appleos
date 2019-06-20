@@ -30,7 +30,7 @@ git fetch upstream
 
 echo "Update master"
 git checkout master
-git rebase upstream/appleos
+git merge upstream/appleos
 
 swift build
 
