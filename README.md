@@ -22,7 +22,7 @@ Visit the `aws-sdk-swift` [documentation](http://htmlpreview.github.io/?https://
 
 ### Swift Package Manager
 
-AWS SDK Apple OS uses the Swift Package manager. It is recommended you create a swift package that only includes the AWS services you are interested in. The easiest method to do this is create an empty folder, enter this folder and type ```swift package init```. This will create a Package.swift file. Add the services you are using in the dependency list for your target in the Package.swift file. See below for an example. Make sure you add the line indicating the platforms you are targetting. In future versions of XCode it will be possible to include Swift Package files directly into your project. In the meantime the method to add aws-sdk-appleos into your project is as follows.
+AWS SDK Apple OS uses the Swift Package manager. It is recommended you create a swift package that only includes the AWS services you are interested in. The easiest method to do this is create an empty folder, enter this folder and type ```swift package init```. This will create a Package.swift file. Add the package dependency on package https://github.com/swift-aws/aws-sdk-appleos.git. Add the services you are using in the dependency list for your target. See below for an example. Make sure you add the line indicating the platforms you are targetting. In future versions of XCode it will be possible to include Swift Package files directly into your project. In the meantime the method to add aws-sdk-appleos into your project is as follows.
 - Create an xcodeproj file. Run ```swift package generate-xcodeproj``` in the same folder as your Package.swift file.
 - Open your project and add the generated xcodeproj in to your project.
 - Include the framework for the services you require in the Embedded Binaries for the project.
@@ -63,7 +63,7 @@ As contributors and maintainers of this project, and in the interest of fosterin
 
 To contribute a feature or idea to `aws-sdk-swift`, submit an issue and fill in the template. If the request is approved, you or one of the members of the community can start working on it. It is prefereable that pull requests are made in the original swift repositories and not the appleos versions of the code. If you have a change that is specific to apple OS then make a pull request to the appleos branch in repositories `aws-sdk-swift` or `aws-sdk-swift-core`.  
 
-If you find a bug, please submit a pull request with a failing test case displaying the bug or create an issue.
+If you find a bug, please submit an issue with a failing test case displaying the bug or create an issue.
 
 If you find a security vulnerability, please contact <yuki@miketokyo.com> and reach out on the [**#aws** channel on the Vapor Discord](https://discordapp.com/channels/431917998102675485/472522745067077632) as soon as possible. We take these matters seriously.
 
@@ -166,11 +166,5 @@ do {
      }
 } catch { print(error) }
 ```
-## Speed Up Compilation
-
-By specifying only those modules necessary for your application, only those modules will compile which makes for fast compilation.
-
-If you want to create a module for your service, you can try using the module-exporter to build a separate repo for any of the modules.
-
 ## License
 `aws-sdk-swift` is released under the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0). See LICENSE for details.
