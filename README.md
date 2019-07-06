@@ -1,6 +1,6 @@
 # AWSSDK AppleOS
 
-Version of the AWS SDK for the Swift programming language that supports Apple platforms (including iOS) as first class citizens. This repository is based off the [aws-sdk-swift](https://github.com/swift-aws/aws-sdk-swift/) repository.
+Version of the AWS SDK for the Swift programming language that supports Apple platforms (including iOS) as first class citizens. This repository is based off the [aws-sdk-swift](https://github.com/swift-aws/aws-sdk-swift/) repository. As this version is reliant on Network.framework it only works for Apple platforms, but it does support iOS unlike aws-sdk-swift.
 
 [<img src="http://img.shields.io/badge/swift-5.0-brightgreen.svg" alt="Swift 5.0" />](https://swift.org)
 [<img src="https://travis-ci.org/swift-aws/aws-sdk-appleos.svg?branch=master">](https://travis-ci.org/swift-aws/aws-sdk-appleos)
