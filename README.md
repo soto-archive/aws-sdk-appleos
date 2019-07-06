@@ -18,6 +18,10 @@ Version of the AWS SDK for the Swift programming language that supports Apple pl
 
 Visit the `aws-sdk-swift` [documentation](http://htmlpreview.github.io/?https://github.com/swift-aws/aws-sdk-swift/gh-pages/index.html) for instructions and browsing api references.
 
+## Swift NIO
+
+This client utilizes [Swift NIO](https://github.com/apple/swift-nio#conceptual-overview) to power its interactions with AWS. It returns an [`EventLoopFuture`](https://apple.github.io/swift-nio/docs/current/NIO/Classes/EventLoopFuture.html) in order to allow non-blocking frameworks to use this code. This version of aws-adk-swift uses the NIOTransportServices to provide network connectivity. The NIOTransportServices package is reliant on Network.framework. This means it can support all Apple platforms but is not available for Linux. Please see the Swift NIO documentation for more details, and please let us know via an Issue if you have questions!
+
 ## Installation
 
 ### Swift Package Manager
