@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/swift-aws/aws-sdk-appleos-core.git",
         "state": {
           "branch": null,
-          "revision": "97c92d66001e01b968e49d5e3dfdd4bbab75844a",
-          "version": "0.2.1"
+          "revision": "91af269c0fba28593c61e41edbb75fdf7cd81eec",
+          "version": "0.2.2"
         }
       },
       {
