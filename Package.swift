@@ -194,7 +194,7 @@ let package = Package(
         .library(name: "XRay", targets: ["XRay"])
     ],
     dependencies: [
-        .package(url: "https://github.com/swift-aws/aws-sdk-appleos-core.git", .upToNextMajor(from:"0.2.2")),
+        .package(url: "https://github.com/swift-aws/aws-sdk-appleos-core.git", .upToNextMajor(from:"0.2.4")),
     ],
     targets: [
         .target(name: "ACM", dependencies: ["AWSSDKSwiftCore"], path: "./Sources/AWSSDKSwift/Services/ACM"),
