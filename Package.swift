@@ -194,7 +194,7 @@ let package = Package(
         .library(name: "XRay", targets: ["XRay"])
     ],
     dependencies: [
-        .package(url: "https://github.com/swift-aws/aws-sdk-appleos-core.git", .upToNextMajor(from:"0.2.4")),
+        .package(url: "https://github.com/swift-aws/aws-sdk-appleos-core.git", .upToNextMinor(from:"0.3.0"))
     ],
     targets: [
         .target(name: "ACM", dependencies: ["AWSSDKSwiftCore"], path: "./Sources/AWSSDKSwift/Services/ACM"),
@@ -385,6 +385,6 @@ let package = Package(
         .target(name: "GlacierMiddleware", dependencies: ["AWSSDKSwiftCore"], path: "./Sources/AWSSDKSwift/Middlewares/Glacier"),
         .target(name: "S3Middleware", dependencies: ["AWSSDKSwiftCore"], path: "./Sources/AWSSDKSwift/Middlewares/S3"),
 
-        .testTarget(name: "AWSSDKSwiftTests", dependencies: ["CloudFront", "EC2", "DynamoDB", "IAM", "S3", "SES", "SNS"])
+        .testTarget(name: "AWSSDKSwiftTests", dependencies: ["ACM", "CloudFront", "EC2", "DynamoDB", "IAM", "S3", "SES", "SNS"])
     ]
 )
