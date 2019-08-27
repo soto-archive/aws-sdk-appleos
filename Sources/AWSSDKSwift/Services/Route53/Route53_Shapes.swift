@@ -2392,7 +2392,7 @@ extension Route53 {
         public static var _members: [AWSShapeMember] = [
             AWSShapeMember(label: "HealthChecks", required: true, type: .list, encoding: .list(member:"HealthCheck")), 
             AWSShapeMember(label: "IsTruncated", required: true, type: .boolean), 
-            AWSShapeMember(label: "Marker", required: true, type: .string), 
+            AWSShapeMember(label: "Marker", required: false, type: .string),
             AWSShapeMember(label: "MaxItems", required: true, type: .string), 
             AWSShapeMember(label: "NextMarker", required: false, type: .string)
         ]
@@ -2540,7 +2540,7 @@ extension Route53 {
         public static var _members: [AWSShapeMember] = [
             AWSShapeMember(label: "HostedZones", required: true, type: .list, encoding: .list(member:"HostedZone")), 
             AWSShapeMember(label: "IsTruncated", required: true, type: .boolean), 
-            AWSShapeMember(label: "Marker", required: true, type: .string), 
+            AWSShapeMember(label: "Marker", required: false, type: .string),
             AWSShapeMember(label: "MaxItems", required: true, type: .string), 
             AWSShapeMember(label: "NextMarker", required: false, type: .string)
         ]
@@ -2743,7 +2743,7 @@ extension Route53 {
         public static var _members: [AWSShapeMember] = [
             AWSShapeMember(label: "DelegationSets", required: true, type: .list, encoding: .list(member:"DelegationSet")), 
             AWSShapeMember(label: "IsTruncated", required: true, type: .boolean), 
-            AWSShapeMember(label: "Marker", required: true, type: .string), 
+            AWSShapeMember(label: "Marker", required: false, type: .string),
             AWSShapeMember(label: "MaxItems", required: true, type: .string), 
             AWSShapeMember(label: "NextMarker", required: false, type: .string)
         ]
