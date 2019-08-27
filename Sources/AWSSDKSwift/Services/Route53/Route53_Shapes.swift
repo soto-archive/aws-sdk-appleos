@@ -2402,7 +2402,7 @@ extension Route53 {
         /// A flag that indicates whether there are more health checks to be listed. If the response was truncated, you can get the next group of health checks by submitting another ListHealthChecks request and specifying the value of NextMarker in the marker parameter.
         public let isTruncated: Bool
         /// For the second and subsequent calls to ListHealthChecks, Marker is the value that you specified for the marker parameter in the previous request.
-        public let marker: String
+        public let marker: String?
         /// The value that you specified for the maxitems parameter in the call to ListHealthChecks that produced the current response.
         public let maxItems: String
         /// If IsTruncated is true, the value of NextMarker identifies the first health check that Amazon Route 53 returns if you submit another ListHealthChecks request and specify the value of NextMarker in the marker parameter.
@@ -2550,7 +2550,7 @@ extension Route53 {
         /// A flag indicating whether there are more hosted zones to be listed. If the response was truncated, you can get more hosted zones by submitting another ListHostedZones request and specifying the value of NextMarker in the marker parameter.
         public let isTruncated: Bool
         /// For the second and subsequent calls to ListHostedZones, Marker is the value that you specified for the marker parameter in the request that produced the current response.
-        public let marker: String
+        public let marker: String?
         /// The value that you specified for the maxitems parameter in the call to ListHostedZones that produced the current response.
         public let maxItems: String
         /// If IsTruncated is true, the value of NextMarker identifies the first hosted zone in the next group of hosted zones. Submit another ListHostedZones request, and specify the value of NextMarker from the response in the marker parameter. This element is present only if IsTruncated is true.
@@ -2753,7 +2753,7 @@ extension Route53 {
         /// A flag that indicates whether there are more reusable delegation sets to be listed.
         public let isTruncated: Bool
         /// For the second and subsequent calls to ListReusableDelegationSets, Marker is the value that you specified for the marker parameter in the request that produced the current response.
-        public let marker: String
+        public let marker: String?
         /// The value that you specified for the maxitems parameter in the call to ListReusableDelegationSets that produced the current response.
         public let maxItems: String
         /// If IsTruncated is true, the value of NextMarker identifies the next reusable delegation set that Amazon Route 53 will return if you submit another ListReusableDelegationSets request and specify the value of NextMarker in the marker parameter.
