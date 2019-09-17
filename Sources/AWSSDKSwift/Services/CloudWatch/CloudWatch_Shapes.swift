@@ -231,11 +231,11 @@ extension CloudWatch {
         }
 
         public func validate(name: String) throws {
-            try alarmNames.forEach {
+            try self.alarmNames.forEach {
                 try validate($0, name: "alarmNames[]", parent: name, max: 255)
                 try validate($0, name: "alarmNames[]", parent: name, min: 1)
             }
-            try validate(alarmNames, name:"alarmNames", parent: name, max: 100)
+            try validate(self.alarmNames, name:"alarmNames", parent: name, max: 100)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -268,15 +268,15 @@ extension CloudWatch {
         }
 
         public func validate(name: String) throws {
-            try dimensions?.forEach {
+            try self.dimensions?.forEach {
                 try $0.validate(name: "\(name).dimensions[]")
             }
-            try validate(dimensions, name:"dimensions", parent: name, max: 10)
-            try validate(metricName, name:"metricName", parent: name, max: 255)
-            try validate(metricName, name:"metricName", parent: name, min: 1)
-            try validate(namespace, name:"namespace", parent: name, max: 255)
-            try validate(namespace, name:"namespace", parent: name, min: 1)
-            try validate(namespace, name:"namespace", parent: name, pattern: "[^:].*")
+            try validate(self.dimensions, name:"dimensions", parent: name, max: 10)
+            try validate(self.metricName, name:"metricName", parent: name, max: 255)
+            try validate(self.metricName, name:"metricName", parent: name, min: 1)
+            try validate(self.namespace, name:"namespace", parent: name, max: 255)
+            try validate(self.namespace, name:"namespace", parent: name, min: 1)
+            try validate(self.namespace, name:"namespace", parent: name, pattern: "[^:].*")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -353,10 +353,10 @@ extension CloudWatch {
         }
 
         public func validate(name: String) throws {
-            try validate(alarmName, name:"alarmName", parent: name, max: 255)
-            try validate(alarmName, name:"alarmName", parent: name, min: 1)
-            try validate(maxRecords, name:"maxRecords", parent: name, max: 100)
-            try validate(maxRecords, name:"maxRecords", parent: name, min: 1)
+            try validate(self.alarmName, name:"alarmName", parent: name, max: 255)
+            try validate(self.alarmName, name:"alarmName", parent: name, min: 1)
+            try validate(self.maxRecords, name:"maxRecords", parent: name, max: 100)
+            try validate(self.maxRecords, name:"maxRecords", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -428,17 +428,17 @@ extension CloudWatch {
         }
 
         public func validate(name: String) throws {
-            try dimensions?.forEach {
+            try self.dimensions?.forEach {
                 try $0.validate(name: "\(name).dimensions[]")
             }
-            try validate(dimensions, name:"dimensions", parent: name, max: 10)
-            try validate(extendedStatistic, name:"extendedStatistic", parent: name, pattern: "p(\\d{1,2}(\\.\\d{0,2})?|100)")
-            try validate(metricName, name:"metricName", parent: name, max: 255)
-            try validate(metricName, name:"metricName", parent: name, min: 1)
-            try validate(namespace, name:"namespace", parent: name, max: 255)
-            try validate(namespace, name:"namespace", parent: name, min: 1)
-            try validate(namespace, name:"namespace", parent: name, pattern: "[^:].*")
-            try validate(period, name:"period", parent: name, min: 1)
+            try validate(self.dimensions, name:"dimensions", parent: name, max: 10)
+            try validate(self.extendedStatistic, name:"extendedStatistic", parent: name, pattern: "p(\\d{1,2}(\\.\\d{0,2})?|100)")
+            try validate(self.metricName, name:"metricName", parent: name, max: 255)
+            try validate(self.metricName, name:"metricName", parent: name, min: 1)
+            try validate(self.namespace, name:"namespace", parent: name, max: 255)
+            try validate(self.namespace, name:"namespace", parent: name, min: 1)
+            try validate(self.namespace, name:"namespace", parent: name, pattern: "[^:].*")
+            try validate(self.period, name:"period", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -502,17 +502,17 @@ extension CloudWatch {
         }
 
         public func validate(name: String) throws {
-            try validate(actionPrefix, name:"actionPrefix", parent: name, max: 1024)
-            try validate(actionPrefix, name:"actionPrefix", parent: name, min: 1)
-            try validate(alarmNamePrefix, name:"alarmNamePrefix", parent: name, max: 255)
-            try validate(alarmNamePrefix, name:"alarmNamePrefix", parent: name, min: 1)
-            try alarmNames?.forEach {
+            try validate(self.actionPrefix, name:"actionPrefix", parent: name, max: 1024)
+            try validate(self.actionPrefix, name:"actionPrefix", parent: name, min: 1)
+            try validate(self.alarmNamePrefix, name:"alarmNamePrefix", parent: name, max: 255)
+            try validate(self.alarmNamePrefix, name:"alarmNamePrefix", parent: name, min: 1)
+            try self.alarmNames?.forEach {
                 try validate($0, name: "alarmNames[]", parent: name, max: 255)
                 try validate($0, name: "alarmNames[]", parent: name, min: 1)
             }
-            try validate(alarmNames, name:"alarmNames", parent: name, max: 100)
-            try validate(maxRecords, name:"maxRecords", parent: name, max: 100)
-            try validate(maxRecords, name:"maxRecords", parent: name, min: 1)
+            try validate(self.alarmNames, name:"alarmNames", parent: name, max: 100)
+            try validate(self.maxRecords, name:"maxRecords", parent: name, max: 100)
+            try validate(self.maxRecords, name:"maxRecords", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -576,16 +576,16 @@ extension CloudWatch {
         }
 
         public func validate(name: String) throws {
-            try dimensions?.forEach {
+            try self.dimensions?.forEach {
                 try $0.validate(name: "\(name).dimensions[]")
             }
-            try validate(dimensions, name:"dimensions", parent: name, max: 10)
-            try validate(maxResults, name:"maxResults", parent: name, min: 1)
-            try validate(metricName, name:"metricName", parent: name, max: 255)
-            try validate(metricName, name:"metricName", parent: name, min: 1)
-            try validate(namespace, name:"namespace", parent: name, max: 255)
-            try validate(namespace, name:"namespace", parent: name, min: 1)
-            try validate(namespace, name:"namespace", parent: name, pattern: "[^:].*")
+            try validate(self.dimensions, name:"dimensions", parent: name, max: 10)
+            try validate(self.maxResults, name:"maxResults", parent: name, min: 1)
+            try validate(self.metricName, name:"metricName", parent: name, max: 255)
+            try validate(self.metricName, name:"metricName", parent: name, min: 1)
+            try validate(self.namespace, name:"namespace", parent: name, max: 255)
+            try validate(self.namespace, name:"namespace", parent: name, min: 1)
+            try validate(self.namespace, name:"namespace", parent: name, pattern: "[^:].*")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -636,10 +636,10 @@ extension CloudWatch {
         }
 
         public func validate(name: String) throws {
-            try validate(name, name:"name", parent: name, max: 255)
-            try validate(name, name:"name", parent: name, min: 1)
-            try validate(value, name:"value", parent: name, max: 255)
-            try validate(value, name:"value", parent: name, min: 1)
+            try validate(self.name, name:"name", parent: name, max: 255)
+            try validate(self.name, name:"name", parent: name, min: 1)
+            try validate(self.value, name:"value", parent: name, max: 255)
+            try validate(self.value, name:"value", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -665,10 +665,10 @@ extension CloudWatch {
         }
 
         public func validate(name: String) throws {
-            try validate(name, name:"name", parent: name, max: 255)
-            try validate(name, name:"name", parent: name, min: 1)
-            try validate(value, name:"value", parent: name, max: 255)
-            try validate(value, name:"value", parent: name, min: 1)
+            try validate(self.name, name:"name", parent: name, max: 255)
+            try validate(self.name, name:"name", parent: name, min: 1)
+            try validate(self.value, name:"value", parent: name, max: 255)
+            try validate(self.value, name:"value", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -690,11 +690,11 @@ extension CloudWatch {
         }
 
         public func validate(name: String) throws {
-            try alarmNames.forEach {
+            try self.alarmNames.forEach {
                 try validate($0, name: "alarmNames[]", parent: name, max: 255)
                 try validate($0, name: "alarmNames[]", parent: name, min: 1)
             }
-            try validate(alarmNames, name:"alarmNames", parent: name, max: 100)
+            try validate(self.alarmNames, name:"alarmNames", parent: name, max: 100)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -715,11 +715,11 @@ extension CloudWatch {
         }
 
         public func validate(name: String) throws {
-            try alarmNames.forEach {
+            try self.alarmNames.forEach {
                 try validate($0, name: "alarmNames[]", parent: name, max: 255)
                 try validate($0, name: "alarmNames[]", parent: name, min: 1)
             }
-            try validate(alarmNames, name:"alarmNames", parent: name, max: 100)
+            try validate(self.alarmNames, name:"alarmNames", parent: name, max: 100)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -781,7 +781,7 @@ extension CloudWatch {
             AWSShapeMember(label: "StartTime", required: true, type: .timestamp)
         ]
 
-        /// The time stamp indicating the latest data to be returned. For better performance, specify StartTime and EndTime values that align with the value of the metric's Period and sync up with the beginning and end of an hour. For example, if the Period of a metric is 5 minutes, specifying 12:05 or 12:30 as EndTime can get a faster response from CloudWatch than setting 12:07 or 12:29 as the EndTime.
+        /// The time stamp indicating the latest data to be returned. The value specified is exclusive; results include data points up to the specified time stamp. For better performance, specify StartTime and EndTime values that align with the value of the metric's Period and sync up with the beginning and end of an hour. For example, if the Period of a metric is 5 minutes, specifying 12:05 or 12:30 as EndTime can get a faster response from CloudWatch than setting 12:07 or 12:29 as the EndTime.
         public let endTime: TimeStamp
         /// The maximum number of data points the request should return before paginating. If you omit this, the default of 100,800 is used.
         public let maxDatapoints: Int?
@@ -791,7 +791,7 @@ extension CloudWatch {
         public let nextToken: String?
         /// The order in which data points should be returned. TimestampDescending returns the newest data first and paginates when the MaxDatapoints limit is reached. TimestampAscending returns the oldest data first and paginates when the MaxDatapoints limit is reached.
         public let scanBy: ScanBy?
-        /// The time stamp indicating the earliest data to be returned. For better performance, specify StartTime and EndTime values that align with the value of the metric's Period and sync up with the beginning and end of an hour. For example, if the Period of a metric is 5 minutes, specifying 12:05 or 12:30 as StartTime can get a faster response from CloudWatch than setting 12:07 or 12:29 as the StartTime.
+        /// The time stamp indicating the earliest data to be returned. The value specified is inclusive; results include data points with the specified time stamp.  CloudWatch rounds the specified time stamp as follows:   Start time less than 15 days ago - Round down to the nearest whole minute. For example, 12:32:34 is rounded down to 12:32:00.   Start time between 15 and 63 days ago - Round down to the nearest 5-minute clock interval. For example, 12:32:34 is rounded down to 12:30:00.   Start time greater than 63 days ago - Round down to the nearest 1-hour clock interval. For example, 12:32:34 is rounded down to 12:00:00.   If you set Period to 5, 10, or 30, the start time of your request is rounded down to the nearest time that corresponds to even 5-, 10-, or 30-second divisions of a minute. For example, if you make a query at (HH:mm:ss) 01:05:23 for the previous 10-second period, the start time of your request is rounded down and you receive data from 01:05:10 to 01:05:20. If you make a query at 15:07:17 for the previous 5 minutes of data, using a period of 5 seconds, you receive data timestamped between 15:02:15 and 15:07:15.  For better performance, specify StartTime and EndTime values that align with the value of the metric's Period and sync up with the beginning and end of an hour. For example, if the Period of a metric is 5 minutes, specifying 12:05 or 12:30 as StartTime can get a faster response from CloudWatch than setting 12:07 or 12:29 as the StartTime.
         public let startTime: TimeStamp
 
         public init(endTime: TimeStamp, maxDatapoints: Int? = nil, metricDataQueries: [MetricDataQuery], nextToken: String? = nil, scanBy: ScanBy? = nil, startTime: TimeStamp) {
@@ -804,7 +804,7 @@ extension CloudWatch {
         }
 
         public func validate(name: String) throws {
-            try metricDataQueries.forEach {
+            try self.metricDataQueries.forEach {
                 try $0.validate(name: "\(name).metricDataQueries[]")
             }
         }
@@ -875,7 +875,7 @@ extension CloudWatch {
         public let startTime: TimeStamp
         /// The metric statistics, other than percentile. For percentile statistics, use ExtendedStatistics. When calling GetMetricStatistics, you must specify either Statistics or ExtendedStatistics, but not both.
         public let statistics: [Statistic]?
-        /// The unit for a given metric. Metrics may be reported in multiple units. Not supplying a unit results in all units being returned. If you specify only a unit that the metric does not report, the results of the call are null.
+        /// The unit for a given metric. If you omit Unit, all data that was collected with any unit is returned, along with the corresponding units that were specified when the data was reported to CloudWatch. If you specify a unit, the operation returns only data data that was collected with that unit specified. If you specify a unit that does not match the data collected, the results of the operation are null. CloudWatch does not perform unit conversions.
         public let unit: StandardUnit?
 
         public init(dimensions: [Dimension]? = nil, endTime: TimeStamp, extendedStatistics: [String]? = nil, metricName: String, namespace: String, period: Int, startTime: TimeStamp, statistics: [Statistic]? = nil, unit: StandardUnit? = nil) {
@@ -891,23 +891,23 @@ extension CloudWatch {
         }
 
         public func validate(name: String) throws {
-            try dimensions?.forEach {
+            try self.dimensions?.forEach {
                 try $0.validate(name: "\(name).dimensions[]")
             }
-            try validate(dimensions, name:"dimensions", parent: name, max: 10)
-            try extendedStatistics?.forEach {
+            try validate(self.dimensions, name:"dimensions", parent: name, max: 10)
+            try self.extendedStatistics?.forEach {
                 try validate($0, name: "extendedStatistics[]", parent: name, pattern: "p(\\d{1,2}(\\.\\d{0,2})?|100)")
             }
-            try validate(extendedStatistics, name:"extendedStatistics", parent: name, max: 10)
-            try validate(extendedStatistics, name:"extendedStatistics", parent: name, min: 1)
-            try validate(metricName, name:"metricName", parent: name, max: 255)
-            try validate(metricName, name:"metricName", parent: name, min: 1)
-            try validate(namespace, name:"namespace", parent: name, max: 255)
-            try validate(namespace, name:"namespace", parent: name, min: 1)
-            try validate(namespace, name:"namespace", parent: name, pattern: "[^:].*")
-            try validate(period, name:"period", parent: name, min: 1)
-            try validate(statistics, name:"statistics", parent: name, max: 5)
-            try validate(statistics, name:"statistics", parent: name, min: 1)
+            try validate(self.extendedStatistics, name:"extendedStatistics", parent: name, max: 10)
+            try validate(self.extendedStatistics, name:"extendedStatistics", parent: name, min: 1)
+            try validate(self.metricName, name:"metricName", parent: name, max: 255)
+            try validate(self.metricName, name:"metricName", parent: name, min: 1)
+            try validate(self.namespace, name:"namespace", parent: name, max: 255)
+            try validate(self.namespace, name:"namespace", parent: name, min: 1)
+            try validate(self.namespace, name:"namespace", parent: name, pattern: "[^:].*")
+            try validate(self.period, name:"period", parent: name, min: 1)
+            try validate(self.statistics, name:"statistics", parent: name, max: 5)
+            try validate(self.statistics, name:"statistics", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1060,15 +1060,15 @@ extension CloudWatch {
         }
 
         public func validate(name: String) throws {
-            try dimensions?.forEach {
+            try self.dimensions?.forEach {
                 try $0.validate(name: "\(name).dimensions[]")
             }
-            try validate(dimensions, name:"dimensions", parent: name, max: 10)
-            try validate(metricName, name:"metricName", parent: name, max: 255)
-            try validate(metricName, name:"metricName", parent: name, min: 1)
-            try validate(namespace, name:"namespace", parent: name, max: 255)
-            try validate(namespace, name:"namespace", parent: name, min: 1)
-            try validate(namespace, name:"namespace", parent: name, pattern: "[^:].*")
+            try validate(self.dimensions, name:"dimensions", parent: name, max: 10)
+            try validate(self.metricName, name:"metricName", parent: name, max: 255)
+            try validate(self.metricName, name:"metricName", parent: name, min: 1)
+            try validate(self.namespace, name:"namespace", parent: name, max: 255)
+            try validate(self.namespace, name:"namespace", parent: name, min: 1)
+            try validate(self.namespace, name:"namespace", parent: name, pattern: "[^:].*")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1114,8 +1114,8 @@ extension CloudWatch {
         }
 
         public func validate(name: String) throws {
-            try validate(resourceARN, name:"resourceARN", parent: name, max: 1024)
-            try validate(resourceARN, name:"resourceARN", parent: name, min: 1)
+            try validate(self.resourceARN, name:"resourceARN", parent: name, max: 1024)
+            try validate(self.resourceARN, name:"resourceARN", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1183,15 +1183,15 @@ extension CloudWatch {
         }
 
         public func validate(name: String) throws {
-            try dimensions?.forEach {
+            try self.dimensions?.forEach {
                 try $0.validate(name: "\(name).dimensions[]")
             }
-            try validate(dimensions, name:"dimensions", parent: name, max: 10)
-            try validate(metricName, name:"metricName", parent: name, max: 255)
-            try validate(metricName, name:"metricName", parent: name, min: 1)
-            try validate(namespace, name:"namespace", parent: name, max: 255)
-            try validate(namespace, name:"namespace", parent: name, min: 1)
-            try validate(namespace, name:"namespace", parent: name, pattern: "[^:].*")
+            try validate(self.dimensions, name:"dimensions", parent: name, max: 10)
+            try validate(self.metricName, name:"metricName", parent: name, max: 255)
+            try validate(self.metricName, name:"metricName", parent: name, min: 1)
+            try validate(self.namespace, name:"namespace", parent: name, max: 255)
+            try validate(self.namespace, name:"namespace", parent: name, min: 1)
+            try validate(self.namespace, name:"namespace", parent: name, pattern: "[^:].*")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1377,11 +1377,11 @@ extension CloudWatch {
         }
 
         public func validate(name: String) throws {
-            try validate(expression, name:"expression", parent: name, max: 1024)
-            try validate(expression, name:"expression", parent: name, min: 1)
-            try validate(id, name:"id", parent: name, max: 255)
-            try validate(id, name:"id", parent: name, min: 1)
-            try metricStat?.validate(name: "\(name).metricStat")
+            try validate(self.expression, name:"expression", parent: name, max: 1024)
+            try validate(self.expression, name:"expression", parent: name, min: 1)
+            try validate(self.id, name:"id", parent: name, max: 255)
+            try validate(self.id, name:"id", parent: name, min: 1)
+            try self.metricStat?.validate(name: "\(name).metricStat")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1480,13 +1480,13 @@ extension CloudWatch {
         }
 
         public func validate(name: String) throws {
-            try dimensions?.forEach {
+            try self.dimensions?.forEach {
                 try $0.validate(name: "\(name).dimensions[]")
             }
-            try validate(dimensions, name:"dimensions", parent: name, max: 10)
-            try validate(metricName, name:"metricName", parent: name, max: 255)
-            try validate(metricName, name:"metricName", parent: name, min: 1)
-            try validate(storageResolution, name:"storageResolution", parent: name, min: 1)
+            try validate(self.dimensions, name:"dimensions", parent: name, max: 10)
+            try validate(self.metricName, name:"metricName", parent: name, max: 255)
+            try validate(self.metricName, name:"metricName", parent: name, min: 1)
+            try validate(self.storageResolution, name:"storageResolution", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1516,7 +1516,7 @@ extension CloudWatch {
         public let period: Int
         /// The statistic to return. It can include any CloudWatch statistic or extended statistic.
         public let stat: String
-        /// When you are using a Put operation, this defines what unit you want to use when storing the metric. In a Get operation, this displays the unit that is used for the metric.
+        /// When you are using a Put operation, this defines what unit you want to use when storing the metric. In a Get operation, if you omit Unit then all data that was collected with any unit is returned, along with the corresponding units that were specified when the data was reported to CloudWatch. If you specify a unit, the operation returns only data data that was collected with that unit specified. If you specify a unit that does not match the data collected, the results of the operation are null. CloudWatch does not perform unit conversions.
         public let unit: StandardUnit?
 
         public init(metric: Metric, period: Int, stat: String, unit: StandardUnit? = nil) {
@@ -1527,8 +1527,8 @@ extension CloudWatch {
         }
 
         public func validate(name: String) throws {
-            try metric.validate(name: "\(name).metric")
-            try validate(period, name:"period", parent: name, min: 1)
+            try self.metric.validate(name: "\(name).metric")
+            try validate(self.period, name:"period", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1568,15 +1568,15 @@ extension CloudWatch {
         }
 
         public func validate(name: String) throws {
-            try dimensions?.forEach {
+            try self.dimensions?.forEach {
                 try $0.validate(name: "\(name).dimensions[]")
             }
-            try validate(dimensions, name:"dimensions", parent: name, max: 10)
-            try validate(metricName, name:"metricName", parent: name, max: 255)
-            try validate(metricName, name:"metricName", parent: name, min: 1)
-            try validate(namespace, name:"namespace", parent: name, max: 255)
-            try validate(namespace, name:"namespace", parent: name, min: 1)
-            try validate(namespace, name:"namespace", parent: name, pattern: "[^:].*")
+            try validate(self.dimensions, name:"dimensions", parent: name, max: 10)
+            try validate(self.metricName, name:"metricName", parent: name, max: 255)
+            try validate(self.metricName, name:"metricName", parent: name, min: 1)
+            try validate(self.namespace, name:"namespace", parent: name, max: 255)
+            try validate(self.namespace, name:"namespace", parent: name, min: 1)
+            try validate(self.namespace, name:"namespace", parent: name, pattern: "[^:].*")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1683,27 +1683,27 @@ extension CloudWatch {
         public let extendedStatistic: String?
         /// The actions to execute when this alarm transitions to the INSUFFICIENT_DATA state from any other state. Each action is specified as an Amazon Resource Name (ARN). Valid Values: arn:aws:automate:region:ec2:stop | arn:aws:automate:region:ec2:terminate | arn:aws:automate:region:ec2:recover | arn:aws:automate:region:ec2:reboot | arn:aws:sns:region:account-id:sns-topic-name  | arn:aws:autoscaling:region:account-id:scalingPolicy:policy-idautoScalingGroupName/group-friendly-name:policyName/policy-friendly-name   Valid Values (for use with IAM roles): &gt;arn:aws:swf:region:account-id:action/actions/AWS_EC2.InstanceId.Stop/1.0 | arn:aws:swf:region:account-id:action/actions/AWS_EC2.InstanceId.Terminate/1.0 | arn:aws:swf:region:account-id:action/actions/AWS_EC2.InstanceId.Reboot/1.0 
         public let insufficientDataActions: [String]?
-        /// The name for the metric associated with the alarm. If you are creating an alarm based on a math expression, you cannot specify this parameter, or any of the Dimensions, Period, Namespace, Statistic, or ExtendedStatistic parameters. Instead, you specify all this information in the Metrics array.
+        /// The name for the metric associated with the alarm. For each PutMetricAlarm operation, you must specify either MetricName or a Metrics array. If you are creating an alarm based on a math expression, you cannot specify this parameter, or any of the Dimensions, Period, Namespace, Statistic, or ExtendedStatistic parameters. Instead, you specify all this information in the Metrics array.
         public let metricName: String?
-        /// An array of MetricDataQuery structures that enable you to create an alarm based on the result of a metric math expression. Each item in the Metrics array either retrieves a metric or performs a math expression. One item in the Metrics array is the expression that the alarm watches. You designate this expression by setting ReturnValue to true for this object in the array. For more information, see MetricDataQuery. If you use the Metrics parameter, you cannot include the MetricName, Dimensions, Period, Namespace, Statistic, or ExtendedStatistic parameters of PutMetricAlarm in the same operation. Instead, you retrieve the metrics you are using in your math expression as part of the Metrics array.
+        /// An array of MetricDataQuery structures that enable you to create an alarm based on the result of a metric math expression. For each PutMetricAlarm operation, you must specify either MetricName or a Metrics array. Each item in the Metrics array either retrieves a metric or performs a math expression. One item in the Metrics array is the expression that the alarm watches. You designate this expression by setting ReturnValue to true for this object in the array. For more information, see MetricDataQuery. If you use the Metrics parameter, you cannot include the MetricName, Dimensions, Period, Namespace, Statistic, or ExtendedStatistic parameters of PutMetricAlarm in the same operation. Instead, you retrieve the metrics you are using in your math expression as part of the Metrics array.
         public let metrics: [MetricDataQuery]?
         /// The namespace for the metric associated specified in MetricName.
         public let namespace: String?
         /// The actions to execute when this alarm transitions to an OK state from any other state. Each action is specified as an Amazon Resource Name (ARN). Valid Values: arn:aws:automate:region:ec2:stop | arn:aws:automate:region:ec2:terminate | arn:aws:automate:region:ec2:recover | arn:aws:automate:region:ec2:reboot | arn:aws:sns:region:account-id:sns-topic-name  | arn:aws:autoscaling:region:account-id:scalingPolicy:policy-idautoScalingGroupName/group-friendly-name:policyName/policy-friendly-name   Valid Values (for use with IAM roles): arn:aws:swf:region:account-id:action/actions/AWS_EC2.InstanceId.Stop/1.0 | arn:aws:swf:region:account-id:action/actions/AWS_EC2.InstanceId.Terminate/1.0 | arn:aws:swf:region:account-id:action/actions/AWS_EC2.InstanceId.Reboot/1.0 
         public let oKActions: [String]?
-        /// The length, in seconds, used each time the metric specified in MetricName is evaluated. Valid values are 10, 30, and any multiple of 60. Be sure to specify 10 or 30 only for metrics that are stored by a PutMetricData call with a StorageResolution of 1. If you specify a period of 10 or 30 for a metric that does not have sub-minute resolution, the alarm still attempts to gather data at the period rate that you specify. In this case, it does not receive data for the attempts that do not correspond to a one-minute data resolution, and the alarm may often lapse into INSUFFICENT_DATA status. Specifying 10 or 30 also sets this alarm as a high-resolution alarm, which has a higher charge than other alarms. For more information about pricing, see Amazon CloudWatch Pricing. An alarm's total current evaluation period can be no longer than one day, so Period multiplied by EvaluationPeriods cannot be more than 86,400 seconds.
+        /// The length, in seconds, used each time the metric specified in MetricName is evaluated. Valid values are 10, 30, and any multiple of 60.  Period is required for alarms based on static thresholds. If you are creating an alarm based on a metric math expression, you specify the period for each metric within the objects in the Metrics array. Be sure to specify 10 or 30 only for metrics that are stored by a PutMetricData call with a StorageResolution of 1. If you specify a period of 10 or 30 for a metric that does not have sub-minute resolution, the alarm still attempts to gather data at the period rate that you specify. In this case, it does not receive data for the attempts that do not correspond to a one-minute data resolution, and the alarm may often lapse into INSUFFICENT_DATA status. Specifying 10 or 30 also sets this alarm as a high-resolution alarm, which has a higher charge than other alarms. For more information about pricing, see Amazon CloudWatch Pricing. An alarm's total current evaluation period can be no longer than one day, so Period multiplied by EvaluationPeriods cannot be more than 86,400 seconds.
         public let period: Int?
         /// The statistic for the metric specified in MetricName, other than percentile. For percentile statistics, use ExtendedStatistic. When you call PutMetricAlarm and specify a MetricName, you must specify either Statistic or ExtendedStatistic, but not both.
         public let statistic: Statistic?
         /// A list of key-value pairs to associate with the alarm. You can associate as many as 50 tags with an alarm. Tags can help you organize and categorize your resources. You can also use them to scope user permissions, by granting a user permission to access or change only resources with certain tag values.
         public let tags: [Tag]?
-        /// The value against which the specified statistic is compared.
+        /// The value against which the specified statistic is compared. This parameter is required for alarms based on static thresholds, but should not be used for alarms based on anomaly detection models.
         public let threshold: Double?
         /// If this is an alarm based on an anomaly detection model, make this value match the ID of the ANOMALY_DETECTION_BAND function. For an example of how to use this parameter, see the Anomaly Detection Model Alarm example on this page. If your alarm uses this parameter, it cannot have Auto Scaling actions.
         public let thresholdMetricId: String?
         ///  Sets how this alarm is to handle missing data points. If TreatMissingData is omitted, the default behavior of missing is used. For more information, see Configuring How CloudWatch Alarms Treats Missing Data. Valid Values: breaching | notBreaching | ignore | missing 
         public let treatMissingData: String?
-        /// The unit of measure for the statistic. For example, the units for the Amazon EC2 NetworkIn metric are Bytes because NetworkIn tracks the number of bytes that an instance receives on all network interfaces. You can also specify a unit when you create a custom metric. Units help provide conceptual meaning to your data. Metric data points that specify a unit of measure, such as Percent, are aggregated separately. If you specify a unit, you must use a unit that is appropriate for the metric. Otherwise, the CloudWatch alarm can get stuck in the INSUFFICIENT DATA state. 
+        /// The unit of measure for the statistic. For example, the units for the Amazon EC2 NetworkIn metric are Bytes because NetworkIn tracks the number of bytes that an instance receives on all network interfaces. You can also specify a unit when you create a custom metric. Units help provide conceptual meaning to your data. Metric data points that specify a unit of measure, such as Percent, are aggregated separately. If you don't specify Unit, CloudWatch retrieves all unit types that have been published for the metric and attempts to evaluate the alarm. Usually metrics are published with only one unit, so the alarm will work as intended. However, if the metric is published with multiple types of units and you don't specify a unit, the alarm's behavior is not defined and will behave un-predictably. We recommend omitting Unit so that you don't inadvertently specify an incorrect unit that is not published for this metric. Doing so causes the alarm to be stuck in the INSUFFICIENT DATA state.
         public let unit: StandardUnit?
 
         public init(actionsEnabled: Bool? = nil, alarmActions: [String]? = nil, alarmDescription: String? = nil, alarmName: String, comparisonOperator: ComparisonOperator, datapointsToAlarm: Int? = nil, dimensions: [Dimension]? = nil, evaluateLowSampleCountPercentile: String? = nil, evaluationPeriods: Int, extendedStatistic: String? = nil, insufficientDataActions: [String]? = nil, metricName: String? = nil, metrics: [MetricDataQuery]? = nil, namespace: String? = nil, oKActions: [String]? = nil, period: Int? = nil, statistic: Statistic? = nil, tags: [Tag]? = nil, threshold: Double? = nil, thresholdMetricId: String? = nil, treatMissingData: String? = nil, unit: StandardUnit? = nil) {
@@ -1732,50 +1732,50 @@ extension CloudWatch {
         }
 
         public func validate(name: String) throws {
-            try alarmActions?.forEach {
+            try self.alarmActions?.forEach {
                 try validate($0, name: "alarmActions[]", parent: name, max: 1024)
                 try validate($0, name: "alarmActions[]", parent: name, min: 1)
             }
-            try validate(alarmActions, name:"alarmActions", parent: name, max: 5)
-            try validate(alarmDescription, name:"alarmDescription", parent: name, max: 1024)
-            try validate(alarmDescription, name:"alarmDescription", parent: name, min: 0)
-            try validate(alarmName, name:"alarmName", parent: name, max: 255)
-            try validate(alarmName, name:"alarmName", parent: name, min: 1)
-            try validate(datapointsToAlarm, name:"datapointsToAlarm", parent: name, min: 1)
-            try dimensions?.forEach {
+            try validate(self.alarmActions, name:"alarmActions", parent: name, max: 5)
+            try validate(self.alarmDescription, name:"alarmDescription", parent: name, max: 1024)
+            try validate(self.alarmDescription, name:"alarmDescription", parent: name, min: 0)
+            try validate(self.alarmName, name:"alarmName", parent: name, max: 255)
+            try validate(self.alarmName, name:"alarmName", parent: name, min: 1)
+            try validate(self.datapointsToAlarm, name:"datapointsToAlarm", parent: name, min: 1)
+            try self.dimensions?.forEach {
                 try $0.validate(name: "\(name).dimensions[]")
             }
-            try validate(dimensions, name:"dimensions", parent: name, max: 10)
-            try validate(evaluateLowSampleCountPercentile, name:"evaluateLowSampleCountPercentile", parent: name, max: 255)
-            try validate(evaluateLowSampleCountPercentile, name:"evaluateLowSampleCountPercentile", parent: name, min: 1)
-            try validate(evaluationPeriods, name:"evaluationPeriods", parent: name, min: 1)
-            try validate(extendedStatistic, name:"extendedStatistic", parent: name, pattern: "p(\\d{1,2}(\\.\\d{0,2})?|100)")
-            try insufficientDataActions?.forEach {
+            try validate(self.dimensions, name:"dimensions", parent: name, max: 10)
+            try validate(self.evaluateLowSampleCountPercentile, name:"evaluateLowSampleCountPercentile", parent: name, max: 255)
+            try validate(self.evaluateLowSampleCountPercentile, name:"evaluateLowSampleCountPercentile", parent: name, min: 1)
+            try validate(self.evaluationPeriods, name:"evaluationPeriods", parent: name, min: 1)
+            try validate(self.extendedStatistic, name:"extendedStatistic", parent: name, pattern: "p(\\d{1,2}(\\.\\d{0,2})?|100)")
+            try self.insufficientDataActions?.forEach {
                 try validate($0, name: "insufficientDataActions[]", parent: name, max: 1024)
                 try validate($0, name: "insufficientDataActions[]", parent: name, min: 1)
             }
-            try validate(insufficientDataActions, name:"insufficientDataActions", parent: name, max: 5)
-            try validate(metricName, name:"metricName", parent: name, max: 255)
-            try validate(metricName, name:"metricName", parent: name, min: 1)
-            try metrics?.forEach {
+            try validate(self.insufficientDataActions, name:"insufficientDataActions", parent: name, max: 5)
+            try validate(self.metricName, name:"metricName", parent: name, max: 255)
+            try validate(self.metricName, name:"metricName", parent: name, min: 1)
+            try self.metrics?.forEach {
                 try $0.validate(name: "\(name).metrics[]")
             }
-            try validate(namespace, name:"namespace", parent: name, max: 255)
-            try validate(namespace, name:"namespace", parent: name, min: 1)
-            try validate(namespace, name:"namespace", parent: name, pattern: "[^:].*")
-            try oKActions?.forEach {
+            try validate(self.namespace, name:"namespace", parent: name, max: 255)
+            try validate(self.namespace, name:"namespace", parent: name, min: 1)
+            try validate(self.namespace, name:"namespace", parent: name, pattern: "[^:].*")
+            try self.oKActions?.forEach {
                 try validate($0, name: "oKActions[]", parent: name, max: 1024)
                 try validate($0, name: "oKActions[]", parent: name, min: 1)
             }
-            try validate(oKActions, name:"oKActions", parent: name, max: 5)
-            try validate(period, name:"period", parent: name, min: 1)
-            try tags?.forEach {
+            try validate(self.oKActions, name:"oKActions", parent: name, max: 5)
+            try validate(self.period, name:"period", parent: name, min: 1)
+            try self.tags?.forEach {
                 try $0.validate(name: "\(name).tags[]")
             }
-            try validate(thresholdMetricId, name:"thresholdMetricId", parent: name, max: 255)
-            try validate(thresholdMetricId, name:"thresholdMetricId", parent: name, min: 1)
-            try validate(treatMissingData, name:"treatMissingData", parent: name, max: 255)
-            try validate(treatMissingData, name:"treatMissingData", parent: name, min: 1)
+            try validate(self.thresholdMetricId, name:"thresholdMetricId", parent: name, max: 255)
+            try validate(self.thresholdMetricId, name:"thresholdMetricId", parent: name, min: 1)
+            try validate(self.treatMissingData, name:"treatMissingData", parent: name, max: 255)
+            try validate(self.treatMissingData, name:"treatMissingData", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1812,7 +1812,7 @@ extension CloudWatch {
 
         /// The data for the metric. The array can include no more than 20 metrics per call.
         public let metricData: [MetricDatum]
-        /// The namespace for the metric data. You cannot specify a namespace that begins with "AWS/". Namespaces that begin with "AWS/" are reserved for use by Amazon Web Services products.
+        /// The namespace for the metric data. To avoid conflicts with AWS service namespaces, you should not specify a namespace that begins with AWS/ 
         public let namespace: String
 
         public init(metricData: [MetricDatum], namespace: String) {
@@ -1821,12 +1821,12 @@ extension CloudWatch {
         }
 
         public func validate(name: String) throws {
-            try metricData.forEach {
+            try self.metricData.forEach {
                 try $0.validate(name: "\(name).metricData[]")
             }
-            try validate(namespace, name:"namespace", parent: name, max: 255)
-            try validate(namespace, name:"namespace", parent: name, min: 1)
-            try validate(namespace, name:"namespace", parent: name, pattern: "[^:].*")
+            try validate(self.namespace, name:"namespace", parent: name, max: 255)
+            try validate(self.namespace, name:"namespace", parent: name, min: 1)
+            try validate(self.namespace, name:"namespace", parent: name, pattern: "[^:].*")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1888,12 +1888,12 @@ extension CloudWatch {
         }
 
         public func validate(name: String) throws {
-            try validate(alarmName, name:"alarmName", parent: name, max: 255)
-            try validate(alarmName, name:"alarmName", parent: name, min: 1)
-            try validate(stateReason, name:"stateReason", parent: name, max: 1023)
-            try validate(stateReason, name:"stateReason", parent: name, min: 0)
-            try validate(stateReasonData, name:"stateReasonData", parent: name, max: 4000)
-            try validate(stateReasonData, name:"stateReasonData", parent: name, min: 0)
+            try validate(self.alarmName, name:"alarmName", parent: name, max: 255)
+            try validate(self.alarmName, name:"alarmName", parent: name, min: 1)
+            try validate(self.stateReason, name:"stateReason", parent: name, max: 1023)
+            try validate(self.stateReason, name:"stateReason", parent: name, min: 0)
+            try validate(self.stateReasonData, name:"stateReasonData", parent: name, max: 4000)
+            try validate(self.stateReasonData, name:"stateReasonData", parent: name, min: 0)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -2007,10 +2007,10 @@ extension CloudWatch {
         }
 
         public func validate(name: String) throws {
-            try validate(key, name:"key", parent: name, max: 128)
-            try validate(key, name:"key", parent: name, min: 1)
-            try validate(value, name:"value", parent: name, max: 256)
-            try validate(value, name:"value", parent: name, min: 0)
+            try validate(self.key, name:"key", parent: name, max: 128)
+            try validate(self.key, name:"key", parent: name, min: 1)
+            try validate(self.value, name:"value", parent: name, max: 256)
+            try validate(self.value, name:"value", parent: name, min: 0)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -2036,9 +2036,9 @@ extension CloudWatch {
         }
 
         public func validate(name: String) throws {
-            try validate(resourceARN, name:"resourceARN", parent: name, max: 1024)
-            try validate(resourceARN, name:"resourceARN", parent: name, min: 1)
-            try tags.forEach {
+            try validate(self.resourceARN, name:"resourceARN", parent: name, max: 1024)
+            try validate(self.resourceARN, name:"resourceARN", parent: name, min: 1)
+            try self.tags.forEach {
                 try $0.validate(name: "\(name).tags[]")
             }
         }
@@ -2074,9 +2074,9 @@ extension CloudWatch {
         }
 
         public func validate(name: String) throws {
-            try validate(resourceARN, name:"resourceARN", parent: name, max: 1024)
-            try validate(resourceARN, name:"resourceARN", parent: name, min: 1)
-            try tagKeys.forEach {
+            try validate(self.resourceARN, name:"resourceARN", parent: name, max: 1024)
+            try validate(self.resourceARN, name:"resourceARN", parent: name, min: 1)
+            try self.tagKeys.forEach {
                 try validate($0, name: "tagKeys[]", parent: name, max: 128)
                 try validate($0, name: "tagKeys[]", parent: name, min: 1)
             }

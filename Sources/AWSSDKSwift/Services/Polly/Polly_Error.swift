@@ -4,6 +4,7 @@ import AWSSDKSwiftCore
 
 /// Error enum for Polly
 public enum PollyErrorType: AWSErrorType {
+    case engineNotSupportedException(message: String?)
     case invalidLexiconException(message: String?)
     case invalidNextTokenException(message: String?)
     case invalidS3BucketException(message: String?)
@@ -33,6 +34,8 @@ extension PollyErrorType {
             errorCode = String(errorCode[errorCode.index(index, offsetBy: 1)...])
         }
         switch errorCode {
+        case "EngineNotSupportedException":
+            self = .engineNotSupportedException(message: message)
         case "InvalidLexiconException":
             self = .invalidLexiconException(message: message)
         case "InvalidNextTokenException":
@@ -75,6 +78,55 @@ extension PollyErrorType {
             self = .unsupportedPlsLanguageException(message: message)
         default:
             return nil
+        }
+    }
+}
+
+extension PollyErrorType : CustomStringConvertible {
+    public var description : String {
+        switch self {
+        case .engineNotSupportedException(let message):
+            return "EngineNotSupportedException: \(message ?? "")"
+        case .invalidLexiconException(let message):
+            return "InvalidLexiconException: \(message ?? "")"
+        case .invalidNextTokenException(let message):
+            return "InvalidNextTokenException: \(message ?? "")"
+        case .invalidS3BucketException(let message):
+            return "InvalidS3BucketException: \(message ?? "")"
+        case .invalidS3KeyException(let message):
+            return "InvalidS3KeyException: \(message ?? "")"
+        case .invalidSampleRateException(let message):
+            return "InvalidSampleRateException: \(message ?? "")"
+        case .invalidSnsTopicArnException(let message):
+            return "InvalidSnsTopicArnException: \(message ?? "")"
+        case .invalidSsmlException(let message):
+            return "InvalidSsmlException: \(message ?? "")"
+        case .invalidTaskIdException(let message):
+            return "InvalidTaskIdException: \(message ?? "")"
+        case .languageNotSupportedException(let message):
+            return "LanguageNotSupportedException: \(message ?? "")"
+        case .lexiconNotFoundException(let message):
+            return "LexiconNotFoundException: \(message ?? "")"
+        case .lexiconSizeExceededException(let message):
+            return "LexiconSizeExceededException: \(message ?? "")"
+        case .marksNotSupportedForFormatException(let message):
+            return "MarksNotSupportedForFormatException: \(message ?? "")"
+        case .maxLexemeLengthExceededException(let message):
+            return "MaxLexemeLengthExceededException: \(message ?? "")"
+        case .maxLexiconsNumberExceededException(let message):
+            return "MaxLexiconsNumberExceededException: \(message ?? "")"
+        case .serviceFailureException(let message):
+            return "ServiceFailureException: \(message ?? "")"
+        case .ssmlMarksNotSupportedForTextTypeException(let message):
+            return "SsmlMarksNotSupportedForTextTypeException: \(message ?? "")"
+        case .synthesisTaskNotFoundException(let message):
+            return "SynthesisTaskNotFoundException: \(message ?? "")"
+        case .textLengthExceededException(let message):
+            return "TextLengthExceededException: \(message ?? "")"
+        case .unsupportedPlsAlphabetException(let message):
+            return "UnsupportedPlsAlphabetException: \(message ?? "")"
+        case .unsupportedPlsLanguageException(let message):
+            return "UnsupportedPlsLanguageException: \(message ?? "")"
         }
     }
 }

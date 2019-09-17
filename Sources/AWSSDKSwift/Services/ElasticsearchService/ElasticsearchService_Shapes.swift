@@ -44,7 +44,7 @@ extension ElasticsearchService {
         }
 
         public func validate(name: String) throws {
-            try tagList.forEach {
+            try self.tagList.forEach {
                 try $0.validate(name: "\(name).tagList[]")
             }
         }
@@ -112,9 +112,9 @@ extension ElasticsearchService {
         }
 
         public func validate(name: String) throws {
-            try validate(domainName, name:"domainName", parent: name, max: 28)
-            try validate(domainName, name:"domainName", parent: name, min: 3)
-            try validate(domainName, name:"domainName", parent: name, pattern: "[a-z][a-z0-9\\-]+")
+            try validate(self.domainName, name:"domainName", parent: name, max: 28)
+            try validate(self.domainName, name:"domainName", parent: name, min: 3)
+            try validate(self.domainName, name:"domainName", parent: name, pattern: "[a-z][a-z0-9\\-]+")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -164,14 +164,14 @@ extension ElasticsearchService {
         }
 
         public func validate(name: String) throws {
-            try validate(identityPoolId, name:"identityPoolId", parent: name, max: 55)
-            try validate(identityPoolId, name:"identityPoolId", parent: name, min: 1)
-            try validate(identityPoolId, name:"identityPoolId", parent: name, pattern: "[\\w-]+:[0-9a-f-]+")
-            try validate(roleArn, name:"roleArn", parent: name, max: 2048)
-            try validate(roleArn, name:"roleArn", parent: name, min: 20)
-            try validate(userPoolId, name:"userPoolId", parent: name, max: 55)
-            try validate(userPoolId, name:"userPoolId", parent: name, min: 1)
-            try validate(userPoolId, name:"userPoolId", parent: name, pattern: "[\\w-]+_[0-9a-zA-Z]+")
+            try validate(self.identityPoolId, name:"identityPoolId", parent: name, max: 55)
+            try validate(self.identityPoolId, name:"identityPoolId", parent: name, min: 1)
+            try validate(self.identityPoolId, name:"identityPoolId", parent: name, pattern: "[\\w-]+:[0-9a-f-]+")
+            try validate(self.roleArn, name:"roleArn", parent: name, max: 2048)
+            try validate(self.roleArn, name:"roleArn", parent: name, min: 20)
+            try validate(self.userPoolId, name:"userPoolId", parent: name, max: 55)
+            try validate(self.userPoolId, name:"userPoolId", parent: name, min: 1)
+            try validate(self.userPoolId, name:"userPoolId", parent: name, pattern: "[\\w-]+_[0-9a-zA-Z]+")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -282,11 +282,11 @@ extension ElasticsearchService {
         }
 
         public func validate(name: String) throws {
-            try cognitoOptions?.validate(name: "\(name).cognitoOptions")
-            try validate(domainName, name:"domainName", parent: name, max: 28)
-            try validate(domainName, name:"domainName", parent: name, min: 3)
-            try validate(domainName, name:"domainName", parent: name, pattern: "[a-z][a-z0-9\\-]+")
-            try encryptionAtRestOptions?.validate(name: "\(name).encryptionAtRestOptions")
+            try self.cognitoOptions?.validate(name: "\(name).cognitoOptions")
+            try validate(self.domainName, name:"domainName", parent: name, max: 28)
+            try validate(self.domainName, name:"domainName", parent: name, min: 3)
+            try validate(self.domainName, name:"domainName", parent: name, pattern: "[a-z][a-z0-9\\-]+")
+            try self.encryptionAtRestOptions?.validate(name: "\(name).encryptionAtRestOptions")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -335,9 +335,9 @@ extension ElasticsearchService {
         }
 
         public func validate(name: String) throws {
-            try validate(domainName, name:"domainName", parent: name, max: 28)
-            try validate(domainName, name:"domainName", parent: name, min: 3)
-            try validate(domainName, name:"domainName", parent: name, pattern: "[a-z][a-z0-9\\-]+")
+            try validate(self.domainName, name:"domainName", parent: name, max: 28)
+            try validate(self.domainName, name:"domainName", parent: name, min: 3)
+            try validate(self.domainName, name:"domainName", parent: name, pattern: "[a-z][a-z0-9\\-]+")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -384,9 +384,9 @@ extension ElasticsearchService {
         }
 
         public func validate(name: String) throws {
-            try validate(domainName, name:"domainName", parent: name, max: 28)
-            try validate(domainName, name:"domainName", parent: name, min: 3)
-            try validate(domainName, name:"domainName", parent: name, pattern: "[a-z][a-z0-9\\-]+")
+            try validate(self.domainName, name:"domainName", parent: name, max: 28)
+            try validate(self.domainName, name:"domainName", parent: name, min: 3)
+            try validate(self.domainName, name:"domainName", parent: name, pattern: "[a-z][a-z0-9\\-]+")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -424,9 +424,9 @@ extension ElasticsearchService {
         }
 
         public func validate(name: String) throws {
-            try validate(domainName, name:"domainName", parent: name, max: 28)
-            try validate(domainName, name:"domainName", parent: name, min: 3)
-            try validate(domainName, name:"domainName", parent: name, pattern: "[a-z][a-z0-9\\-]+")
+            try validate(self.domainName, name:"domainName", parent: name, max: 28)
+            try validate(self.domainName, name:"domainName", parent: name, min: 3)
+            try validate(self.domainName, name:"domainName", parent: name, pattern: "[a-z][a-z0-9\\-]+")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -464,7 +464,7 @@ extension ElasticsearchService {
         }
 
         public func validate(name: String) throws {
-            try domainNames.forEach {
+            try self.domainNames.forEach {
                 try validate($0, name: "domainNames[]", parent: name, max: 28)
                 try validate($0, name: "domainNames[]", parent: name, min: 3)
                 try validate($0, name: "domainNames[]", parent: name, pattern: "[a-z][a-z0-9\\-]+")
@@ -514,9 +514,9 @@ extension ElasticsearchService {
         }
 
         public func validate(name: String) throws {
-            try validate(domainName, name:"domainName", parent: name, max: 28)
-            try validate(domainName, name:"domainName", parent: name, min: 3)
-            try validate(domainName, name:"domainName", parent: name, pattern: "[a-z][a-z0-9\\-]+")
+            try validate(self.domainName, name:"domainName", parent: name, max: 28)
+            try validate(self.domainName, name:"domainName", parent: name, min: 3)
+            try validate(self.domainName, name:"domainName", parent: name, pattern: "[a-z][a-z0-9\\-]+")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -563,8 +563,8 @@ extension ElasticsearchService {
         }
 
         public func validate(name: String) throws {
-            try validate(maxResults, name:"maxResults", parent: name, max: 100)
-            try validate(reservedElasticsearchInstanceOfferingId, name:"reservedElasticsearchInstanceOfferingId", parent: name, pattern: "\\p{XDigit}{8}-\\p{XDigit}{4}-\\p{XDigit}{4}-\\p{XDigit}{4}-\\p{XDigit}{12}")
+            try validate(self.maxResults, name:"maxResults", parent: name, max: 100)
+            try validate(self.reservedElasticsearchInstanceOfferingId, name:"reservedElasticsearchInstanceOfferingId", parent: name, pattern: "\\p{XDigit}{8}-\\p{XDigit}{4}-\\p{XDigit}{4}-\\p{XDigit}{4}-\\p{XDigit}{12}")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -617,8 +617,8 @@ extension ElasticsearchService {
         }
 
         public func validate(name: String) throws {
-            try validate(maxResults, name:"maxResults", parent: name, max: 100)
-            try validate(reservedElasticsearchInstanceId, name:"reservedElasticsearchInstanceId", parent: name, pattern: "\\p{XDigit}{8}-\\p{XDigit}{4}-\\p{XDigit}{4}-\\p{XDigit}{4}-\\p{XDigit}{12}")
+            try validate(self.maxResults, name:"maxResults", parent: name, max: 100)
+            try validate(self.reservedElasticsearchInstanceId, name:"reservedElasticsearchInstanceId", parent: name, pattern: "\\p{XDigit}{8}-\\p{XDigit}{4}-\\p{XDigit}{4}-\\p{XDigit}{4}-\\p{XDigit}{12}")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -731,6 +731,22 @@ extension ElasticsearchService {
         case m42XlargeElasticsearch = "m4.2xlarge.elasticsearch"
         case m44XlargeElasticsearch = "m4.4xlarge.elasticsearch"
         case m410XlargeElasticsearch = "m4.10xlarge.elasticsearch"
+        case m5LargeElasticsearch = "m5.large.elasticsearch"
+        case m5XlargeElasticsearch = "m5.xlarge.elasticsearch"
+        case m52XlargeElasticsearch = "m5.2xlarge.elasticsearch"
+        case m54XlargeElasticsearch = "m5.4xlarge.elasticsearch"
+        case m512XlargeElasticsearch = "m5.12xlarge.elasticsearch"
+        case r5LargeElasticsearch = "r5.large.elasticsearch"
+        case r5XlargeElasticsearch = "r5.xlarge.elasticsearch"
+        case r52XlargeElasticsearch = "r5.2xlarge.elasticsearch"
+        case r54XlargeElasticsearch = "r5.4xlarge.elasticsearch"
+        case r512XlargeElasticsearch = "r5.12xlarge.elasticsearch"
+        case c5LargeElasticsearch = "c5.large.elasticsearch"
+        case c5XlargeElasticsearch = "c5.xlarge.elasticsearch"
+        case c52XlargeElasticsearch = "c5.2xlarge.elasticsearch"
+        case c54XlargeElasticsearch = "c5.4xlarge.elasticsearch"
+        case c59XlargeElasticsearch = "c5.9xlarge.elasticsearch"
+        case c518XlargeElasticsearch = "c5.18xlarge.elasticsearch"
         case t2MicroElasticsearch = "t2.micro.elasticsearch"
         case t2SmallElasticsearch = "t2.small.elasticsearch"
         case t2MediumElasticsearch = "t2.medium.elasticsearch"
@@ -1056,8 +1072,8 @@ extension ElasticsearchService {
         }
 
         public func validate(name: String) throws {
-            try validate(kmsKeyId, name:"kmsKeyId", parent: name, max: 500)
-            try validate(kmsKeyId, name:"kmsKeyId", parent: name, min: 1)
+            try validate(self.kmsKeyId, name:"kmsKeyId", parent: name, max: 500)
+            try validate(self.kmsKeyId, name:"kmsKeyId", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1100,9 +1116,9 @@ extension ElasticsearchService {
         }
 
         public func validate(name: String) throws {
-            try validate(domainName, name:"domainName", parent: name, max: 28)
-            try validate(domainName, name:"domainName", parent: name, min: 3)
-            try validate(domainName, name:"domainName", parent: name, pattern: "[a-z][a-z0-9\\-]+")
+            try validate(self.domainName, name:"domainName", parent: name, max: 28)
+            try validate(self.domainName, name:"domainName", parent: name, min: 3)
+            try validate(self.domainName, name:"domainName", parent: name, pattern: "[a-z][a-z0-9\\-]+")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1145,10 +1161,10 @@ extension ElasticsearchService {
         }
 
         public func validate(name: String) throws {
-            try validate(domainName, name:"domainName", parent: name, max: 28)
-            try validate(domainName, name:"domainName", parent: name, min: 3)
-            try validate(domainName, name:"domainName", parent: name, pattern: "[a-z][a-z0-9\\-]+")
-            try validate(maxResults, name:"maxResults", parent: name, max: 100)
+            try validate(self.domainName, name:"domainName", parent: name, max: 28)
+            try validate(self.domainName, name:"domainName", parent: name, min: 3)
+            try validate(self.domainName, name:"domainName", parent: name, pattern: "[a-z][a-z0-9\\-]+")
+            try validate(self.maxResults, name:"maxResults", parent: name, max: 100)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1192,9 +1208,9 @@ extension ElasticsearchService {
         }
 
         public func validate(name: String) throws {
-            try validate(domainName, name:"domainName", parent: name, max: 28)
-            try validate(domainName, name:"domainName", parent: name, min: 3)
-            try validate(domainName, name:"domainName", parent: name, pattern: "[a-z][a-z0-9\\-]+")
+            try validate(self.domainName, name:"domainName", parent: name, max: 28)
+            try validate(self.domainName, name:"domainName", parent: name, min: 3)
+            try validate(self.domainName, name:"domainName", parent: name, pattern: "[a-z][a-z0-9\\-]+")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1333,10 +1349,10 @@ extension ElasticsearchService {
         }
 
         public func validate(name: String) throws {
-            try validate(domainName, name:"domainName", parent: name, max: 28)
-            try validate(domainName, name:"domainName", parent: name, min: 3)
-            try validate(domainName, name:"domainName", parent: name, pattern: "[a-z][a-z0-9\\-]+")
-            try validate(maxResults, name:"maxResults", parent: name, max: 100)
+            try validate(self.domainName, name:"domainName", parent: name, max: 28)
+            try validate(self.domainName, name:"domainName", parent: name, min: 3)
+            try validate(self.domainName, name:"domainName", parent: name, pattern: "[a-z][a-z0-9\\-]+")
+            try validate(self.maxResults, name:"maxResults", parent: name, max: 100)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1385,7 +1401,7 @@ extension ElasticsearchService {
         }
 
         public func validate(name: String) throws {
-            try validate(maxResults, name:"maxResults", parent: name, max: 100)
+            try validate(self.maxResults, name:"maxResults", parent: name, max: 100)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1602,10 +1618,10 @@ extension ElasticsearchService {
         }
 
         public func validate(name: String) throws {
-            try validate(instanceCount, name:"instanceCount", parent: name, min: 1)
-            try validate(reservationName, name:"reservationName", parent: name, max: 64)
-            try validate(reservationName, name:"reservationName", parent: name, min: 5)
-            try validate(reservedElasticsearchInstanceOfferingId, name:"reservedElasticsearchInstanceOfferingId", parent: name, pattern: "\\p{XDigit}{8}-\\p{XDigit}{4}-\\p{XDigit}{4}-\\p{XDigit}{4}-\\p{XDigit}{12}")
+            try validate(self.instanceCount, name:"instanceCount", parent: name, min: 1)
+            try validate(self.reservationName, name:"reservationName", parent: name, max: 64)
+            try validate(self.reservationName, name:"reservationName", parent: name, min: 5)
+            try validate(self.reservedElasticsearchInstanceOfferingId, name:"reservedElasticsearchInstanceOfferingId", parent: name, pattern: "\\p{XDigit}{8}-\\p{XDigit}{4}-\\p{XDigit}{4}-\\p{XDigit}{4}-\\p{XDigit}{12}")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1916,9 +1932,9 @@ extension ElasticsearchService {
         }
 
         public func validate(name: String) throws {
-            try validate(domainName, name:"domainName", parent: name, max: 28)
-            try validate(domainName, name:"domainName", parent: name, min: 3)
-            try validate(domainName, name:"domainName", parent: name, pattern: "[a-z][a-z0-9\\-]+")
+            try validate(self.domainName, name:"domainName", parent: name, max: 28)
+            try validate(self.domainName, name:"domainName", parent: name, min: 3)
+            try validate(self.domainName, name:"domainName", parent: name, pattern: "[a-z][a-z0-9\\-]+")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -2007,10 +2023,10 @@ extension ElasticsearchService {
         }
 
         public func validate(name: String) throws {
-            try validate(key, name:"key", parent: name, max: 128)
-            try validate(key, name:"key", parent: name, min: 1)
-            try validate(value, name:"value", parent: name, max: 256)
-            try validate(value, name:"value", parent: name, min: 0)
+            try validate(self.key, name:"key", parent: name, max: 128)
+            try validate(self.key, name:"key", parent: name, min: 1)
+            try validate(self.value, name:"value", parent: name, max: 256)
+            try validate(self.value, name:"value", parent: name, min: 0)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -2064,10 +2080,10 @@ extension ElasticsearchService {
         }
 
         public func validate(name: String) throws {
-            try cognitoOptions?.validate(name: "\(name).cognitoOptions")
-            try validate(domainName, name:"domainName", parent: name, max: 28)
-            try validate(domainName, name:"domainName", parent: name, min: 3)
-            try validate(domainName, name:"domainName", parent: name, pattern: "[a-z][a-z0-9\\-]+")
+            try self.cognitoOptions?.validate(name: "\(name).cognitoOptions")
+            try validate(self.domainName, name:"domainName", parent: name, max: 28)
+            try validate(self.domainName, name:"domainName", parent: name, min: 3)
+            try validate(self.domainName, name:"domainName", parent: name, pattern: "[a-z][a-z0-9\\-]+")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -2120,9 +2136,9 @@ extension ElasticsearchService {
         }
 
         public func validate(name: String) throws {
-            try validate(domainName, name:"domainName", parent: name, max: 28)
-            try validate(domainName, name:"domainName", parent: name, min: 3)
-            try validate(domainName, name:"domainName", parent: name, pattern: "[a-z][a-z0-9\\-]+")
+            try validate(self.domainName, name:"domainName", parent: name, max: 28)
+            try validate(self.domainName, name:"domainName", parent: name, min: 3)
+            try validate(self.domainName, name:"domainName", parent: name, pattern: "[a-z][a-z0-9\\-]+")
         }
 
         private enum CodingKeys: String, CodingKey {

@@ -18,8 +18,8 @@ extension Athena {
         }
 
         public func validate(name: String) throws {
-            try validate(namedQueryIds, name:"namedQueryIds", parent: name, max: 50)
-            try validate(namedQueryIds, name:"namedQueryIds", parent: name, min: 1)
+            try validate(self.namedQueryIds, name:"namedQueryIds", parent: name, max: 50)
+            try validate(self.namedQueryIds, name:"namedQueryIds", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -62,8 +62,8 @@ extension Athena {
         }
 
         public func validate(name: String) throws {
-            try validate(queryExecutionIds, name:"queryExecutionIds", parent: name, max: 50)
-            try validate(queryExecutionIds, name:"queryExecutionIds", parent: name, min: 1)
+            try validate(self.queryExecutionIds, name:"queryExecutionIds", parent: name, max: 50)
+            try validate(self.queryExecutionIds, name:"queryExecutionIds", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -195,17 +195,17 @@ extension Athena {
         }
 
         public func validate(name: String) throws {
-            try validate(clientRequestToken, name:"clientRequestToken", parent: name, max: 128)
-            try validate(clientRequestToken, name:"clientRequestToken", parent: name, min: 32)
-            try validate(database, name:"database", parent: name, max: 255)
-            try validate(database, name:"database", parent: name, min: 1)
-            try validate(description, name:"description", parent: name, max: 1024)
-            try validate(description, name:"description", parent: name, min: 1)
-            try validate(name, name:"name", parent: name, max: 128)
-            try validate(name, name:"name", parent: name, min: 1)
-            try validate(queryString, name:"queryString", parent: name, max: 262144)
-            try validate(queryString, name:"queryString", parent: name, min: 1)
-            try validate(workGroup, name:"workGroup", parent: name, pattern: "[a-zA-z0-9._-]{1,128}")
+            try validate(self.clientRequestToken, name:"clientRequestToken", parent: name, max: 128)
+            try validate(self.clientRequestToken, name:"clientRequestToken", parent: name, min: 32)
+            try validate(self.database, name:"database", parent: name, max: 255)
+            try validate(self.database, name:"database", parent: name, min: 1)
+            try validate(self.description, name:"description", parent: name, max: 1024)
+            try validate(self.description, name:"description", parent: name, min: 1)
+            try validate(self.name, name:"name", parent: name, max: 128)
+            try validate(self.name, name:"name", parent: name, min: 1)
+            try validate(self.queryString, name:"queryString", parent: name, max: 262144)
+            try validate(self.queryString, name:"queryString", parent: name, min: 1)
+            try validate(self.workGroup, name:"workGroup", parent: name, pattern: "[a-zA-z0-9._-]{1,128}")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -260,11 +260,11 @@ extension Athena {
         }
 
         public func validate(name: String) throws {
-            try configuration?.validate(name: "\(name).configuration")
-            try validate(description, name:"description", parent: name, max: 1024)
-            try validate(description, name:"description", parent: name, min: 0)
-            try validate(name, name:"name", parent: name, pattern: "[a-zA-z0-9._-]{1,128}")
-            try tags?.forEach {
+            try self.configuration?.validate(name: "\(name).configuration")
+            try validate(self.description, name:"description", parent: name, max: 1024)
+            try validate(self.description, name:"description", parent: name, min: 0)
+            try validate(self.name, name:"name", parent: name, pattern: "[a-zA-z0-9._-]{1,128}")
+            try self.tags?.forEach {
                 try $0.validate(name: "\(name).tags[]")
             }
         }
@@ -344,7 +344,7 @@ extension Athena {
         }
 
         public func validate(name: String) throws {
-            try validate(workGroup, name:"workGroup", parent: name, pattern: "[a-zA-z0-9._-]{1,128}")
+            try validate(self.workGroup, name:"workGroup", parent: name, pattern: "[a-zA-z0-9._-]{1,128}")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -479,10 +479,10 @@ extension Athena {
         }
 
         public func validate(name: String) throws {
-            try validate(maxResults, name:"maxResults", parent: name, max: 1000)
-            try validate(maxResults, name:"maxResults", parent: name, min: 0)
-            try validate(nextToken, name:"nextToken", parent: name, max: 1024)
-            try validate(nextToken, name:"nextToken", parent: name, min: 1)
+            try validate(self.maxResults, name:"maxResults", parent: name, max: 1000)
+            try validate(self.maxResults, name:"maxResults", parent: name, min: 1)
+            try validate(self.nextToken, name:"nextToken", parent: name, max: 1024)
+            try validate(self.nextToken, name:"nextToken", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -532,7 +532,7 @@ extension Athena {
         }
 
         public func validate(name: String) throws {
-            try validate(workGroup, name:"workGroup", parent: name, pattern: "[a-zA-z0-9._-]{1,128}")
+            try validate(self.workGroup, name:"workGroup", parent: name, pattern: "[a-zA-z0-9._-]{1,128}")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -578,11 +578,11 @@ extension Athena {
         }
 
         public func validate(name: String) throws {
-            try validate(maxResults, name:"maxResults", parent: name, max: 50)
-            try validate(maxResults, name:"maxResults", parent: name, min: 0)
-            try validate(nextToken, name:"nextToken", parent: name, max: 1024)
-            try validate(nextToken, name:"nextToken", parent: name, min: 1)
-            try validate(workGroup, name:"workGroup", parent: name, pattern: "[a-zA-z0-9._-]{1,128}")
+            try validate(self.maxResults, name:"maxResults", parent: name, max: 50)
+            try validate(self.maxResults, name:"maxResults", parent: name, min: 0)
+            try validate(self.nextToken, name:"nextToken", parent: name, max: 1024)
+            try validate(self.nextToken, name:"nextToken", parent: name, min: 1)
+            try validate(self.workGroup, name:"workGroup", parent: name, pattern: "[a-zA-z0-9._-]{1,128}")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -635,11 +635,11 @@ extension Athena {
         }
 
         public func validate(name: String) throws {
-            try validate(maxResults, name:"maxResults", parent: name, max: 50)
-            try validate(maxResults, name:"maxResults", parent: name, min: 0)
-            try validate(nextToken, name:"nextToken", parent: name, max: 1024)
-            try validate(nextToken, name:"nextToken", parent: name, min: 1)
-            try validate(workGroup, name:"workGroup", parent: name, pattern: "[a-zA-z0-9._-]{1,128}")
+            try validate(self.maxResults, name:"maxResults", parent: name, max: 50)
+            try validate(self.maxResults, name:"maxResults", parent: name, min: 0)
+            try validate(self.nextToken, name:"nextToken", parent: name, max: 1024)
+            try validate(self.nextToken, name:"nextToken", parent: name, min: 1)
+            try validate(self.workGroup, name:"workGroup", parent: name, pattern: "[a-zA-z0-9._-]{1,128}")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -692,11 +692,11 @@ extension Athena {
         }
 
         public func validate(name: String) throws {
-            try validate(maxResults, name:"maxResults", parent: name, min: 75)
-            try validate(nextToken, name:"nextToken", parent: name, max: 1024)
-            try validate(nextToken, name:"nextToken", parent: name, min: 1)
-            try validate(resourceARN, name:"resourceARN", parent: name, max: 1011)
-            try validate(resourceARN, name:"resourceARN", parent: name, min: 1)
+            try validate(self.maxResults, name:"maxResults", parent: name, min: 75)
+            try validate(self.nextToken, name:"nextToken", parent: name, max: 1024)
+            try validate(self.nextToken, name:"nextToken", parent: name, min: 1)
+            try validate(self.resourceARN, name:"resourceARN", parent: name, max: 1011)
+            try validate(self.resourceARN, name:"resourceARN", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -745,10 +745,10 @@ extension Athena {
         }
 
         public func validate(name: String) throws {
-            try validate(maxResults, name:"maxResults", parent: name, max: 50)
-            try validate(maxResults, name:"maxResults", parent: name, min: 1)
-            try validate(nextToken, name:"nextToken", parent: name, max: 1024)
-            try validate(nextToken, name:"nextToken", parent: name, min: 1)
+            try validate(self.maxResults, name:"maxResults", parent: name, max: 50)
+            try validate(self.maxResults, name:"maxResults", parent: name, min: 1)
+            try validate(self.nextToken, name:"nextToken", parent: name, max: 1024)
+            try validate(self.nextToken, name:"nextToken", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -886,8 +886,8 @@ extension Athena {
         }
 
         public func validate(name: String) throws {
-            try validate(database, name:"database", parent: name, max: 255)
-            try validate(database, name:"database", parent: name, min: 1)
+            try validate(self.database, name:"database", parent: name, max: 255)
+            try validate(self.database, name:"database", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -966,7 +966,7 @@ extension Athena {
 
         /// If query results are encrypted in Amazon S3, indicates the encryption option used (for example, SSE-KMS or CSE-KMS) and key information. This is a client-side setting. If workgroup settings override client-side settings, then the query uses the encryption configuration that is specified for the workgroup, and also uses the location for storing query results specified in the workgroup. See WorkGroupConfiguration$EnforceWorkGroupConfiguration and Workgroup Settings Override Client-Side Settings.
         public let encryptionConfiguration: EncryptionConfiguration?
-        /// The location in Amazon S3 where your query results are stored, such as s3://path/to/query/bucket/. For more information, see Queries and Query Result Files. If workgroup settings override client-side settings, then the query uses the location for the query results and the encryption configuration that are specified for the workgroup. The "workgroup settings override" is specified in EnforceWorkGroupConfiguration (true/false) in the WorkGroupConfiguration. See WorkGroupConfiguration$EnforceWorkGroupConfiguration.
+        /// The location in Amazon S3 where your query results are stored, such as s3://path/to/query/bucket/. To run the query, you must specify the query results location using one of the ways: either for individual queries using either this setting (client-side), or in the workgroup, using WorkGroupConfiguration. If none of them is set, Athena issues an error that no output location is provided. For more information, see Query Results. If workgroup settings override client-side settings, then the query uses the settings specified for the workgroup. See WorkGroupConfiguration$EnforceWorkGroupConfiguration.
         public let outputLocation: String?
 
         public init(encryptionConfiguration: EncryptionConfiguration? = nil, outputLocation: String? = nil) {
@@ -990,7 +990,7 @@ extension Athena {
 
         /// The encryption configuration for the query results.
         public let encryptionConfiguration: EncryptionConfiguration?
-        /// The location in Amazon S3 where your query results are stored, such as s3://path/to/query/bucket/. For more information, see Queries and Query Result Files. If workgroup settings override client-side settings, then the query uses the location for the query results and the encryption configuration that are specified for the workgroup. The "workgroup settings override" is specified in EnforceWorkGroupConfiguration (true/false) in the WorkGroupConfiguration. See WorkGroupConfiguration$EnforceWorkGroupConfiguration.
+        /// The location in Amazon S3 where your query results are stored, such as s3://path/to/query/bucket/. For more information, see Query Results If workgroup settings override client-side settings, then the query uses the location for the query results and the encryption configuration that are specified for the workgroup. The "workgroup settings override" is specified in EnforceWorkGroupConfiguration (true/false) in the WorkGroupConfiguration. See WorkGroupConfiguration$EnforceWorkGroupConfiguration.
         public let outputLocation: String?
         /// If set to "true", indicates that the previously-specified encryption configuration (also known as the client-side setting) for queries in this workgroup should be ignored and set to null. If set to "false" or not set, and a value is present in the EncryptionConfiguration in ResultConfigurationUpdates (the client-side setting), the EncryptionConfiguration in the workgroup's ResultConfiguration will be updated with the new value. For more information, see Workgroup Settings Override Client-Side Settings.
         public let removeEncryptionConfiguration: Bool?
@@ -1097,12 +1097,12 @@ extension Athena {
         }
 
         public func validate(name: String) throws {
-            try validate(clientRequestToken, name:"clientRequestToken", parent: name, max: 128)
-            try validate(clientRequestToken, name:"clientRequestToken", parent: name, min: 32)
-            try queryExecutionContext?.validate(name: "\(name).queryExecutionContext")
-            try validate(queryString, name:"queryString", parent: name, max: 262144)
-            try validate(queryString, name:"queryString", parent: name, min: 1)
-            try validate(workGroup, name:"workGroup", parent: name, pattern: "[a-zA-z0-9._-]{1,128}")
+            try validate(self.clientRequestToken, name:"clientRequestToken", parent: name, max: 128)
+            try validate(self.clientRequestToken, name:"clientRequestToken", parent: name, min: 32)
+            try self.queryExecutionContext?.validate(name: "\(name).queryExecutionContext")
+            try validate(self.queryString, name:"queryString", parent: name, max: 262144)
+            try validate(self.queryString, name:"queryString", parent: name, min: 1)
+            try validate(self.workGroup, name:"workGroup", parent: name, pattern: "[a-zA-z0-9._-]{1,128}")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1180,10 +1180,10 @@ extension Athena {
         }
 
         public func validate(name: String) throws {
-            try validate(key, name:"key", parent: name, max: 128)
-            try validate(key, name:"key", parent: name, min: 1)
-            try validate(value, name:"value", parent: name, max: 256)
-            try validate(value, name:"value", parent: name, min: 0)
+            try validate(self.key, name:"key", parent: name, max: 128)
+            try validate(self.key, name:"key", parent: name, min: 1)
+            try validate(self.value, name:"value", parent: name, max: 256)
+            try validate(self.value, name:"value", parent: name, min: 0)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1209,9 +1209,9 @@ extension Athena {
         }
 
         public func validate(name: String) throws {
-            try validate(resourceARN, name:"resourceARN", parent: name, max: 1011)
-            try validate(resourceARN, name:"resourceARN", parent: name, min: 1)
-            try tags.forEach {
+            try validate(self.resourceARN, name:"resourceARN", parent: name, max: 1011)
+            try validate(self.resourceARN, name:"resourceARN", parent: name, min: 1)
+            try self.tags.forEach {
                 try $0.validate(name: "\(name).tags[]")
             }
         }
@@ -1301,9 +1301,9 @@ extension Athena {
         }
 
         public func validate(name: String) throws {
-            try validate(resourceARN, name:"resourceARN", parent: name, max: 1011)
-            try validate(resourceARN, name:"resourceARN", parent: name, min: 1)
-            try tagKeys.forEach {
+            try validate(self.resourceARN, name:"resourceARN", parent: name, max: 1011)
+            try validate(self.resourceARN, name:"resourceARN", parent: name, min: 1)
+            try self.tagKeys.forEach {
                 try validate($0, name: "tagKeys[]", parent: name, max: 128)
                 try validate($0, name: "tagKeys[]", parent: name, min: 1)
             }
@@ -1348,10 +1348,10 @@ extension Athena {
         }
 
         public func validate(name: String) throws {
-            try configurationUpdates?.validate(name: "\(name).configurationUpdates")
-            try validate(description, name:"description", parent: name, max: 1024)
-            try validate(description, name:"description", parent: name, min: 0)
-            try validate(workGroup, name:"workGroup", parent: name, pattern: "[a-zA-z0-9._-]{1,128}")
+            try self.configurationUpdates?.validate(name: "\(name).configurationUpdates")
+            try validate(self.description, name:"description", parent: name, max: 1024)
+            try validate(self.description, name:"description", parent: name, min: 0)
+            try validate(self.workGroup, name:"workGroup", parent: name, pattern: "[a-zA-z0-9._-]{1,128}")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1379,7 +1379,7 @@ extension Athena {
             AWSShapeMember(label: "State", required: false, type: .enum)
         ]
 
-        /// The configuration of the workgroup, which includes the location in Amazon S3 where query results are stored, the encryption configuration, if any, used for query results; whether the Amazon CloudWatch Metrics are enabled for the workgroup; whether workgroup settings override client-side settings; and the data usage limit for the amount of data scanned per query, if it is specified. The workgroup settings override is specified in EnforceWorkGroupConfiguration (true/false) in the WorkGroupConfiguration. See WorkGroupConfiguration$EnforceWorkGroupConfiguration.
+        /// The configuration of the workgroup, which includes the location in Amazon S3 where query results are stored, the encryption configuration, if any, used for query results; whether the Amazon CloudWatch Metrics are enabled for the workgroup; whether workgroup settings override client-side settings; and the data usage limits for the amount of data scanned per query or per workgroup. The workgroup settings override is specified in EnforceWorkGroupConfiguration (true/false) in the WorkGroupConfiguration. See WorkGroupConfiguration$EnforceWorkGroupConfiguration.
         public let configuration: WorkGroupConfiguration?
         /// The date and time the workgroup was created.
         public let creationTime: TimeStamp?
@@ -1412,6 +1412,7 @@ extension Athena {
             AWSShapeMember(label: "BytesScannedCutoffPerQuery", required: false, type: .long), 
             AWSShapeMember(label: "EnforceWorkGroupConfiguration", required: false, type: .boolean), 
             AWSShapeMember(label: "PublishCloudWatchMetricsEnabled", required: false, type: .boolean), 
+            AWSShapeMember(label: "RequesterPaysEnabled", required: false, type: .boolean), 
             AWSShapeMember(label: "ResultConfiguration", required: false, type: .structure)
         ]
 
@@ -1421,24 +1422,28 @@ extension Athena {
         public let enforceWorkGroupConfiguration: Bool?
         /// Indicates that the Amazon CloudWatch metrics are enabled for the workgroup.
         public let publishCloudWatchMetricsEnabled: Bool?
-        /// The configuration for the workgroup, which includes the location in Amazon S3 where query results are stored and the encryption option, if any, used for query results.
+        /// If set to true, allows members assigned to a workgroup to reference Amazon S3 Requester Pays buckets in queries. If set to false, workgroup members cannot query data from Requester Pays buckets, and queries that retrieve data from Requester Pays buckets cause an error. The default is false. For more information about Requester Pays buckets, see Requester Pays Buckets in the Amazon Simple Storage Service Developer Guide.
+        public let requesterPaysEnabled: Bool?
+        /// The configuration for the workgroup, which includes the location in Amazon S3 where query results are stored and the encryption option, if any, used for query results. To run the query, you must specify the query results location using one of the ways: either in the workgroup using this setting, or for individual queries (client-side), using ResultConfiguration$OutputLocation. If none of them is set, Athena issues an error that no output location is provided. For more information, see Query Results.
         public let resultConfiguration: ResultConfiguration?
 
-        public init(bytesScannedCutoffPerQuery: Int64? = nil, enforceWorkGroupConfiguration: Bool? = nil, publishCloudWatchMetricsEnabled: Bool? = nil, resultConfiguration: ResultConfiguration? = nil) {
+        public init(bytesScannedCutoffPerQuery: Int64? = nil, enforceWorkGroupConfiguration: Bool? = nil, publishCloudWatchMetricsEnabled: Bool? = nil, requesterPaysEnabled: Bool? = nil, resultConfiguration: ResultConfiguration? = nil) {
             self.bytesScannedCutoffPerQuery = bytesScannedCutoffPerQuery
             self.enforceWorkGroupConfiguration = enforceWorkGroupConfiguration
             self.publishCloudWatchMetricsEnabled = publishCloudWatchMetricsEnabled
+            self.requesterPaysEnabled = requesterPaysEnabled
             self.resultConfiguration = resultConfiguration
         }
 
         public func validate(name: String) throws {
-            try validate(bytesScannedCutoffPerQuery, name:"bytesScannedCutoffPerQuery", parent: name, min: 10000000)
+            try validate(self.bytesScannedCutoffPerQuery, name:"bytesScannedCutoffPerQuery", parent: name, min: 10000000)
         }
 
         private enum CodingKeys: String, CodingKey {
             case bytesScannedCutoffPerQuery = "BytesScannedCutoffPerQuery"
             case enforceWorkGroupConfiguration = "EnforceWorkGroupConfiguration"
             case publishCloudWatchMetricsEnabled = "PublishCloudWatchMetricsEnabled"
+            case requesterPaysEnabled = "RequesterPaysEnabled"
             case resultConfiguration = "ResultConfiguration"
         }
     }
@@ -1449,6 +1454,7 @@ extension Athena {
             AWSShapeMember(label: "EnforceWorkGroupConfiguration", required: false, type: .boolean), 
             AWSShapeMember(label: "PublishCloudWatchMetricsEnabled", required: false, type: .boolean), 
             AWSShapeMember(label: "RemoveBytesScannedCutoffPerQuery", required: false, type: .boolean), 
+            AWSShapeMember(label: "RequesterPaysEnabled", required: false, type: .boolean), 
             AWSShapeMember(label: "ResultConfigurationUpdates", required: false, type: .structure)
         ]
 
@@ -1460,19 +1466,22 @@ extension Athena {
         public let publishCloudWatchMetricsEnabled: Bool?
         /// Indicates that the data usage control limit per query is removed. WorkGroupConfiguration$BytesScannedCutoffPerQuery 
         public let removeBytesScannedCutoffPerQuery: Bool?
+        /// If set to true, allows members assigned to a workgroup to specify Amazon S3 Requester Pays buckets in queries. If set to false, workgroup members cannot query data from Requester Pays buckets, and queries that retrieve data from Requester Pays buckets cause an error. The default is false. For more information about Requester Pays buckets, see Requester Pays Buckets in the Amazon Simple Storage Service Developer Guide.
+        public let requesterPaysEnabled: Bool?
         /// The result configuration information about the queries in this workgroup that will be updated. Includes the updated results location and an updated option for encrypting query results.
         public let resultConfigurationUpdates: ResultConfigurationUpdates?
 
-        public init(bytesScannedCutoffPerQuery: Int64? = nil, enforceWorkGroupConfiguration: Bool? = nil, publishCloudWatchMetricsEnabled: Bool? = nil, removeBytesScannedCutoffPerQuery: Bool? = nil, resultConfigurationUpdates: ResultConfigurationUpdates? = nil) {
+        public init(bytesScannedCutoffPerQuery: Int64? = nil, enforceWorkGroupConfiguration: Bool? = nil, publishCloudWatchMetricsEnabled: Bool? = nil, removeBytesScannedCutoffPerQuery: Bool? = nil, requesterPaysEnabled: Bool? = nil, resultConfigurationUpdates: ResultConfigurationUpdates? = nil) {
             self.bytesScannedCutoffPerQuery = bytesScannedCutoffPerQuery
             self.enforceWorkGroupConfiguration = enforceWorkGroupConfiguration
             self.publishCloudWatchMetricsEnabled = publishCloudWatchMetricsEnabled
             self.removeBytesScannedCutoffPerQuery = removeBytesScannedCutoffPerQuery
+            self.requesterPaysEnabled = requesterPaysEnabled
             self.resultConfigurationUpdates = resultConfigurationUpdates
         }
 
         public func validate(name: String) throws {
-            try validate(bytesScannedCutoffPerQuery, name:"bytesScannedCutoffPerQuery", parent: name, min: 10000000)
+            try validate(self.bytesScannedCutoffPerQuery, name:"bytesScannedCutoffPerQuery", parent: name, min: 10000000)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1480,6 +1489,7 @@ extension Athena {
             case enforceWorkGroupConfiguration = "EnforceWorkGroupConfiguration"
             case publishCloudWatchMetricsEnabled = "PublishCloudWatchMetricsEnabled"
             case removeBytesScannedCutoffPerQuery = "RemoveBytesScannedCutoffPerQuery"
+            case requesterPaysEnabled = "RequesterPaysEnabled"
             case resultConfigurationUpdates = "ResultConfigurationUpdates"
         }
     }

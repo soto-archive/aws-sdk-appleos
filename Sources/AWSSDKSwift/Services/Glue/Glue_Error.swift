@@ -17,6 +17,7 @@ public enum GlueErrorType: AWSErrorType {
     case idempotentParameterMismatchException(message: String?)
     case internalServiceException(message: String?)
     case invalidInputException(message: String?)
+    case mLTransformNotReadyException(message: String?)
     case noScheduleException(message: String?)
     case operationTimeoutException(message: String?)
     case resourceNumberLimitExceededException(message: String?)
@@ -60,6 +61,8 @@ extension GlueErrorType {
             self = .internalServiceException(message: message)
         case "InvalidInputException":
             self = .invalidInputException(message: message)
+        case "MLTransformNotReadyException":
+            self = .mLTransformNotReadyException(message: message)
         case "NoScheduleException":
             self = .noScheduleException(message: message)
         case "OperationTimeoutException":
@@ -78,6 +81,57 @@ extension GlueErrorType {
             self = .versionMismatchException(message: message)
         default:
             return nil
+        }
+    }
+}
+
+extension GlueErrorType : CustomStringConvertible {
+    public var description : String {
+        switch self {
+        case .accessDeniedException(let message):
+            return "AccessDeniedException: \(message ?? "")"
+        case .alreadyExistsException(let message):
+            return "AlreadyExistsException: \(message ?? "")"
+        case .concurrentModificationException(let message):
+            return "ConcurrentModificationException: \(message ?? "")"
+        case .concurrentRunsExceededException(let message):
+            return "ConcurrentRunsExceededException: \(message ?? "")"
+        case .conditionCheckFailureException(let message):
+            return "ConditionCheckFailureException: \(message ?? "")"
+        case .crawlerNotRunningException(let message):
+            return "CrawlerNotRunningException: \(message ?? "")"
+        case .crawlerRunningException(let message):
+            return "CrawlerRunningException: \(message ?? "")"
+        case .crawlerStoppingException(let message):
+            return "CrawlerStoppingException: \(message ?? "")"
+        case .entityNotFoundException(let message):
+            return "EntityNotFoundException: \(message ?? "")"
+        case .glueEncryptionException(let message):
+            return "GlueEncryptionException: \(message ?? "")"
+        case .idempotentParameterMismatchException(let message):
+            return "IdempotentParameterMismatchException: \(message ?? "")"
+        case .internalServiceException(let message):
+            return "InternalServiceException: \(message ?? "")"
+        case .invalidInputException(let message):
+            return "InvalidInputException: \(message ?? "")"
+        case .mLTransformNotReadyException(let message):
+            return "MLTransformNotReadyException: \(message ?? "")"
+        case .noScheduleException(let message):
+            return "NoScheduleException: \(message ?? "")"
+        case .operationTimeoutException(let message):
+            return "OperationTimeoutException: \(message ?? "")"
+        case .resourceNumberLimitExceededException(let message):
+            return "ResourceNumberLimitExceededException: \(message ?? "")"
+        case .schedulerNotRunningException(let message):
+            return "SchedulerNotRunningException: \(message ?? "")"
+        case .schedulerRunningException(let message):
+            return "SchedulerRunningException: \(message ?? "")"
+        case .schedulerTransitioningException(let message):
+            return "SchedulerTransitioningException: \(message ?? "")"
+        case .validationException(let message):
+            return "ValidationException: \(message ?? "")"
+        case .versionMismatchException(let message):
+            return "VersionMismatchException: \(message ?? "")"
         }
     }
 }

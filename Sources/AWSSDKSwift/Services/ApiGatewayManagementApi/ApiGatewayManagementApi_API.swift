@@ -11,22 +11,33 @@ public struct ApiGatewayManagementApi {
 
     public let client: AWSClient
 
-    public init(accessKeyId: String? = nil, secretAccessKey: String? = nil, region: AWSSDKSwiftCore.Region? = nil, endpoint: String? = nil) {
+    public init(accessKeyId: String? = nil, secretAccessKey: String? = nil, sessionToken: String? = nil, region: AWSSDKSwiftCore.Region? = nil, endpoint: String? = nil, middlewares: [AWSServiceMiddleware] = []) {
         self.client = AWSClient(
             accessKeyId: accessKeyId,
             secretAccessKey: secretAccessKey,
+            sessionToken: sessionToken,
             region: region,
             service: "execute-api",
             serviceProtocol: ServiceProtocol(type: .restjson, version: ServiceProtocol.Version(major: 1, minor: 1)),
             apiVersion: "2018-11-29",
             endpoint: endpoint,
-            middlewares: [],
+            middlewares: middlewares,
             possibleErrorTypes: [ApiGatewayManagementApiErrorType.self]
         )
     }
 
+    ///  Delete the connection with the provided id.
+    @discardableResult public func deleteConnection(_ input: DeleteConnectionRequest) -> Future<Void> {
+        return client.send(operation: "DeleteConnection", path: "/@connections/{connectionId}", httpMethod: "DELETE", input: input)
+    }
+
+    ///  Get information about the connection with the provided id.
+    public func getConnection(_ input: GetConnectionRequest) -> Future<GetConnectionResponse> {
+        return client.send(operation: "GetConnection", path: "/@connections/{connectionId}", httpMethod: "GET", input: input)
+    }
+
     ///  Sends the provided data to the specified connection.
-    @discardableResult public func postToConnection(_ input: PostToConnectionRequest) throws -> Future<Void> {
-        return try client.send(operation: "PostToConnection", path: "/@connections/{connectionId}", httpMethod: "POST", input: input)
+    @discardableResult public func postToConnection(_ input: PostToConnectionRequest) -> Future<Void> {
+        return client.send(operation: "PostToConnection", path: "/@connections/{connectionId}", httpMethod: "POST", input: input)
     }
 }
