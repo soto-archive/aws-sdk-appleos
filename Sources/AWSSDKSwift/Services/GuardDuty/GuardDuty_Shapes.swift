@@ -26,8 +26,8 @@ extension GuardDuty {
         }
 
         public func validate(name: String) throws {
-            try validate(detectorId, name:"detectorId", parent: name, max: 300)
-            try validate(detectorId, name:"detectorId", parent: name, min: 1)
+            try validate(self.detectorId, name:"detectorId", parent: name, max: 300)
+            try validate(self.detectorId, name:"detectorId", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -94,10 +94,10 @@ extension GuardDuty {
         }
 
         public func validate(name: String) throws {
-            try validate(accountId, name:"accountId", parent: name, max: 12)
-            try validate(accountId, name:"accountId", parent: name, min: 12)
-            try validate(email, name:"email", parent: name, max: 64)
-            try validate(email, name:"email", parent: name, min: 1)
+            try validate(self.accountId, name:"accountId", parent: name, max: 12)
+            try validate(self.accountId, name:"accountId", parent: name, min: 12)
+            try validate(self.email, name:"email", parent: name, max: 64)
+            try validate(self.email, name:"email", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -160,14 +160,14 @@ extension GuardDuty {
         }
 
         public func validate(name: String) throws {
-            try validate(detectorId, name:"detectorId", parent: name, max: 300)
-            try validate(detectorId, name:"detectorId", parent: name, min: 1)
-            try findingIds.forEach {
+            try validate(self.detectorId, name:"detectorId", parent: name, max: 300)
+            try validate(self.detectorId, name:"detectorId", parent: name, min: 1)
+            try self.findingIds.forEach {
                 try validate($0, name: "findingIds[]", parent: name, max: 300)
                 try validate($0, name: "findingIds[]", parent: name, min: 1)
             }
-            try validate(findingIds, name:"findingIds", parent: name, max: 50)
-            try validate(findingIds, name:"findingIds", parent: name, min: 0)
+            try validate(self.findingIds, name:"findingIds", parent: name, max: 50)
+            try validate(self.findingIds, name:"findingIds", parent: name, min: 0)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -248,6 +248,7 @@ extension GuardDuty {
             AWSShapeMember(label: "NotEquals", location: .body(locationName: "notEquals"), required: false, type: .list)
         ]
 
+        /// Represents an equal condition to be applied to a single field when querying for findings.
         public let equals: [String]?
         /// Represents a greater than condition to be applied to a single field when querying for findings.
         public let greaterThan: Int64?
@@ -257,6 +258,7 @@ extension GuardDuty {
         public let lessThan: Int64?
         /// Represents a less than equal condition to be applied to a single field when querying for findings.
         public let lessThanOrEqual: Int64?
+        /// Represents an not equal condition to be applied to a single field when querying for findings.
         public let notEquals: [String]?
 
         public init(equals: [String]? = nil, greaterThan: Int64? = nil, greaterThanOrEqual: Int64? = nil, lessThan: Int64? = nil, lessThanOrEqual: Int64? = nil, notEquals: [String]? = nil) {
@@ -325,9 +327,9 @@ extension GuardDuty {
         }
 
         public func validate(name: String) throws {
-            try validate(clientToken, name:"clientToken", parent: name, max: 64)
-            try validate(clientToken, name:"clientToken", parent: name, min: 0)
-            try tags?.forEach {
+            try validate(self.clientToken, name:"clientToken", parent: name, max: 64)
+            try validate(self.clientToken, name:"clientToken", parent: name, min: 0)
+            try self.tags?.forEach {
                 try validate($0.key, name:"tags.key", parent: name, max: 128)
                 try validate($0.key, name:"tags.key", parent: name, min: 1)
                 try validate($0.key, name:"tags.key", parent: name, pattern: "^(?!aws:)[a-zA-Z+-=._:/]+$")
@@ -401,17 +403,17 @@ extension GuardDuty {
         }
 
         public func validate(name: String) throws {
-            try validate(clientToken, name:"clientToken", parent: name, max: 64)
-            try validate(clientToken, name:"clientToken", parent: name, min: 0)
-            try validate(description, name:"description", parent: name, max: 512)
-            try validate(description, name:"description", parent: name, min: 0)
-            try validate(detectorId, name:"detectorId", parent: name, max: 300)
-            try validate(detectorId, name:"detectorId", parent: name, min: 1)
-            try validate(name, name:"name", parent: name, max: 64)
-            try validate(name, name:"name", parent: name, min: 3)
-            try validate(rank, name:"rank", parent: name, max: 100)
-            try validate(rank, name:"rank", parent: name, min: 1)
-            try tags?.forEach {
+            try validate(self.clientToken, name:"clientToken", parent: name, max: 64)
+            try validate(self.clientToken, name:"clientToken", parent: name, min: 0)
+            try validate(self.description, name:"description", parent: name, max: 512)
+            try validate(self.description, name:"description", parent: name, min: 0)
+            try validate(self.detectorId, name:"detectorId", parent: name, max: 300)
+            try validate(self.detectorId, name:"detectorId", parent: name, min: 1)
+            try validate(self.name, name:"name", parent: name, max: 64)
+            try validate(self.name, name:"name", parent: name, min: 3)
+            try validate(self.rank, name:"rank", parent: name, max: 100)
+            try validate(self.rank, name:"rank", parent: name, min: 1)
+            try self.tags?.forEach {
                 try validate($0.key, name:"tags.key", parent: name, max: 128)
                 try validate($0.key, name:"tags.key", parent: name, min: 1)
                 try validate($0.key, name:"tags.key", parent: name, pattern: "^(?!aws:)[a-zA-Z+-=._:/]+$")
@@ -485,15 +487,15 @@ extension GuardDuty {
         }
 
         public func validate(name: String) throws {
-            try validate(clientToken, name:"clientToken", parent: name, max: 64)
-            try validate(clientToken, name:"clientToken", parent: name, min: 0)
-            try validate(detectorId, name:"detectorId", parent: name, max: 300)
-            try validate(detectorId, name:"detectorId", parent: name, min: 1)
-            try validate(location, name:"location", parent: name, max: 300)
-            try validate(location, name:"location", parent: name, min: 1)
-            try validate(name, name:"name", parent: name, max: 300)
-            try validate(name, name:"name", parent: name, min: 1)
-            try tags?.forEach {
+            try validate(self.clientToken, name:"clientToken", parent: name, max: 64)
+            try validate(self.clientToken, name:"clientToken", parent: name, min: 0)
+            try validate(self.detectorId, name:"detectorId", parent: name, max: 300)
+            try validate(self.detectorId, name:"detectorId", parent: name, min: 1)
+            try validate(self.location, name:"location", parent: name, max: 300)
+            try validate(self.location, name:"location", parent: name, min: 1)
+            try validate(self.name, name:"name", parent: name, max: 300)
+            try validate(self.name, name:"name", parent: name, min: 1)
+            try self.tags?.forEach {
                 try validate($0.key, name:"tags.key", parent: name, max: 128)
                 try validate($0.key, name:"tags.key", parent: name, min: 1)
                 try validate($0.key, name:"tags.key", parent: name, pattern: "^(?!aws:)[a-zA-Z+-=._:/]+$")
@@ -546,13 +548,13 @@ extension GuardDuty {
         }
 
         public func validate(name: String) throws {
-            try accountDetails.forEach {
+            try self.accountDetails.forEach {
                 try $0.validate(name: "\(name).accountDetails[]")
             }
-            try validate(accountDetails, name:"accountDetails", parent: name, max: 50)
-            try validate(accountDetails, name:"accountDetails", parent: name, min: 1)
-            try validate(detectorId, name:"detectorId", parent: name, max: 300)
-            try validate(detectorId, name:"detectorId", parent: name, min: 1)
+            try validate(self.accountDetails, name:"accountDetails", parent: name, max: 50)
+            try validate(self.accountDetails, name:"accountDetails", parent: name, min: 1)
+            try validate(self.detectorId, name:"detectorId", parent: name, max: 300)
+            try validate(self.detectorId, name:"detectorId", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -595,14 +597,14 @@ extension GuardDuty {
         }
 
         public func validate(name: String) throws {
-            try validate(detectorId, name:"detectorId", parent: name, max: 300)
-            try validate(detectorId, name:"detectorId", parent: name, min: 1)
-            try findingTypes?.forEach {
+            try validate(self.detectorId, name:"detectorId", parent: name, max: 300)
+            try validate(self.detectorId, name:"detectorId", parent: name, min: 1)
+            try self.findingTypes?.forEach {
                 try validate($0, name: "findingTypes[]", parent: name, max: 50)
                 try validate($0, name: "findingTypes[]", parent: name, min: 1)
             }
-            try validate(findingTypes, name:"findingTypes", parent: name, max: 50)
-            try validate(findingTypes, name:"findingTypes", parent: name, min: 0)
+            try validate(self.findingTypes, name:"findingTypes", parent: name, max: 50)
+            try validate(self.findingTypes, name:"findingTypes", parent: name, min: 0)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -656,15 +658,15 @@ extension GuardDuty {
         }
 
         public func validate(name: String) throws {
-            try validate(clientToken, name:"clientToken", parent: name, max: 64)
-            try validate(clientToken, name:"clientToken", parent: name, min: 0)
-            try validate(detectorId, name:"detectorId", parent: name, max: 300)
-            try validate(detectorId, name:"detectorId", parent: name, min: 1)
-            try validate(location, name:"location", parent: name, max: 300)
-            try validate(location, name:"location", parent: name, min: 1)
-            try validate(name, name:"name", parent: name, max: 300)
-            try validate(name, name:"name", parent: name, min: 1)
-            try tags?.forEach {
+            try validate(self.clientToken, name:"clientToken", parent: name, max: 64)
+            try validate(self.clientToken, name:"clientToken", parent: name, min: 0)
+            try validate(self.detectorId, name:"detectorId", parent: name, max: 300)
+            try validate(self.detectorId, name:"detectorId", parent: name, min: 1)
+            try validate(self.location, name:"location", parent: name, max: 300)
+            try validate(self.location, name:"location", parent: name, min: 1)
+            try validate(self.name, name:"name", parent: name, max: 300)
+            try validate(self.name, name:"name", parent: name, min: 1)
+            try self.tags?.forEach {
                 try validate($0.key, name:"tags.key", parent: name, max: 128)
                 try validate($0.key, name:"tags.key", parent: name, min: 1)
                 try validate($0.key, name:"tags.key", parent: name, pattern: "^(?!aws:)[a-zA-Z+-=._:/]+$")
@@ -713,12 +715,12 @@ extension GuardDuty {
         }
 
         public func validate(name: String) throws {
-            try accountIds.forEach {
+            try self.accountIds.forEach {
                 try validate($0, name: "accountIds[]", parent: name, max: 12)
                 try validate($0, name: "accountIds[]", parent: name, min: 12)
             }
-            try validate(accountIds, name:"accountIds", parent: name, max: 50)
-            try validate(accountIds, name:"accountIds", parent: name, min: 1)
+            try validate(self.accountIds, name:"accountIds", parent: name, max: 50)
+            try validate(self.accountIds, name:"accountIds", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -756,8 +758,8 @@ extension GuardDuty {
         }
 
         public func validate(name: String) throws {
-            try validate(detectorId, name:"detectorId", parent: name, max: 300)
-            try validate(detectorId, name:"detectorId", parent: name, min: 1)
+            try validate(self.detectorId, name:"detectorId", parent: name, max: 300)
+            try validate(self.detectorId, name:"detectorId", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -790,8 +792,8 @@ extension GuardDuty {
         }
 
         public func validate(name: String) throws {
-            try validate(detectorId, name:"detectorId", parent: name, max: 300)
-            try validate(detectorId, name:"detectorId", parent: name, min: 1)
+            try validate(self.detectorId, name:"detectorId", parent: name, max: 300)
+            try validate(self.detectorId, name:"detectorId", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -825,8 +827,8 @@ extension GuardDuty {
         }
 
         public func validate(name: String) throws {
-            try validate(detectorId, name:"detectorId", parent: name, max: 300)
-            try validate(detectorId, name:"detectorId", parent: name, min: 1)
+            try validate(self.detectorId, name:"detectorId", parent: name, max: 300)
+            try validate(self.detectorId, name:"detectorId", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -856,12 +858,12 @@ extension GuardDuty {
         }
 
         public func validate(name: String) throws {
-            try accountIds.forEach {
+            try self.accountIds.forEach {
                 try validate($0, name: "accountIds[]", parent: name, max: 12)
                 try validate($0, name: "accountIds[]", parent: name, min: 12)
             }
-            try validate(accountIds, name:"accountIds", parent: name, max: 50)
-            try validate(accountIds, name:"accountIds", parent: name, min: 1)
+            try validate(self.accountIds, name:"accountIds", parent: name, max: 50)
+            try validate(self.accountIds, name:"accountIds", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -903,14 +905,14 @@ extension GuardDuty {
         }
 
         public func validate(name: String) throws {
-            try accountIds.forEach {
+            try self.accountIds.forEach {
                 try validate($0, name: "accountIds[]", parent: name, max: 12)
                 try validate($0, name: "accountIds[]", parent: name, min: 12)
             }
-            try validate(accountIds, name:"accountIds", parent: name, max: 50)
-            try validate(accountIds, name:"accountIds", parent: name, min: 1)
-            try validate(detectorId, name:"detectorId", parent: name, max: 300)
-            try validate(detectorId, name:"detectorId", parent: name, min: 1)
+            try validate(self.accountIds, name:"accountIds", parent: name, max: 50)
+            try validate(self.accountIds, name:"accountIds", parent: name, min: 1)
+            try validate(self.detectorId, name:"detectorId", parent: name, max: 300)
+            try validate(self.detectorId, name:"detectorId", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -924,7 +926,7 @@ extension GuardDuty {
             AWSShapeMember(label: "UnprocessedAccounts", location: .body(locationName: "unprocessedAccounts"), required: true, type: .list)
         ]
 
-        /// A list of objects containing the unprocessed account and a result string explaining why it was unprocessed.
+        /// The accounts that could not be processed.
         public let unprocessedAccounts: [UnprocessedAccount]
 
         public init(unprocessedAccounts: [UnprocessedAccount]) {
@@ -953,8 +955,8 @@ extension GuardDuty {
         }
 
         public func validate(name: String) throws {
-            try validate(detectorId, name:"detectorId", parent: name, max: 300)
-            try validate(detectorId, name:"detectorId", parent: name, min: 1)
+            try validate(self.detectorId, name:"detectorId", parent: name, max: 300)
+            try validate(self.detectorId, name:"detectorId", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -990,8 +992,8 @@ extension GuardDuty {
         }
 
         public func validate(name: String) throws {
-            try validate(detectorId, name:"detectorId", parent: name, max: 300)
-            try validate(detectorId, name:"detectorId", parent: name, min: 1)
+            try validate(self.detectorId, name:"detectorId", parent: name, max: 300)
+            try validate(self.detectorId, name:"detectorId", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1024,14 +1026,14 @@ extension GuardDuty {
         }
 
         public func validate(name: String) throws {
-            try accountIds.forEach {
+            try self.accountIds.forEach {
                 try validate($0, name: "accountIds[]", parent: name, max: 12)
                 try validate($0, name: "accountIds[]", parent: name, min: 12)
             }
-            try validate(accountIds, name:"accountIds", parent: name, max: 50)
-            try validate(accountIds, name:"accountIds", parent: name, min: 1)
-            try validate(detectorId, name:"detectorId", parent: name, max: 300)
-            try validate(detectorId, name:"detectorId", parent: name, min: 1)
+            try validate(self.accountIds, name:"accountIds", parent: name, max: 50)
+            try validate(self.accountIds, name:"accountIds", parent: name, min: 1)
+            try validate(self.detectorId, name:"detectorId", parent: name, max: 300)
+            try validate(self.detectorId, name:"detectorId", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1091,6 +1093,23 @@ extension GuardDuty {
         }
     }
 
+    public struct Evidence: AWSShape {
+        public static var _members: [AWSShapeMember] = [
+            AWSShapeMember(label: "ThreatIntelligenceDetails", location: .body(locationName: "threatIntelligenceDetails"), required: false, type: .list)
+        ]
+
+        /// A list of threat intelligence details related to the evidence.
+        public let threatIntelligenceDetails: [ThreatIntelligenceDetail]?
+
+        public init(threatIntelligenceDetails: [ThreatIntelligenceDetail]? = nil) {
+            self.threatIntelligenceDetails = threatIntelligenceDetails
+        }
+
+        private enum CodingKeys: String, CodingKey {
+            case threatIntelligenceDetails = "threatIntelligenceDetails"
+        }
+    }
+
     public enum Feedback: String, CustomStringConvertible, Codable {
         case useful = "USEFUL"
         case notUseful = "NOT_USEFUL"
@@ -1122,35 +1141,33 @@ extension GuardDuty {
             AWSShapeMember(label: "UpdatedAt", location: .body(locationName: "updatedAt"), required: true, type: .string)
         ]
 
-        /// AWS account ID where the activity occurred that prompted GuardDuty to generate a finding.
+        /// The ID of the account in which the finding was generated.
         public let accountId: String
-        /// The ARN of a finding described by the action.
+        /// The ARN for the finding.
         public let arn: String
-        /// The confidence level of a finding.
+        /// The confidence score for the finding.
         public let confidence: Double?
-        /// The time stamp at which a finding was generated.
+        /// The time and date at which the finding was created.
         public let createdAt: String
-        /// The description of a finding.
+        /// The description of the finding.
         public let description: String?
-        /// The identifier that corresponds to a finding described by the action.
+        /// The ID of the finding.
         public let id: String
-        /// The AWS resource partition.
+        /// The partition associated with the finding.
         public let partition: String?
-        /// The AWS region where the activity occurred that prompted GuardDuty to generate a finding.
+        /// The Region in which the finding was generated.
         public let region: String
-        /// The AWS resource associated with the activity that prompted GuardDuty to generate a finding.
         public let resource: Resource
-        /// Findings' schema version.
+        /// The version of the schema used for the finding.
         public let schemaVersion: String
-        /// Additional information assigned to the generated finding by GuardDuty.
         public let service: Service?
-        /// The severity of a finding.
+        /// The severity of the finding.
         public let severity: Double
-        /// The title of a finding.
+        /// The title for the finding.
         public let title: String?
-        /// The type of a finding described by the action.
+        /// The type of the finding.
         public let `type`: String
-        /// The time stamp at which a finding was last updated.
+        /// The time and date at which the finding was laste updated.
         public let updatedAt: String
 
         public init(accountId: String, arn: String, confidence: Double? = nil, createdAt: String, description: String? = nil, id: String, partition: String? = nil, region: String, resource: Resource, schemaVersion: String, service: Service? = nil, severity: Double, title: String? = nil, type: String, updatedAt: String) {
@@ -1271,8 +1288,8 @@ extension GuardDuty {
         }
 
         public func validate(name: String) throws {
-            try validate(detectorId, name:"detectorId", parent: name, max: 300)
-            try validate(detectorId, name:"detectorId", parent: name, min: 1)
+            try validate(self.detectorId, name:"detectorId", parent: name, max: 300)
+            try validate(self.detectorId, name:"detectorId", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1339,8 +1356,8 @@ extension GuardDuty {
         }
 
         public func validate(name: String) throws {
-            try validate(detectorId, name:"detectorId", parent: name, max: 300)
-            try validate(detectorId, name:"detectorId", parent: name, min: 1)
+            try validate(self.detectorId, name:"detectorId", parent: name, max: 300)
+            try validate(self.detectorId, name:"detectorId", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1412,14 +1429,14 @@ extension GuardDuty {
         }
 
         public func validate(name: String) throws {
-            try validate(detectorId, name:"detectorId", parent: name, max: 300)
-            try validate(detectorId, name:"detectorId", parent: name, min: 1)
-            try findingIds.forEach {
+            try validate(self.detectorId, name:"detectorId", parent: name, max: 300)
+            try validate(self.detectorId, name:"detectorId", parent: name, min: 1)
+            try self.findingIds.forEach {
                 try validate($0, name: "findingIds[]", parent: name, max: 300)
                 try validate($0, name: "findingIds[]", parent: name, min: 1)
             }
-            try validate(findingIds, name:"findingIds", parent: name, max: 50)
-            try validate(findingIds, name:"findingIds", parent: name, min: 0)
+            try validate(self.findingIds, name:"findingIds", parent: name, max: 50)
+            try validate(self.findingIds, name:"findingIds", parent: name, min: 0)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1467,10 +1484,10 @@ extension GuardDuty {
         }
 
         public func validate(name: String) throws {
-            try validate(detectorId, name:"detectorId", parent: name, max: 300)
-            try validate(detectorId, name:"detectorId", parent: name, min: 1)
-            try validate(findingStatisticTypes, name:"findingStatisticTypes", parent: name, max: 10)
-            try validate(findingStatisticTypes, name:"findingStatisticTypes", parent: name, min: 0)
+            try validate(self.detectorId, name:"detectorId", parent: name, max: 300)
+            try validate(self.detectorId, name:"detectorId", parent: name, min: 1)
+            try validate(self.findingStatisticTypes, name:"findingStatisticTypes", parent: name, max: 10)
+            try validate(self.findingStatisticTypes, name:"findingStatisticTypes", parent: name, min: 0)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1514,8 +1531,8 @@ extension GuardDuty {
         }
 
         public func validate(name: String) throws {
-            try validate(detectorId, name:"detectorId", parent: name, max: 300)
-            try validate(detectorId, name:"detectorId", parent: name, min: 1)
+            try validate(self.detectorId, name:"detectorId", parent: name, max: 300)
+            try validate(self.detectorId, name:"detectorId", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1599,8 +1616,8 @@ extension GuardDuty {
         }
 
         public func validate(name: String) throws {
-            try validate(detectorId, name:"detectorId", parent: name, max: 300)
-            try validate(detectorId, name:"detectorId", parent: name, min: 1)
+            try validate(self.detectorId, name:"detectorId", parent: name, max: 300)
+            try validate(self.detectorId, name:"detectorId", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1642,14 +1659,14 @@ extension GuardDuty {
         }
 
         public func validate(name: String) throws {
-            try accountIds.forEach {
+            try self.accountIds.forEach {
                 try validate($0, name: "accountIds[]", parent: name, max: 12)
                 try validate($0, name: "accountIds[]", parent: name, min: 12)
             }
-            try validate(accountIds, name:"accountIds", parent: name, max: 50)
-            try validate(accountIds, name:"accountIds", parent: name, min: 1)
-            try validate(detectorId, name:"detectorId", parent: name, max: 300)
-            try validate(detectorId, name:"detectorId", parent: name, min: 1)
+            try validate(self.accountIds, name:"accountIds", parent: name, max: 50)
+            try validate(self.accountIds, name:"accountIds", parent: name, min: 1)
+            try validate(self.detectorId, name:"detectorId", parent: name, max: 300)
+            try validate(self.detectorId, name:"detectorId", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1697,8 +1714,8 @@ extension GuardDuty {
         }
 
         public func validate(name: String) throws {
-            try validate(detectorId, name:"detectorId", parent: name, max: 300)
-            try validate(detectorId, name:"detectorId", parent: name, min: 1)
+            try validate(self.detectorId, name:"detectorId", parent: name, max: 300)
+            try validate(self.detectorId, name:"detectorId", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1895,14 +1912,14 @@ extension GuardDuty {
         }
 
         public func validate(name: String) throws {
-            try accountIds.forEach {
+            try self.accountIds.forEach {
                 try validate($0, name: "accountIds[]", parent: name, max: 12)
                 try validate($0, name: "accountIds[]", parent: name, min: 12)
             }
-            try validate(accountIds, name:"accountIds", parent: name, max: 50)
-            try validate(accountIds, name:"accountIds", parent: name, min: 1)
-            try validate(detectorId, name:"detectorId", parent: name, max: 300)
-            try validate(detectorId, name:"detectorId", parent: name, min: 1)
+            try validate(self.accountIds, name:"accountIds", parent: name, max: 50)
+            try validate(self.accountIds, name:"accountIds", parent: name, min: 1)
+            try validate(self.detectorId, name:"detectorId", parent: name, max: 300)
+            try validate(self.detectorId, name:"detectorId", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1968,8 +1985,8 @@ extension GuardDuty {
         }
 
         public func validate(name: String) throws {
-            try validate(maxResults, name:"maxResults", parent: name, max: 50)
-            try validate(maxResults, name:"maxResults", parent: name, min: 1)
+            try validate(self.maxResults, name:"maxResults", parent: name, max: 50)
+            try validate(self.maxResults, name:"maxResults", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -2021,10 +2038,10 @@ extension GuardDuty {
         }
 
         public func validate(name: String) throws {
-            try validate(detectorId, name:"detectorId", parent: name, max: 300)
-            try validate(detectorId, name:"detectorId", parent: name, min: 1)
-            try validate(maxResults, name:"maxResults", parent: name, max: 50)
-            try validate(maxResults, name:"maxResults", parent: name, min: 1)
+            try validate(self.detectorId, name:"detectorId", parent: name, max: 300)
+            try validate(self.detectorId, name:"detectorId", parent: name, min: 1)
+            try validate(self.maxResults, name:"maxResults", parent: name, max: 50)
+            try validate(self.maxResults, name:"maxResults", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -2085,10 +2102,10 @@ extension GuardDuty {
         }
 
         public func validate(name: String) throws {
-            try validate(detectorId, name:"detectorId", parent: name, max: 300)
-            try validate(detectorId, name:"detectorId", parent: name, min: 1)
-            try validate(maxResults, name:"maxResults", parent: name, max: 50)
-            try validate(maxResults, name:"maxResults", parent: name, min: 1)
+            try validate(self.detectorId, name:"detectorId", parent: name, max: 300)
+            try validate(self.detectorId, name:"detectorId", parent: name, min: 1)
+            try validate(self.maxResults, name:"maxResults", parent: name, max: 50)
+            try validate(self.maxResults, name:"maxResults", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -2143,10 +2160,10 @@ extension GuardDuty {
         }
 
         public func validate(name: String) throws {
-            try validate(detectorId, name:"detectorId", parent: name, max: 300)
-            try validate(detectorId, name:"detectorId", parent: name, min: 1)
-            try validate(maxResults, name:"maxResults", parent: name, max: 50)
-            try validate(maxResults, name:"maxResults", parent: name, min: 1)
+            try validate(self.detectorId, name:"detectorId", parent: name, max: 300)
+            try validate(self.detectorId, name:"detectorId", parent: name, min: 1)
+            try validate(self.maxResults, name:"maxResults", parent: name, max: 50)
+            try validate(self.maxResults, name:"maxResults", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -2195,8 +2212,8 @@ extension GuardDuty {
         }
 
         public func validate(name: String) throws {
-            try validate(maxResults, name:"maxResults", parent: name, max: 50)
-            try validate(maxResults, name:"maxResults", parent: name, min: 1)
+            try validate(self.maxResults, name:"maxResults", parent: name, max: 50)
+            try validate(self.maxResults, name:"maxResults", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -2252,10 +2269,10 @@ extension GuardDuty {
         }
 
         public func validate(name: String) throws {
-            try validate(detectorId, name:"detectorId", parent: name, max: 300)
-            try validate(detectorId, name:"detectorId", parent: name, min: 1)
-            try validate(maxResults, name:"maxResults", parent: name, max: 50)
-            try validate(maxResults, name:"maxResults", parent: name, min: 1)
+            try validate(self.detectorId, name:"detectorId", parent: name, max: 300)
+            try validate(self.detectorId, name:"detectorId", parent: name, min: 1)
+            try validate(self.maxResults, name:"maxResults", parent: name, max: 50)
+            try validate(self.maxResults, name:"maxResults", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -2301,7 +2318,7 @@ extension GuardDuty {
         }
 
         public func validate(name: String) throws {
-            try validate(resourceArn, name:"resourceArn", parent: name, pattern: "^arn:[A-Za-z_.-]{1,20}:guardduty:[A-Za-z0-9_/.-]{0,63}:\\d+:detector/[A-Za-z0-9_/.-]{32,264}$")
+            try validate(self.resourceArn, name:"resourceArn", parent: name, pattern: "^arn:[A-Za-z_.-]{1,20}:guardduty:[A-Za-z0-9_/.-]{0,63}:\\d+:detector/[A-Za-z0-9_/.-]{32,264}$")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -2314,6 +2331,7 @@ extension GuardDuty {
             AWSShapeMember(label: "Tags", location: .body(locationName: "tags"), required: false, type: .map)
         ]
 
+        /// The tags associated with the resource.
         public let tags: [String: String]?
 
         public init(tags: [String: String]? = nil) {
@@ -2346,10 +2364,10 @@ extension GuardDuty {
         }
 
         public func validate(name: String) throws {
-            try validate(detectorId, name:"detectorId", parent: name, max: 300)
-            try validate(detectorId, name:"detectorId", parent: name, min: 1)
-            try validate(maxResults, name:"maxResults", parent: name, max: 50)
-            try validate(maxResults, name:"maxResults", parent: name, min: 1)
+            try validate(self.detectorId, name:"detectorId", parent: name, max: 300)
+            try validate(self.detectorId, name:"detectorId", parent: name, min: 1)
+            try validate(self.maxResults, name:"maxResults", parent: name, max: 50)
+            try validate(self.maxResults, name:"maxResults", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -2411,11 +2429,11 @@ extension GuardDuty {
             AWSShapeMember(label: "RelationshipStatus", location: .body(locationName: "relationshipStatus"), required: false, type: .string)
         ]
 
-        /// Master account ID
+        /// The ID of the account used as the Master account.
         public let accountId: String?
         /// This value is used to validate the master account to the member account.
         public let invitationId: String?
-        /// Timestamp at which the invitation was sent
+        /// Timestamp at which the invitation was sent.
         public let invitedAt: String?
         /// The status of the relationship between the master and member accounts.
         public let relationshipStatus: String?
@@ -2828,6 +2846,7 @@ extension GuardDuty {
             AWSShapeMember(label: "DetectorId", location: .body(locationName: "detectorId"), required: false, type: .string), 
             AWSShapeMember(label: "EventFirstSeen", location: .body(locationName: "eventFirstSeen"), required: false, type: .string), 
             AWSShapeMember(label: "EventLastSeen", location: .body(locationName: "eventLastSeen"), required: false, type: .string), 
+            AWSShapeMember(label: "Evidence", location: .body(locationName: "evidence"), required: false, type: .structure), 
             AWSShapeMember(label: "ResourceRole", location: .body(locationName: "resourceRole"), required: false, type: .string), 
             AWSShapeMember(label: "ServiceName", location: .body(locationName: "serviceName"), required: false, type: .string), 
             AWSShapeMember(label: "UserFeedback", location: .body(locationName: "userFeedback"), required: false, type: .string)
@@ -2845,6 +2864,8 @@ extension GuardDuty {
         public let eventFirstSeen: String?
         /// Last seen timestamp of the activity that prompted GuardDuty to generate this finding.
         public let eventLastSeen: String?
+        /// An evidence object associated with the service.
+        public let evidence: Evidence?
         /// Resource role information for this finding.
         public let resourceRole: String?
         /// The name of the AWS service (GuardDuty) that generated a finding.
@@ -2852,13 +2873,14 @@ extension GuardDuty {
         /// Feedback left about the finding.
         public let userFeedback: String?
 
-        public init(action: Action? = nil, archived: Bool? = nil, count: Int? = nil, detectorId: String? = nil, eventFirstSeen: String? = nil, eventLastSeen: String? = nil, resourceRole: String? = nil, serviceName: String? = nil, userFeedback: String? = nil) {
+        public init(action: Action? = nil, archived: Bool? = nil, count: Int? = nil, detectorId: String? = nil, eventFirstSeen: String? = nil, eventLastSeen: String? = nil, evidence: Evidence? = nil, resourceRole: String? = nil, serviceName: String? = nil, userFeedback: String? = nil) {
             self.action = action
             self.archived = archived
             self.count = count
             self.detectorId = detectorId
             self.eventFirstSeen = eventFirstSeen
             self.eventLastSeen = eventLastSeen
+            self.evidence = evidence
             self.resourceRole = resourceRole
             self.serviceName = serviceName
             self.userFeedback = userFeedback
@@ -2871,6 +2893,7 @@ extension GuardDuty {
             case detectorId = "detectorId"
             case eventFirstSeen = "eventFirstSeen"
             case eventLastSeen = "eventLastSeen"
+            case evidence = "evidence"
             case resourceRole = "resourceRole"
             case serviceName = "serviceName"
             case userFeedback = "userFeedback"
@@ -2916,14 +2939,14 @@ extension GuardDuty {
         }
 
         public func validate(name: String) throws {
-            try accountIds.forEach {
+            try self.accountIds.forEach {
                 try validate($0, name: "accountIds[]", parent: name, max: 12)
                 try validate($0, name: "accountIds[]", parent: name, min: 12)
             }
-            try validate(accountIds, name:"accountIds", parent: name, max: 50)
-            try validate(accountIds, name:"accountIds", parent: name, min: 1)
-            try validate(detectorId, name:"detectorId", parent: name, max: 300)
-            try validate(detectorId, name:"detectorId", parent: name, min: 1)
+            try validate(self.accountIds, name:"accountIds", parent: name, max: 50)
+            try validate(self.accountIds, name:"accountIds", parent: name, min: 1)
+            try validate(self.detectorId, name:"detectorId", parent: name, max: 300)
+            try validate(self.detectorId, name:"detectorId", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -2966,14 +2989,14 @@ extension GuardDuty {
         }
 
         public func validate(name: String) throws {
-            try accountIds.forEach {
+            try self.accountIds.forEach {
                 try validate($0, name: "accountIds[]", parent: name, max: 12)
                 try validate($0, name: "accountIds[]", parent: name, min: 12)
             }
-            try validate(accountIds, name:"accountIds", parent: name, max: 50)
-            try validate(accountIds, name:"accountIds", parent: name, min: 1)
-            try validate(detectorId, name:"detectorId", parent: name, max: 300)
-            try validate(detectorId, name:"detectorId", parent: name, min: 1)
+            try validate(self.accountIds, name:"accountIds", parent: name, max: 50)
+            try validate(self.accountIds, name:"accountIds", parent: name, min: 1)
+            try validate(self.detectorId, name:"detectorId", parent: name, max: 300)
+            try validate(self.detectorId, name:"detectorId", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -3038,8 +3061,8 @@ extension GuardDuty {
         }
 
         public func validate(name: String) throws {
-            try validate(resourceArn, name:"resourceArn", parent: name, pattern: "^arn:[A-Za-z_.-]{1,20}:guardduty:[A-Za-z0-9_/.-]{0,63}:\\d+:detector/[A-Za-z0-9_/.-]{32,264}$")
-            try tags.forEach {
+            try validate(self.resourceArn, name:"resourceArn", parent: name, pattern: "^arn:[A-Za-z_.-]{1,20}:guardduty:[A-Za-z0-9_/.-]{0,63}:\\d+:detector/[A-Za-z0-9_/.-]{32,264}$")
+            try self.tags.forEach {
                 try validate($0.key, name:"tags.key", parent: name, max: 128)
                 try validate($0.key, name:"tags.key", parent: name, min: 1)
                 try validate($0.key, name:"tags.key", parent: name, pattern: "^(?!aws:)[a-zA-Z+-=._:/]+$")
@@ -3082,6 +3105,28 @@ extension GuardDuty {
         public var description: String { return self.rawValue }
     }
 
+    public struct ThreatIntelligenceDetail: AWSShape {
+        public static var _members: [AWSShapeMember] = [
+            AWSShapeMember(label: "ThreatListName", location: .body(locationName: "threatListName"), required: false, type: .string), 
+            AWSShapeMember(label: "ThreatNames", location: .body(locationName: "threatNames"), required: false, type: .list)
+        ]
+
+        /// The name of the threat intelligence list that triggered the finding.
+        public let threatListName: String?
+        /// A list of names of the threats in the threat intelligence list that triggered the finding.
+        public let threatNames: [String]?
+
+        public init(threatListName: String? = nil, threatNames: [String]? = nil) {
+            self.threatListName = threatListName
+            self.threatNames = threatNames
+        }
+
+        private enum CodingKeys: String, CodingKey {
+            case threatListName = "threatListName"
+            case threatNames = "threatNames"
+        }
+    }
+
     public struct UnarchiveFindingsRequest: AWSShape {
         public static var _members: [AWSShapeMember] = [
             AWSShapeMember(label: "DetectorId", location: .uri(locationName: "detectorId"), required: true, type: .string), 
@@ -3099,14 +3144,14 @@ extension GuardDuty {
         }
 
         public func validate(name: String) throws {
-            try validate(detectorId, name:"detectorId", parent: name, max: 300)
-            try validate(detectorId, name:"detectorId", parent: name, min: 1)
-            try findingIds.forEach {
+            try validate(self.detectorId, name:"detectorId", parent: name, max: 300)
+            try validate(self.detectorId, name:"detectorId", parent: name, min: 1)
+            try self.findingIds.forEach {
                 try validate($0, name: "findingIds[]", parent: name, max: 300)
                 try validate($0, name: "findingIds[]", parent: name, min: 1)
             }
-            try validate(findingIds, name:"findingIds", parent: name, max: 50)
-            try validate(findingIds, name:"findingIds", parent: name, min: 0)
+            try validate(self.findingIds, name:"findingIds", parent: name, max: 50)
+            try validate(self.findingIds, name:"findingIds", parent: name, min: 0)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -3162,14 +3207,14 @@ extension GuardDuty {
         }
 
         public func validate(name: String) throws {
-            try validate(resourceArn, name:"resourceArn", parent: name, pattern: "^arn:[A-Za-z_.-]{1,20}:guardduty:[A-Za-z0-9_/.-]{0,63}:\\d+:detector/[A-Za-z0-9_/.-]{32,264}$")
-            try tagKeys.forEach {
+            try validate(self.resourceArn, name:"resourceArn", parent: name, pattern: "^arn:[A-Za-z_.-]{1,20}:guardduty:[A-Za-z0-9_/.-]{0,63}:\\d+:detector/[A-Za-z0-9_/.-]{32,264}$")
+            try self.tagKeys.forEach {
                 try validate($0, name: "tagKeys[]", parent: name, max: 128)
                 try validate($0, name: "tagKeys[]", parent: name, min: 1)
                 try validate($0, name: "tagKeys[]", parent: name, pattern: "^(?!aws:)[a-zA-Z+-=._:/]+$")
             }
-            try validate(tagKeys, name:"tagKeys", parent: name, max: 200)
-            try validate(tagKeys, name:"tagKeys", parent: name, min: 1)
+            try validate(self.tagKeys, name:"tagKeys", parent: name, max: 200)
+            try validate(self.tagKeys, name:"tagKeys", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -3207,8 +3252,8 @@ extension GuardDuty {
         }
 
         public func validate(name: String) throws {
-            try validate(detectorId, name:"detectorId", parent: name, max: 300)
-            try validate(detectorId, name:"detectorId", parent: name, min: 1)
+            try validate(self.detectorId, name:"detectorId", parent: name, max: 300)
+            try validate(self.detectorId, name:"detectorId", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -3259,12 +3304,12 @@ extension GuardDuty {
         }
 
         public func validate(name: String) throws {
-            try validate(description, name:"description", parent: name, max: 512)
-            try validate(description, name:"description", parent: name, min: 0)
-            try validate(detectorId, name:"detectorId", parent: name, max: 300)
-            try validate(detectorId, name:"detectorId", parent: name, min: 1)
-            try validate(rank, name:"rank", parent: name, max: 100)
-            try validate(rank, name:"rank", parent: name, min: 1)
+            try validate(self.description, name:"description", parent: name, max: 512)
+            try validate(self.description, name:"description", parent: name, min: 0)
+            try validate(self.detectorId, name:"detectorId", parent: name, max: 300)
+            try validate(self.detectorId, name:"detectorId", parent: name, min: 1)
+            try validate(self.rank, name:"rank", parent: name, max: 100)
+            try validate(self.rank, name:"rank", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -3319,14 +3364,14 @@ extension GuardDuty {
         }
 
         public func validate(name: String) throws {
-            try validate(detectorId, name:"detectorId", parent: name, max: 300)
-            try validate(detectorId, name:"detectorId", parent: name, min: 1)
-            try findingIds.forEach {
+            try validate(self.detectorId, name:"detectorId", parent: name, max: 300)
+            try validate(self.detectorId, name:"detectorId", parent: name, min: 1)
+            try self.findingIds.forEach {
                 try validate($0, name: "findingIds[]", parent: name, max: 300)
                 try validate($0, name: "findingIds[]", parent: name, min: 1)
             }
-            try validate(findingIds, name:"findingIds", parent: name, max: 50)
-            try validate(findingIds, name:"findingIds", parent: name, min: 0)
+            try validate(self.findingIds, name:"findingIds", parent: name, max: 50)
+            try validate(self.findingIds, name:"findingIds", parent: name, min: 0)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -3374,12 +3419,12 @@ extension GuardDuty {
         }
 
         public func validate(name: String) throws {
-            try validate(detectorId, name:"detectorId", parent: name, max: 300)
-            try validate(detectorId, name:"detectorId", parent: name, min: 1)
-            try validate(location, name:"location", parent: name, max: 300)
-            try validate(location, name:"location", parent: name, min: 1)
-            try validate(name, name:"name", parent: name, max: 300)
-            try validate(name, name:"name", parent: name, min: 1)
+            try validate(self.detectorId, name:"detectorId", parent: name, max: 300)
+            try validate(self.detectorId, name:"detectorId", parent: name, min: 1)
+            try validate(self.location, name:"location", parent: name, max: 300)
+            try validate(self.location, name:"location", parent: name, min: 1)
+            try validate(self.name, name:"name", parent: name, max: 300)
+            try validate(self.name, name:"name", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -3428,12 +3473,12 @@ extension GuardDuty {
         }
 
         public func validate(name: String) throws {
-            try validate(detectorId, name:"detectorId", parent: name, max: 300)
-            try validate(detectorId, name:"detectorId", parent: name, min: 1)
-            try validate(location, name:"location", parent: name, max: 300)
-            try validate(location, name:"location", parent: name, min: 1)
-            try validate(name, name:"name", parent: name, max: 300)
-            try validate(name, name:"name", parent: name, min: 1)
+            try validate(self.detectorId, name:"detectorId", parent: name, max: 300)
+            try validate(self.detectorId, name:"detectorId", parent: name, min: 1)
+            try validate(self.location, name:"location", parent: name, max: 300)
+            try validate(self.location, name:"location", parent: name, min: 1)
+            try validate(self.name, name:"name", parent: name, max: 300)
+            try validate(self.name, name:"name", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {

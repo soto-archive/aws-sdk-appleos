@@ -21,15 +21,15 @@ extension GlobalAccelerator {
         public let acceleratorArn: String?
         /// The date and time that the accelerator was created.
         public let createdTime: TimeStamp?
-        /// Indicates whether theaccelerator is enabled. The value is true or false. The default value is true.  If the value is set to true, the accelerator cannot be deleted. If set to false, accelerator can be deleted.
+        /// Indicates whether the accelerator is enabled. The value is true or false. The default value is true.  If the value is set to true, the accelerator cannot be deleted. If set to false, accelerator can be deleted.
         public let enabled: Bool?
         /// The value for the address type must be IPv4. 
         public let ipAddressType: IpAddressType?
-        /// IP address set associated with the accelerator.
+        /// The static IP addresses that Global Accelerator associates with the accelerator.
         public let ipSets: [IpSet]?
         /// The date and time that the accelerator was last modified.
         public let lastModifiedTime: TimeStamp?
-        /// The name of the accelerator. The name can have a maximum of 32 characters, must contain only alphanumeric characters or hyphens (-), and must not begin or end with a hyphen.
+        /// The name of the accelerator. The name must contain only alphanumeric characters or hyphens (-), and must not begin or end with a hyphen.
         public let name: String?
         /// Describes the deployment status of the accelerator.
         public let status: AcceleratorStatus?
@@ -121,8 +121,8 @@ extension GlobalAccelerator {
         }
 
         public func validate(name: String) throws {
-            try validate(idempotencyToken, name:"idempotencyToken", parent: name, max: 255)
-            try validate(name, name:"name", parent: name, max: 255)
+            try validate(self.idempotencyToken, name:"idempotencyToken", parent: name, max: 255)
+            try validate(self.name, name:"name", parent: name, max: 255)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -199,23 +199,23 @@ extension GlobalAccelerator {
         }
 
         public func validate(name: String) throws {
-            try endpointConfigurations?.forEach {
+            try self.endpointConfigurations?.forEach {
                 try $0.validate(name: "\(name).endpointConfigurations[]")
             }
-            try validate(endpointConfigurations, name:"endpointConfigurations", parent: name, max: 10)
-            try validate(endpointConfigurations, name:"endpointConfigurations", parent: name, min: 0)
-            try validate(endpointGroupRegion, name:"endpointGroupRegion", parent: name, max: 255)
-            try validate(healthCheckIntervalSeconds, name:"healthCheckIntervalSeconds", parent: name, max: 30)
-            try validate(healthCheckIntervalSeconds, name:"healthCheckIntervalSeconds", parent: name, min: 10)
-            try validate(healthCheckPath, name:"healthCheckPath", parent: name, max: 255)
-            try validate(healthCheckPort, name:"healthCheckPort", parent: name, max: 65535)
-            try validate(healthCheckPort, name:"healthCheckPort", parent: name, min: 1)
-            try validate(idempotencyToken, name:"idempotencyToken", parent: name, max: 255)
-            try validate(listenerArn, name:"listenerArn", parent: name, max: 255)
-            try validate(thresholdCount, name:"thresholdCount", parent: name, max: 10)
-            try validate(thresholdCount, name:"thresholdCount", parent: name, min: 1)
-            try validate(trafficDialPercentage, name:"trafficDialPercentage", parent: name, max: 100)
-            try validate(trafficDialPercentage, name:"trafficDialPercentage", parent: name, min: 0)
+            try validate(self.endpointConfigurations, name:"endpointConfigurations", parent: name, max: 10)
+            try validate(self.endpointConfigurations, name:"endpointConfigurations", parent: name, min: 0)
+            try validate(self.endpointGroupRegion, name:"endpointGroupRegion", parent: name, max: 255)
+            try validate(self.healthCheckIntervalSeconds, name:"healthCheckIntervalSeconds", parent: name, max: 30)
+            try validate(self.healthCheckIntervalSeconds, name:"healthCheckIntervalSeconds", parent: name, min: 10)
+            try validate(self.healthCheckPath, name:"healthCheckPath", parent: name, max: 255)
+            try validate(self.healthCheckPort, name:"healthCheckPort", parent: name, max: 65535)
+            try validate(self.healthCheckPort, name:"healthCheckPort", parent: name, min: 1)
+            try validate(self.idempotencyToken, name:"idempotencyToken", parent: name, max: 255)
+            try validate(self.listenerArn, name:"listenerArn", parent: name, max: 255)
+            try validate(self.thresholdCount, name:"thresholdCount", parent: name, max: 10)
+            try validate(self.thresholdCount, name:"thresholdCount", parent: name, min: 1)
+            try validate(self.trafficDialPercentage, name:"trafficDialPercentage", parent: name, max: 100)
+            try validate(self.trafficDialPercentage, name:"trafficDialPercentage", parent: name, min: 0)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -278,13 +278,13 @@ extension GlobalAccelerator {
         }
 
         public func validate(name: String) throws {
-            try validate(acceleratorArn, name:"acceleratorArn", parent: name, max: 255)
-            try validate(idempotencyToken, name:"idempotencyToken", parent: name, max: 255)
-            try portRanges.forEach {
+            try validate(self.acceleratorArn, name:"acceleratorArn", parent: name, max: 255)
+            try validate(self.idempotencyToken, name:"idempotencyToken", parent: name, max: 255)
+            try self.portRanges.forEach {
                 try $0.validate(name: "\(name).portRanges[]")
             }
-            try validate(portRanges, name:"portRanges", parent: name, max: 10)
-            try validate(portRanges, name:"portRanges", parent: name, min: 1)
+            try validate(self.portRanges, name:"portRanges", parent: name, max: 10)
+            try validate(self.portRanges, name:"portRanges", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -326,7 +326,7 @@ extension GlobalAccelerator {
         }
 
         public func validate(name: String) throws {
-            try validate(acceleratorArn, name:"acceleratorArn", parent: name, max: 255)
+            try validate(self.acceleratorArn, name:"acceleratorArn", parent: name, max: 255)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -347,7 +347,7 @@ extension GlobalAccelerator {
         }
 
         public func validate(name: String) throws {
-            try validate(endpointGroupArn, name:"endpointGroupArn", parent: name, max: 255)
+            try validate(self.endpointGroupArn, name:"endpointGroupArn", parent: name, max: 255)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -368,7 +368,7 @@ extension GlobalAccelerator {
         }
 
         public func validate(name: String) throws {
-            try validate(listenerArn, name:"listenerArn", parent: name, max: 255)
+            try validate(self.listenerArn, name:"listenerArn", parent: name, max: 255)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -378,18 +378,18 @@ extension GlobalAccelerator {
 
     public struct DescribeAcceleratorAttributesRequest: AWSShape {
         public static var _members: [AWSShapeMember] = [
-            AWSShapeMember(label: "AcceleratorArn", required: false, type: .string)
+            AWSShapeMember(label: "AcceleratorArn", required: true, type: .string)
         ]
 
-        /// The Amazon Resource Name (ARN) of the accelerator with the attributes that you want to describe. Value is required.
-        public let acceleratorArn: String?
+        /// The Amazon Resource Name (ARN) of the accelerator with the attributes that you want to describe.
+        public let acceleratorArn: String
 
-        public init(acceleratorArn: String? = nil) {
+        public init(acceleratorArn: String) {
             self.acceleratorArn = acceleratorArn
         }
 
         public func validate(name: String) throws {
-            try validate(acceleratorArn, name:"acceleratorArn", parent: name, max: 255)
+            try validate(self.acceleratorArn, name:"acceleratorArn", parent: name, max: 255)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -427,7 +427,7 @@ extension GlobalAccelerator {
         }
 
         public func validate(name: String) throws {
-            try validate(acceleratorArn, name:"acceleratorArn", parent: name, max: 255)
+            try validate(self.acceleratorArn, name:"acceleratorArn", parent: name, max: 255)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -465,7 +465,7 @@ extension GlobalAccelerator {
         }
 
         public func validate(name: String) throws {
-            try validate(endpointGroupArn, name:"endpointGroupArn", parent: name, max: 255)
+            try validate(self.endpointGroupArn, name:"endpointGroupArn", parent: name, max: 255)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -503,7 +503,7 @@ extension GlobalAccelerator {
         }
 
         public func validate(name: String) throws {
-            try validate(listenerArn, name:"listenerArn", parent: name, max: 255)
+            try validate(self.listenerArn, name:"listenerArn", parent: name, max: 255)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -530,27 +530,32 @@ extension GlobalAccelerator {
 
     public struct EndpointConfiguration: AWSShape {
         public static var _members: [AWSShapeMember] = [
+            AWSShapeMember(label: "ClientIPPreservationEnabled", required: false, type: .boolean), 
             AWSShapeMember(label: "EndpointId", required: false, type: .string), 
             AWSShapeMember(label: "Weight", required: false, type: .integer)
         ]
 
+        /// Indicates whether client IP address preservation is enabled for an Application Load Balancer endpoint. The value is true or false. The default value is true for new accelerators.  If the value is set to true, the client's IP address is preserved in the X-Forwarded-For request header as traffic travels to applications on the Application Load Balancer endpoint fronted by the accelerator. For more information, see  Viewing Client IP Addresses in AWS Global Accelerator in the AWS Global Accelerator Developer Guide.
+        public let clientIPPreservationEnabled: Bool?
         /// An ID for the endpoint. If the endpoint is a Network Load Balancer or Application Load Balancer, this is the Amazon Resource Name (ARN) of the resource. If the endpoint is an Elastic IP address, this is the Elastic IP address allocation ID.
         public let endpointId: String?
         /// The weight associated with the endpoint. When you add weights to endpoints, you configure AWS Global Accelerator to route traffic based on proportions that you specify. For example, you might specify endpoint weights of 4, 5, 5, and 6 (sum=20). The result is that 4/20 of your traffic, on average, is routed to the first endpoint, 5/20 is routed both to the second and third endpoints, and 6/20 is routed to the last endpoint. For more information, see Endpoint Weights in the AWS Global Accelerator Developer Guide.
         public let weight: Int?
 
-        public init(endpointId: String? = nil, weight: Int? = nil) {
+        public init(clientIPPreservationEnabled: Bool? = nil, endpointId: String? = nil, weight: Int? = nil) {
+            self.clientIPPreservationEnabled = clientIPPreservationEnabled
             self.endpointId = endpointId
             self.weight = weight
         }
 
         public func validate(name: String) throws {
-            try validate(endpointId, name:"endpointId", parent: name, max: 255)
-            try validate(weight, name:"weight", parent: name, max: 255)
-            try validate(weight, name:"weight", parent: name, min: 0)
+            try validate(self.endpointId, name:"endpointId", parent: name, max: 255)
+            try validate(self.weight, name:"weight", parent: name, max: 255)
+            try validate(self.weight, name:"weight", parent: name, min: 0)
         }
 
         private enum CodingKeys: String, CodingKey {
+            case clientIPPreservationEnabled = "ClientIPPreservationEnabled"
             case endpointId = "EndpointId"
             case weight = "Weight"
         }
@@ -558,13 +563,16 @@ extension GlobalAccelerator {
 
     public struct EndpointDescription: AWSShape {
         public static var _members: [AWSShapeMember] = [
+            AWSShapeMember(label: "ClientIPPreservationEnabled", required: false, type: .boolean), 
             AWSShapeMember(label: "EndpointId", required: false, type: .string), 
             AWSShapeMember(label: "HealthReason", required: false, type: .string), 
             AWSShapeMember(label: "HealthState", required: false, type: .enum), 
             AWSShapeMember(label: "Weight", required: false, type: .integer)
         ]
 
-        /// An ID for the endpoint. If the endpoint is a Network Load Balancer or Application Load Balancer, this is the Amazon Resource Name (ARN) of the resource. If the endpoint is an Elastic IP address, this is the Elastic IP address allocation ID.
+        /// Indicates whether client IP address preservation is enabled for an Application Load Balancer endpoint. The value is true or false. The default value is true for new accelerators.  If the value is set to true, the client's IP address is preserved in the X-Forwarded-For request header as traffic travels to applications on the Application Load Balancer endpoint fronted by the accelerator. For more information, see  Viewing Client IP Addresses in AWS Global Accelerator in the AWS Global Accelerator Developer Guide.
+        public let clientIPPreservationEnabled: Bool?
+        /// An ID for the endpoint. If the endpoint is a Network Load Balancer or Application Load Balancer, this is the Amazon Resource Name (ARN) of the resource. If the endpoint is an Elastic IP address, this is the Elastic IP address allocation ID. An Application Load Balancer can be either internal or internet-facing.
         public let endpointId: String?
         /// The reason code associated with why the endpoint is not healthy. If the endpoint state is healthy, a reason code is not provided. If the endpoint state is unhealthy, the reason code can be one of the following values:    Timeout: The health check requests to the endpoint are timing out before returning a status.    Failed: The health check failed, for example because the endpoint response was invalid (malformed).   If the endpoint state is initial, the reason code can be one of the following values:    ProvisioningInProgress: The endpoint is in the process of being provisioned.    InitialHealthChecking: Global Accelerator is still setting up the minimum number of health checks for the endpoint that are required to determine its health status.  
         public let healthReason: String?
@@ -573,7 +581,8 @@ extension GlobalAccelerator {
         /// The weight associated with the endpoint. When you add weights to endpoints, you configure AWS Global Accelerator to route traffic based on proportions that you specify. For example, you might specify endpoint weights of 4, 5, 5, and 6 (sum=20). The result is that 4/20 of your traffic, on average, is routed to the first endpoint, 5/20 is routed both to the second and third endpoints, and 6/20 is routed to the last endpoint. For more information, see Endpoint Weights in the AWS Global Accelerator Developer Guide. 
         public let weight: Int?
 
-        public init(endpointId: String? = nil, healthReason: String? = nil, healthState: HealthState? = nil, weight: Int? = nil) {
+        public init(clientIPPreservationEnabled: Bool? = nil, endpointId: String? = nil, healthReason: String? = nil, healthState: HealthState? = nil, weight: Int? = nil) {
+            self.clientIPPreservationEnabled = clientIPPreservationEnabled
             self.endpointId = endpointId
             self.healthReason = healthReason
             self.healthState = healthState
@@ -581,6 +590,7 @@ extension GlobalAccelerator {
         }
 
         private enum CodingKeys: String, CodingKey {
+            case clientIPPreservationEnabled = "ClientIPPreservationEnabled"
             case endpointId = "EndpointId"
             case healthReason = "HealthReason"
             case healthState = "HealthState"
@@ -703,9 +713,9 @@ extension GlobalAccelerator {
         }
 
         public func validate(name: String) throws {
-            try validate(maxResults, name:"maxResults", parent: name, max: 100)
-            try validate(maxResults, name:"maxResults", parent: name, min: 1)
-            try validate(nextToken, name:"nextToken", parent: name, max: 255)
+            try validate(self.maxResults, name:"maxResults", parent: name, max: 100)
+            try validate(self.maxResults, name:"maxResults", parent: name, min: 1)
+            try validate(self.nextToken, name:"nextToken", parent: name, max: 255)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -757,10 +767,10 @@ extension GlobalAccelerator {
         }
 
         public func validate(name: String) throws {
-            try validate(listenerArn, name:"listenerArn", parent: name, max: 255)
-            try validate(maxResults, name:"maxResults", parent: name, max: 100)
-            try validate(maxResults, name:"maxResults", parent: name, min: 1)
-            try validate(nextToken, name:"nextToken", parent: name, max: 255)
+            try validate(self.listenerArn, name:"listenerArn", parent: name, max: 255)
+            try validate(self.maxResults, name:"maxResults", parent: name, max: 100)
+            try validate(self.maxResults, name:"maxResults", parent: name, min: 1)
+            try validate(self.nextToken, name:"nextToken", parent: name, max: 255)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -813,10 +823,10 @@ extension GlobalAccelerator {
         }
 
         public func validate(name: String) throws {
-            try validate(acceleratorArn, name:"acceleratorArn", parent: name, max: 255)
-            try validate(maxResults, name:"maxResults", parent: name, max: 100)
-            try validate(maxResults, name:"maxResults", parent: name, min: 1)
-            try validate(nextToken, name:"nextToken", parent: name, max: 255)
+            try validate(self.acceleratorArn, name:"acceleratorArn", parent: name, max: 255)
+            try validate(self.maxResults, name:"maxResults", parent: name, max: 100)
+            try validate(self.maxResults, name:"maxResults", parent: name, min: 1)
+            try validate(self.nextToken, name:"nextToken", parent: name, max: 255)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -897,10 +907,10 @@ extension GlobalAccelerator {
         }
 
         public func validate(name: String) throws {
-            try validate(fromPort, name:"fromPort", parent: name, max: 65535)
-            try validate(fromPort, name:"fromPort", parent: name, min: 1)
-            try validate(toPort, name:"toPort", parent: name, max: 65535)
-            try validate(toPort, name:"toPort", parent: name, min: 1)
+            try validate(self.fromPort, name:"fromPort", parent: name, max: 65535)
+            try validate(self.fromPort, name:"fromPort", parent: name, min: 1)
+            try validate(self.toPort, name:"toPort", parent: name, max: 65535)
+            try validate(self.toPort, name:"toPort", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -917,14 +927,14 @@ extension GlobalAccelerator {
 
     public struct UpdateAcceleratorAttributesRequest: AWSShape {
         public static var _members: [AWSShapeMember] = [
-            AWSShapeMember(label: "AcceleratorArn", required: false, type: .string), 
+            AWSShapeMember(label: "AcceleratorArn", required: true, type: .string), 
             AWSShapeMember(label: "FlowLogsEnabled", required: false, type: .boolean), 
             AWSShapeMember(label: "FlowLogsS3Bucket", required: false, type: .string), 
             AWSShapeMember(label: "FlowLogsS3Prefix", required: false, type: .string)
         ]
 
-        /// The Amazon Resource Name (ARN) of the accelerator that you want to update. Attribute is required.
-        public let acceleratorArn: String?
+        /// The Amazon Resource Name (ARN) of the accelerator that you want to update.
+        public let acceleratorArn: String
         /// Update whether flow logs are enabled. The default value is false. If the value is true, FlowLogsS3Bucket and FlowLogsS3Prefix must be specified. For more information, see Flow Logs in the AWS Global Accelerator Developer Guide.
         public let flowLogsEnabled: Bool?
         /// The name of the Amazon S3 bucket for the flow logs. Attribute is required if FlowLogsEnabled is true. The bucket must exist and have a bucket policy that grants AWS Global Accelerator permission to write to the bucket.
@@ -932,7 +942,7 @@ extension GlobalAccelerator {
         /// Update the prefix for the location in the Amazon S3 bucket for the flow logs. Attribute is required if FlowLogsEnabled is true. If you don’t specify a prefix, the flow logs are stored in the root of the bucket.
         public let flowLogsS3Prefix: String?
 
-        public init(acceleratorArn: String? = nil, flowLogsEnabled: Bool? = nil, flowLogsS3Bucket: String? = nil, flowLogsS3Prefix: String? = nil) {
+        public init(acceleratorArn: String, flowLogsEnabled: Bool? = nil, flowLogsS3Bucket: String? = nil, flowLogsS3Prefix: String? = nil) {
             self.acceleratorArn = acceleratorArn
             self.flowLogsEnabled = flowLogsEnabled
             self.flowLogsS3Bucket = flowLogsS3Bucket
@@ -940,9 +950,9 @@ extension GlobalAccelerator {
         }
 
         public func validate(name: String) throws {
-            try validate(acceleratorArn, name:"acceleratorArn", parent: name, max: 255)
-            try validate(flowLogsS3Bucket, name:"flowLogsS3Bucket", parent: name, max: 255)
-            try validate(flowLogsS3Prefix, name:"flowLogsS3Prefix", parent: name, max: 255)
+            try validate(self.acceleratorArn, name:"acceleratorArn", parent: name, max: 255)
+            try validate(self.flowLogsS3Bucket, name:"flowLogsS3Bucket", parent: name, max: 255)
+            try validate(self.flowLogsS3Prefix, name:"flowLogsS3Prefix", parent: name, max: 255)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -995,8 +1005,8 @@ extension GlobalAccelerator {
         }
 
         public func validate(name: String) throws {
-            try validate(acceleratorArn, name:"acceleratorArn", parent: name, max: 255)
-            try validate(name, name:"name", parent: name, max: 255)
+            try validate(self.acceleratorArn, name:"acceleratorArn", parent: name, max: 255)
+            try validate(self.name, name:"name", parent: name, max: 255)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1065,21 +1075,21 @@ extension GlobalAccelerator {
         }
 
         public func validate(name: String) throws {
-            try endpointConfigurations?.forEach {
+            try self.endpointConfigurations?.forEach {
                 try $0.validate(name: "\(name).endpointConfigurations[]")
             }
-            try validate(endpointConfigurations, name:"endpointConfigurations", parent: name, max: 10)
-            try validate(endpointConfigurations, name:"endpointConfigurations", parent: name, min: 0)
-            try validate(endpointGroupArn, name:"endpointGroupArn", parent: name, max: 255)
-            try validate(healthCheckIntervalSeconds, name:"healthCheckIntervalSeconds", parent: name, max: 30)
-            try validate(healthCheckIntervalSeconds, name:"healthCheckIntervalSeconds", parent: name, min: 10)
-            try validate(healthCheckPath, name:"healthCheckPath", parent: name, max: 255)
-            try validate(healthCheckPort, name:"healthCheckPort", parent: name, max: 65535)
-            try validate(healthCheckPort, name:"healthCheckPort", parent: name, min: 1)
-            try validate(thresholdCount, name:"thresholdCount", parent: name, max: 10)
-            try validate(thresholdCount, name:"thresholdCount", parent: name, min: 1)
-            try validate(trafficDialPercentage, name:"trafficDialPercentage", parent: name, max: 100)
-            try validate(trafficDialPercentage, name:"trafficDialPercentage", parent: name, min: 0)
+            try validate(self.endpointConfigurations, name:"endpointConfigurations", parent: name, max: 10)
+            try validate(self.endpointConfigurations, name:"endpointConfigurations", parent: name, min: 0)
+            try validate(self.endpointGroupArn, name:"endpointGroupArn", parent: name, max: 255)
+            try validate(self.healthCheckIntervalSeconds, name:"healthCheckIntervalSeconds", parent: name, max: 30)
+            try validate(self.healthCheckIntervalSeconds, name:"healthCheckIntervalSeconds", parent: name, min: 10)
+            try validate(self.healthCheckPath, name:"healthCheckPath", parent: name, max: 255)
+            try validate(self.healthCheckPort, name:"healthCheckPort", parent: name, max: 65535)
+            try validate(self.healthCheckPort, name:"healthCheckPort", parent: name, min: 1)
+            try validate(self.thresholdCount, name:"thresholdCount", parent: name, max: 10)
+            try validate(self.thresholdCount, name:"thresholdCount", parent: name, min: 1)
+            try validate(self.trafficDialPercentage, name:"trafficDialPercentage", parent: name, max: 100)
+            try validate(self.trafficDialPercentage, name:"trafficDialPercentage", parent: name, min: 0)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1136,12 +1146,12 @@ extension GlobalAccelerator {
         }
 
         public func validate(name: String) throws {
-            try validate(listenerArn, name:"listenerArn", parent: name, max: 255)
-            try portRanges?.forEach {
+            try validate(self.listenerArn, name:"listenerArn", parent: name, max: 255)
+            try self.portRanges?.forEach {
                 try $0.validate(name: "\(name).portRanges[]")
             }
-            try validate(portRanges, name:"portRanges", parent: name, max: 10)
-            try validate(portRanges, name:"portRanges", parent: name, min: 1)
+            try validate(self.portRanges, name:"portRanges", parent: name, max: 10)
+            try validate(self.portRanges, name:"portRanges", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {

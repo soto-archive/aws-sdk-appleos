@@ -11,28 +11,29 @@ public struct ComprehendMedical {
 
     public let client: AWSClient
 
-    public init(accessKeyId: String? = nil, secretAccessKey: String? = nil, region: AWSSDKSwiftCore.Region? = nil, endpoint: String? = nil) {
+    public init(accessKeyId: String? = nil, secretAccessKey: String? = nil, sessionToken: String? = nil, region: AWSSDKSwiftCore.Region? = nil, endpoint: String? = nil, middlewares: [AWSServiceMiddleware] = []) {
         self.client = AWSClient(
             accessKeyId: accessKeyId,
             secretAccessKey: secretAccessKey,
+            sessionToken: sessionToken,
             region: region,
             amzTarget: "ComprehendMedical_20181030",
             service: "comprehendmedical",
             serviceProtocol: ServiceProtocol(type: .json, version: ServiceProtocol.Version(major: 1, minor: 1)),
             apiVersion: "2018-10-30",
             endpoint: endpoint,
-            middlewares: [],
+            middlewares: middlewares,
             possibleErrorTypes: [ComprehendMedicalErrorType.self]
         )
     }
 
     ///   Inspects the clinical text for a variety of medical entities and returns specific information about them such as entity category, location, and confidence score on that information .
-    public func detectEntities(_ input: DetectEntitiesRequest) throws -> Future<DetectEntitiesResponse> {
-        return try client.send(operation: "DetectEntities", path: "/", httpMethod: "POST", input: input)
+    public func detectEntities(_ input: DetectEntitiesRequest) -> Future<DetectEntitiesResponse> {
+        return client.send(operation: "DetectEntities", path: "/", httpMethod: "POST", input: input)
     }
 
     ///   Inspects the clinical text for personal health information (PHI) entities and entity category, location, and confidence score on that information.
-    public func detectPHI(_ input: DetectPHIRequest) throws -> Future<DetectPHIResponse> {
-        return try client.send(operation: "DetectPHI", path: "/", httpMethod: "POST", input: input)
+    public func detectPHI(_ input: DetectPHIRequest) -> Future<DetectPHIResponse> {
+        return client.send(operation: "DetectPHI", path: "/", httpMethod: "POST", input: input)
     }
 }

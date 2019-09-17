@@ -5,6 +5,37 @@ import AWSSDKSwiftCore
 
 extension AppStream {
 
+    public struct AccessEndpoint: AWSShape {
+        public static var _members: [AWSShapeMember] = [
+            AWSShapeMember(label: "EndpointType", required: true, type: .enum), 
+            AWSShapeMember(label: "VpceId", required: false, type: .string)
+        ]
+
+        /// The type of interface endpoint.
+        public let endpointType: AccessEndpointType
+        /// The identifier (ID) of the VPC in which the interface endpoint is used.
+        public let vpceId: String?
+
+        public init(endpointType: AccessEndpointType, vpceId: String? = nil) {
+            self.endpointType = endpointType
+            self.vpceId = vpceId
+        }
+
+        public func validate(name: String) throws {
+            try validate(self.vpceId, name:"vpceId", parent: name, min: 1)
+        }
+
+        private enum CodingKeys: String, CodingKey {
+            case endpointType = "EndpointType"
+            case vpceId = "VpceId"
+        }
+    }
+
+    public enum AccessEndpointType: String, CustomStringConvertible, Codable {
+        case streaming = "STREAMING"
+        public var description: String { return self.rawValue }
+    }
+
     public enum Action: String, CustomStringConvertible, Codable {
         case clipboardCopyFromLocalDevice = "CLIPBOARD_COPY_FROM_LOCAL_DEVICE"
         case clipboardCopyToLocalDevice = "CLIPBOARD_COPY_TO_LOCAL_DEVICE"
@@ -78,7 +109,7 @@ extension AppStream {
         }
 
         public func validate(name: String) throws {
-            try validate(settingsGroup, name:"settingsGroup", parent: name, max: 100)
+            try validate(self.settingsGroup, name:"settingsGroup", parent: name, max: 100)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -131,8 +162,8 @@ extension AppStream {
         }
 
         public func validate(name: String) throws {
-            try validate(fleetName, name:"fleetName", parent: name, min: 1)
-            try validate(stackName, name:"stackName", parent: name, min: 1)
+            try validate(self.fleetName, name:"fleetName", parent: name, min: 1)
+            try validate(self.stackName, name:"stackName", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -169,11 +200,11 @@ extension AppStream {
         }
 
         public func validate(name: String) throws {
-            try userStackAssociations.forEach {
+            try self.userStackAssociations.forEach {
                 try $0.validate(name: "\(name).userStackAssociations[]")
             }
-            try validate(userStackAssociations, name:"userStackAssociations", parent: name, max: 25)
-            try validate(userStackAssociations, name:"userStackAssociations", parent: name, min: 1)
+            try validate(self.userStackAssociations, name:"userStackAssociations", parent: name, max: 25)
+            try validate(self.userStackAssociations, name:"userStackAssociations", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -211,11 +242,11 @@ extension AppStream {
         }
 
         public func validate(name: String) throws {
-            try userStackAssociations.forEach {
+            try self.userStackAssociations.forEach {
                 try $0.validate(name: "\(name).userStackAssociations[]")
             }
-            try validate(userStackAssociations, name:"userStackAssociations", parent: name, max: 25)
-            try validate(userStackAssociations, name:"userStackAssociations", parent: name, min: 1)
+            try validate(self.userStackAssociations, name:"userStackAssociations", parent: name, max: 25)
+            try validate(self.userStackAssociations, name:"userStackAssociations", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -314,11 +345,11 @@ extension AppStream {
         }
 
         public func validate(name: String) throws {
-            try validate(destinationImageDescription, name:"destinationImageDescription", parent: name, max: 256)
-            try validate(destinationImageName, name:"destinationImageName", parent: name, pattern: "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,100}$")
-            try validate(destinationRegion, name:"destinationRegion", parent: name, max: 32)
-            try validate(destinationRegion, name:"destinationRegion", parent: name, min: 1)
-            try validate(sourceImageName, name:"sourceImageName", parent: name, pattern: "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,100}$")
+            try validate(self.destinationImageDescription, name:"destinationImageDescription", parent: name, max: 256)
+            try validate(self.destinationImageName, name:"destinationImageName", parent: name, pattern: "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,100}$")
+            try validate(self.destinationRegion, name:"destinationRegion", parent: name, max: 32)
+            try validate(self.destinationRegion, name:"destinationRegion", parent: name, min: 1)
+            try validate(self.sourceImageName, name:"sourceImageName", parent: name, pattern: "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,100}$")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -367,10 +398,10 @@ extension AppStream {
         }
 
         public func validate(name: String) throws {
-            try organizationalUnitDistinguishedNames.forEach {
+            try self.organizationalUnitDistinguishedNames.forEach {
                 try validate($0, name: "organizationalUnitDistinguishedNames[]", parent: name, max: 2000)
             }
-            try serviceAccountCredentials.validate(name: "\(name).serviceAccountCredentials")
+            try self.serviceAccountCredentials.validate(name: "\(name).serviceAccountCredentials")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -406,6 +437,7 @@ extension AppStream {
             AWSShapeMember(label: "DomainJoinInfo", required: false, type: .structure), 
             AWSShapeMember(label: "EnableDefaultInternetAccess", required: false, type: .boolean), 
             AWSShapeMember(label: "FleetType", required: false, type: .enum), 
+            AWSShapeMember(label: "IamRoleArn", required: false, type: .string), 
             AWSShapeMember(label: "IdleDisconnectTimeoutInSeconds", required: false, type: .integer), 
             AWSShapeMember(label: "ImageArn", required: false, type: .string), 
             AWSShapeMember(label: "ImageName", required: false, type: .string), 
@@ -430,6 +462,8 @@ extension AppStream {
         public let enableDefaultInternetAccess: Bool?
         /// The fleet type.  ALWAYS_ON  Provides users with instant-on access to their apps. You are charged for all running instances in your fleet, even if no users are streaming apps.  ON_DEMAND  Provide users with access to applications after they connect, which takes one to two minutes. You are charged for instance streaming when users are connected and a small hourly fee for instances that are not streaming apps.  
         public let fleetType: FleetType?
+        /// The Amazon Resource Name (ARN) of the IAM role to apply to the fleet. To assume a role, a fleet instance calls the AWS Security Token Service (STS) AssumeRole API operation and passes the ARN of the role to use. The operation creates a new session with temporary credentials.
+        public let iamRoleArn: String?
         /// The amount of time that users can be idle (inactive) before they are disconnected from their streaming session and the DisconnectTimeoutInSeconds time interval begins. Users are notified before they are disconnected due to inactivity. If they try to reconnect to the streaming session before the time interval specified in DisconnectTimeoutInSeconds elapses, they are connected to their previous session. Users are considered idle when they stop providing keyboard or mouse input during their streaming session. File uploads and downloads, audio in, audio out, and pixels changing do not qualify as user activity. If users continue to be idle after the time interval in IdleDisconnectTimeoutInSeconds elapses, they are disconnected. To prevent users from being disconnected due to inactivity, specify a value of 0. Otherwise, specify a value between 60 and 3600. The default value is 0.  If you enable this feature, we recommend that you specify a value that corresponds exactly to a whole number of minutes (for example, 60, 120, and 180). If you don't do this, the value is rounded to the nearest minute. For example, if you specify a value of 70, users are disconnected after 1 minute of inactivity. If you specify a value that is at the midpoint between two different minutes, the value is rounded up. For example, if you specify a value of 90, users are disconnected after 2 minutes of inactivity.  
         public let idleDisconnectTimeoutInSeconds: Int?
         /// The ARN of the public, private, or shared image to use.
@@ -442,12 +476,12 @@ extension AppStream {
         public let maxUserDurationInSeconds: Int?
         /// A unique name for the fleet.
         public let name: String
-        /// The tags to associate with the fleet. A tag is a key-value pair, and the value is optional. For example, Environment=Test. If you do not specify a value, Environment=.  If you do not specify a value, the value is set to an empty string. Generally allowed characters are: letters, numbers, and spaces representable in UTF-8, and the following special characters:  _ . : / = + \ - @ For more information, see Tagging Your Resources in the Amazon AppStream 2.0 Developer Guide.
+        /// The tags to associate with the fleet. A tag is a key-value pair, and the value is optional. For example, Environment=Test. If you do not specify a value, Environment=.  If you do not specify a value, the value is set to an empty string. Generally allowed characters are: letters, numbers, and spaces representable in UTF-8, and the following special characters:  _ . : / = + \ - @ For more information, see Tagging Your Resources in the Amazon AppStream 2.0 Administration Guide.
         public let tags: [String: String]?
         /// The VPC configuration for the fleet.
         public let vpcConfig: VpcConfig?
 
-        public init(computeCapacity: ComputeCapacity, description: String? = nil, disconnectTimeoutInSeconds: Int? = nil, displayName: String? = nil, domainJoinInfo: DomainJoinInfo? = nil, enableDefaultInternetAccess: Bool? = nil, fleetType: FleetType? = nil, idleDisconnectTimeoutInSeconds: Int? = nil, imageArn: String? = nil, imageName: String? = nil, instanceType: String, maxUserDurationInSeconds: Int? = nil, name: String, tags: [String: String]? = nil, vpcConfig: VpcConfig? = nil) {
+        public init(computeCapacity: ComputeCapacity, description: String? = nil, disconnectTimeoutInSeconds: Int? = nil, displayName: String? = nil, domainJoinInfo: DomainJoinInfo? = nil, enableDefaultInternetAccess: Bool? = nil, fleetType: FleetType? = nil, iamRoleArn: String? = nil, idleDisconnectTimeoutInSeconds: Int? = nil, imageArn: String? = nil, imageName: String? = nil, instanceType: String, maxUserDurationInSeconds: Int? = nil, name: String, tags: [String: String]? = nil, vpcConfig: VpcConfig? = nil) {
             self.computeCapacity = computeCapacity
             self.description = description
             self.disconnectTimeoutInSeconds = disconnectTimeoutInSeconds
@@ -455,6 +489,7 @@ extension AppStream {
             self.domainJoinInfo = domainJoinInfo
             self.enableDefaultInternetAccess = enableDefaultInternetAccess
             self.fleetType = fleetType
+            self.iamRoleArn = iamRoleArn
             self.idleDisconnectTimeoutInSeconds = idleDisconnectTimeoutInSeconds
             self.imageArn = imageArn
             self.imageName = imageName
@@ -466,14 +501,15 @@ extension AppStream {
         }
 
         public func validate(name: String) throws {
-            try validate(description, name:"description", parent: name, max: 256)
-            try validate(displayName, name:"displayName", parent: name, max: 100)
-            try domainJoinInfo?.validate(name: "\(name).domainJoinInfo")
-            try validate(imageArn, name:"imageArn", parent: name, pattern: "^arn:aws:[A-Za-z0-9][A-Za-z0-9_/.-]{0,62}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9][A-Za-z0-9:_/+=,@.-]{0,1023}$")
-            try validate(imageName, name:"imageName", parent: name, min: 1)
-            try validate(instanceType, name:"instanceType", parent: name, min: 1)
-            try validate(name, name:"name", parent: name, pattern: "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,100}$")
-            try tags?.forEach {
+            try validate(self.description, name:"description", parent: name, max: 256)
+            try validate(self.displayName, name:"displayName", parent: name, max: 100)
+            try self.domainJoinInfo?.validate(name: "\(name).domainJoinInfo")
+            try validate(self.iamRoleArn, name:"iamRoleArn", parent: name, pattern: "^arn:aws:[A-Za-z0-9][A-Za-z0-9_/.-]{0,62}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9][A-Za-z0-9:_/+=,@.-]{0,1023}$")
+            try validate(self.imageArn, name:"imageArn", parent: name, pattern: "^arn:aws:[A-Za-z0-9][A-Za-z0-9_/.-]{0,62}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9][A-Za-z0-9:_/+=,@.-]{0,1023}$")
+            try validate(self.imageName, name:"imageName", parent: name, min: 1)
+            try validate(self.instanceType, name:"instanceType", parent: name, min: 1)
+            try validate(self.name, name:"name", parent: name, pattern: "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,100}$")
+            try self.tags?.forEach {
                 try validate($0.key, name:"tags.key", parent: name, max: 128)
                 try validate($0.key, name:"tags.key", parent: name, min: 1)
                 try validate($0.key, name:"tags.key", parent: name, pattern: "^(^(?!aws:).[\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$")
@@ -481,7 +517,7 @@ extension AppStream {
                 try validate($0.value, name:"tags[\"\($0.key)\"]", parent: name, min: 0)
                 try validate($0.value, name:"tags[\"\($0.key)\"]", parent: name, pattern: "^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$")
             }
-            try vpcConfig?.validate(name: "\(name).vpcConfig")
+            try self.vpcConfig?.validate(name: "\(name).vpcConfig")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -492,6 +528,7 @@ extension AppStream {
             case domainJoinInfo = "DomainJoinInfo"
             case enableDefaultInternetAccess = "EnableDefaultInternetAccess"
             case fleetType = "FleetType"
+            case iamRoleArn = "IamRoleArn"
             case idleDisconnectTimeoutInSeconds = "IdleDisconnectTimeoutInSeconds"
             case imageArn = "ImageArn"
             case imageName = "ImageName"
@@ -522,11 +559,13 @@ extension AppStream {
 
     public struct CreateImageBuilderRequest: AWSShape {
         public static var _members: [AWSShapeMember] = [
+            AWSShapeMember(label: "AccessEndpoints", required: false, type: .list), 
             AWSShapeMember(label: "AppstreamAgentVersion", required: false, type: .string), 
             AWSShapeMember(label: "Description", required: false, type: .string), 
             AWSShapeMember(label: "DisplayName", required: false, type: .string), 
             AWSShapeMember(label: "DomainJoinInfo", required: false, type: .structure), 
             AWSShapeMember(label: "EnableDefaultInternetAccess", required: false, type: .boolean), 
+            AWSShapeMember(label: "IamRoleArn", required: false, type: .string), 
             AWSShapeMember(label: "ImageArn", required: false, type: .string), 
             AWSShapeMember(label: "ImageName", required: false, type: .string), 
             AWSShapeMember(label: "InstanceType", required: true, type: .string), 
@@ -535,6 +574,8 @@ extension AppStream {
             AWSShapeMember(label: "VpcConfig", required: false, type: .structure)
         ]
 
+        /// The list of interface VPC endpoint (interface endpoint) objects. Administrators can connect to the image builder only through the specified endpoints.
+        public let accessEndpoints: [AccessEndpoint]?
         /// The version of the AppStream 2.0 agent to use for this image builder. To use the latest version of the AppStream 2.0 agent, specify [LATEST]. 
         public let appstreamAgentVersion: String?
         /// The description to display.
@@ -545,6 +586,8 @@ extension AppStream {
         public let domainJoinInfo: DomainJoinInfo?
         /// Enables or disables default internet access for the image builder.
         public let enableDefaultInternetAccess: Bool?
+        /// The Amazon Resource Name (ARN) of the IAM role to apply to the image builder. To assume a role, the image builder calls the AWS Security Token Service (STS) AssumeRole API operation and passes the ARN of the role to use. The operation creates a new session with temporary credentials.
+        public let iamRoleArn: String?
         /// The ARN of the public, private, or shared image to use.
         public let imageArn: String?
         /// The name of the image used to create the image builder.
@@ -553,17 +596,19 @@ extension AppStream {
         public let instanceType: String
         /// A unique name for the image builder.
         public let name: String
-        /// The tags to associate with the image builder. A tag is a key-value pair, and the value is optional. For example, Environment=Test. If you do not specify a value, Environment=.  Generally allowed characters are: letters, numbers, and spaces representable in UTF-8, and the following special characters:  _ . : / = + \ - @ If you do not specify a value, the value is set to an empty string. For more information about tags, see Tagging Your Resources in the Amazon AppStream 2.0 Developer Guide.
+        /// The tags to associate with the image builder. A tag is a key-value pair, and the value is optional. For example, Environment=Test. If you do not specify a value, Environment=.  Generally allowed characters are: letters, numbers, and spaces representable in UTF-8, and the following special characters:  _ . : / = + \ - @ If you do not specify a value, the value is set to an empty string. For more information about tags, see Tagging Your Resources in the Amazon AppStream 2.0 Administration Guide.
         public let tags: [String: String]?
         /// The VPC configuration for the image builder. You can specify only one subnet.
         public let vpcConfig: VpcConfig?
 
-        public init(appstreamAgentVersion: String? = nil, description: String? = nil, displayName: String? = nil, domainJoinInfo: DomainJoinInfo? = nil, enableDefaultInternetAccess: Bool? = nil, imageArn: String? = nil, imageName: String? = nil, instanceType: String, name: String, tags: [String: String]? = nil, vpcConfig: VpcConfig? = nil) {
+        public init(accessEndpoints: [AccessEndpoint]? = nil, appstreamAgentVersion: String? = nil, description: String? = nil, displayName: String? = nil, domainJoinInfo: DomainJoinInfo? = nil, enableDefaultInternetAccess: Bool? = nil, iamRoleArn: String? = nil, imageArn: String? = nil, imageName: String? = nil, instanceType: String, name: String, tags: [String: String]? = nil, vpcConfig: VpcConfig? = nil) {
+            self.accessEndpoints = accessEndpoints
             self.appstreamAgentVersion = appstreamAgentVersion
             self.description = description
             self.displayName = displayName
             self.domainJoinInfo = domainJoinInfo
             self.enableDefaultInternetAccess = enableDefaultInternetAccess
+            self.iamRoleArn = iamRoleArn
             self.imageArn = imageArn
             self.imageName = imageName
             self.instanceType = instanceType
@@ -573,16 +618,22 @@ extension AppStream {
         }
 
         public func validate(name: String) throws {
-            try validate(appstreamAgentVersion, name:"appstreamAgentVersion", parent: name, max: 100)
-            try validate(appstreamAgentVersion, name:"appstreamAgentVersion", parent: name, min: 1)
-            try validate(description, name:"description", parent: name, max: 256)
-            try validate(displayName, name:"displayName", parent: name, max: 100)
-            try domainJoinInfo?.validate(name: "\(name).domainJoinInfo")
-            try validate(imageArn, name:"imageArn", parent: name, pattern: "^arn:aws:[A-Za-z0-9][A-Za-z0-9_/.-]{0,62}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9][A-Za-z0-9:_/+=,@.-]{0,1023}$")
-            try validate(imageName, name:"imageName", parent: name, min: 1)
-            try validate(instanceType, name:"instanceType", parent: name, min: 1)
-            try validate(name, name:"name", parent: name, pattern: "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,100}$")
-            try tags?.forEach {
+            try self.accessEndpoints?.forEach {
+                try $0.validate(name: "\(name).accessEndpoints[]")
+            }
+            try validate(self.accessEndpoints, name:"accessEndpoints", parent: name, max: 4)
+            try validate(self.accessEndpoints, name:"accessEndpoints", parent: name, min: 1)
+            try validate(self.appstreamAgentVersion, name:"appstreamAgentVersion", parent: name, max: 100)
+            try validate(self.appstreamAgentVersion, name:"appstreamAgentVersion", parent: name, min: 1)
+            try validate(self.description, name:"description", parent: name, max: 256)
+            try validate(self.displayName, name:"displayName", parent: name, max: 100)
+            try self.domainJoinInfo?.validate(name: "\(name).domainJoinInfo")
+            try validate(self.iamRoleArn, name:"iamRoleArn", parent: name, pattern: "^arn:aws:[A-Za-z0-9][A-Za-z0-9_/.-]{0,62}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9][A-Za-z0-9:_/+=,@.-]{0,1023}$")
+            try validate(self.imageArn, name:"imageArn", parent: name, pattern: "^arn:aws:[A-Za-z0-9][A-Za-z0-9_/.-]{0,62}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9][A-Za-z0-9:_/+=,@.-]{0,1023}$")
+            try validate(self.imageName, name:"imageName", parent: name, min: 1)
+            try validate(self.instanceType, name:"instanceType", parent: name, min: 1)
+            try validate(self.name, name:"name", parent: name, pattern: "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,100}$")
+            try self.tags?.forEach {
                 try validate($0.key, name:"tags.key", parent: name, max: 128)
                 try validate($0.key, name:"tags.key", parent: name, min: 1)
                 try validate($0.key, name:"tags.key", parent: name, pattern: "^(^(?!aws:).[\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$")
@@ -590,15 +641,17 @@ extension AppStream {
                 try validate($0.value, name:"tags[\"\($0.key)\"]", parent: name, min: 0)
                 try validate($0.value, name:"tags[\"\($0.key)\"]", parent: name, pattern: "^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$")
             }
-            try vpcConfig?.validate(name: "\(name).vpcConfig")
+            try self.vpcConfig?.validate(name: "\(name).vpcConfig")
         }
 
         private enum CodingKeys: String, CodingKey {
+            case accessEndpoints = "AccessEndpoints"
             case appstreamAgentVersion = "AppstreamAgentVersion"
             case description = "Description"
             case displayName = "DisplayName"
             case domainJoinInfo = "DomainJoinInfo"
             case enableDefaultInternetAccess = "EnableDefaultInternetAccess"
+            case iamRoleArn = "IamRoleArn"
             case imageArn = "ImageArn"
             case imageName = "ImageName"
             case instanceType = "InstanceType"
@@ -642,7 +695,7 @@ extension AppStream {
         }
 
         public func validate(name: String) throws {
-            try validate(name, name:"name", parent: name, min: 1)
+            try validate(self.name, name:"name", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -675,6 +728,7 @@ extension AppStream {
 
     public struct CreateStackRequest: AWSShape {
         public static var _members: [AWSShapeMember] = [
+            AWSShapeMember(label: "AccessEndpoints", required: false, type: .list), 
             AWSShapeMember(label: "ApplicationSettings", required: false, type: .structure), 
             AWSShapeMember(label: "Description", required: false, type: .string), 
             AWSShapeMember(label: "DisplayName", required: false, type: .string), 
@@ -686,6 +740,8 @@ extension AppStream {
             AWSShapeMember(label: "UserSettings", required: false, type: .list)
         ]
 
+        /// The list of interface VPC endpoint (interface endpoint) objects. Users of the stack can connect to AppStream 2.0 only through the specified endpoints.
+        public let accessEndpoints: [AccessEndpoint]?
         /// The persistent application settings for users of a stack. When these settings are enabled, changes that users make to applications and Windows settings are automatically saved after each session and applied to the next session.
         public let applicationSettings: ApplicationSettings?
         /// The description to display.
@@ -700,12 +756,13 @@ extension AppStream {
         public let redirectURL: String?
         /// The storage connectors to enable.
         public let storageConnectors: [StorageConnector]?
-        /// The tags to associate with the stack. A tag is a key-value pair, and the value is optional. For example, Environment=Test. If you do not specify a value, Environment=.  If you do not specify a value, the value is set to an empty string. Generally allowed characters are: letters, numbers, and spaces representable in UTF-8, and the following special characters:  _ . : / = + \ - @ For more information about tags, see Tagging Your Resources in the Amazon AppStream 2.0 Developer Guide.
+        /// The tags to associate with the stack. A tag is a key-value pair, and the value is optional. For example, Environment=Test. If you do not specify a value, Environment=.  If you do not specify a value, the value is set to an empty string. Generally allowed characters are: letters, numbers, and spaces representable in UTF-8, and the following special characters:  _ . : / = + \ - @ For more information about tags, see Tagging Your Resources in the Amazon AppStream 2.0 Administration Guide.
         public let tags: [String: String]?
         /// The actions that are enabled or disabled for users during their streaming sessions. By default, these actions are enabled. 
         public let userSettings: [UserSetting]?
 
-        public init(applicationSettings: ApplicationSettings? = nil, description: String? = nil, displayName: String? = nil, feedbackURL: String? = nil, name: String, redirectURL: String? = nil, storageConnectors: [StorageConnector]? = nil, tags: [String: String]? = nil, userSettings: [UserSetting]? = nil) {
+        public init(accessEndpoints: [AccessEndpoint]? = nil, applicationSettings: ApplicationSettings? = nil, description: String? = nil, displayName: String? = nil, feedbackURL: String? = nil, name: String, redirectURL: String? = nil, storageConnectors: [StorageConnector]? = nil, tags: [String: String]? = nil, userSettings: [UserSetting]? = nil) {
+            self.accessEndpoints = accessEndpoints
             self.applicationSettings = applicationSettings
             self.description = description
             self.displayName = displayName
@@ -718,16 +775,21 @@ extension AppStream {
         }
 
         public func validate(name: String) throws {
-            try applicationSettings?.validate(name: "\(name).applicationSettings")
-            try validate(description, name:"description", parent: name, max: 256)
-            try validate(displayName, name:"displayName", parent: name, max: 100)
-            try validate(feedbackURL, name:"feedbackURL", parent: name, max: 1000)
-            try validate(name, name:"name", parent: name, pattern: "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,100}$")
-            try validate(redirectURL, name:"redirectURL", parent: name, max: 1000)
-            try storageConnectors?.forEach {
+            try self.accessEndpoints?.forEach {
+                try $0.validate(name: "\(name).accessEndpoints[]")
+            }
+            try validate(self.accessEndpoints, name:"accessEndpoints", parent: name, max: 4)
+            try validate(self.accessEndpoints, name:"accessEndpoints", parent: name, min: 1)
+            try self.applicationSettings?.validate(name: "\(name).applicationSettings")
+            try validate(self.description, name:"description", parent: name, max: 256)
+            try validate(self.displayName, name:"displayName", parent: name, max: 100)
+            try validate(self.feedbackURL, name:"feedbackURL", parent: name, max: 1000)
+            try validate(self.name, name:"name", parent: name, pattern: "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,100}$")
+            try validate(self.redirectURL, name:"redirectURL", parent: name, max: 1000)
+            try self.storageConnectors?.forEach {
                 try $0.validate(name: "\(name).storageConnectors[]")
             }
-            try tags?.forEach {
+            try self.tags?.forEach {
                 try validate($0.key, name:"tags.key", parent: name, max: 128)
                 try validate($0.key, name:"tags.key", parent: name, min: 1)
                 try validate($0.key, name:"tags.key", parent: name, pattern: "^(^(?!aws:).[\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$")
@@ -735,10 +797,11 @@ extension AppStream {
                 try validate($0.value, name:"tags[\"\($0.key)\"]", parent: name, min: 0)
                 try validate($0.value, name:"tags[\"\($0.key)\"]", parent: name, pattern: "^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$")
             }
-            try validate(userSettings, name:"userSettings", parent: name, min: 1)
+            try validate(self.userSettings, name:"userSettings", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
+            case accessEndpoints = "AccessEndpoints"
             case applicationSettings = "ApplicationSettings"
             case description = "Description"
             case displayName = "DisplayName"
@@ -782,7 +845,7 @@ extension AppStream {
         public let applicationId: String?
         /// The name of the fleet.
         public let fleetName: String
-        /// The session context. For more information, see Session Context in the Amazon AppStream 2.0 Developer Guide.
+        /// The session context. For more information, see Session Context in the Amazon AppStream 2.0 Administration Guide.
         public let sessionContext: String?
         /// The name of the stack.
         public let stackName: String
@@ -801,13 +864,13 @@ extension AppStream {
         }
 
         public func validate(name: String) throws {
-            try validate(applicationId, name:"applicationId", parent: name, min: 1)
-            try validate(fleetName, name:"fleetName", parent: name, min: 1)
-            try validate(sessionContext, name:"sessionContext", parent: name, min: 1)
-            try validate(stackName, name:"stackName", parent: name, min: 1)
-            try validate(userId, name:"userId", parent: name, max: 32)
-            try validate(userId, name:"userId", parent: name, min: 2)
-            try validate(userId, name:"userId", parent: name, pattern: "[\\w+=,.@-]*")
+            try validate(self.applicationId, name:"applicationId", parent: name, min: 1)
+            try validate(self.fleetName, name:"fleetName", parent: name, min: 1)
+            try validate(self.sessionContext, name:"sessionContext", parent: name, min: 1)
+            try validate(self.stackName, name:"stackName", parent: name, min: 1)
+            try validate(self.userId, name:"userId", parent: name, max: 32)
+            try validate(self.userId, name:"userId", parent: name, min: 2)
+            try validate(self.userId, name:"userId", parent: name, pattern: "[\\w+=,.@-]*")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -901,13 +964,13 @@ extension AppStream {
         }
 
         public func validate(name: String) throws {
-            try validate(firstName, name:"firstName", parent: name, max: 2048)
-            try validate(firstName, name:"firstName", parent: name, pattern: "^[A-Za-z0-9_\\-\\s]+$")
-            try validate(lastName, name:"lastName", parent: name, max: 2048)
-            try validate(lastName, name:"lastName", parent: name, pattern: "^[A-Za-z0-9_\\-\\s]+$")
-            try validate(userName, name:"userName", parent: name, max: 128)
-            try validate(userName, name:"userName", parent: name, min: 1)
-            try validate(userName, name:"userName", parent: name, pattern: "[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}]+")
+            try validate(self.firstName, name:"firstName", parent: name, max: 2048)
+            try validate(self.firstName, name:"firstName", parent: name, pattern: "^[A-Za-z0-9_\\-\\s]+$")
+            try validate(self.lastName, name:"lastName", parent: name, max: 2048)
+            try validate(self.lastName, name:"lastName", parent: name, pattern: "^[A-Za-z0-9_\\-\\s]+$")
+            try validate(self.userName, name:"userName", parent: name, max: 128)
+            try validate(self.userName, name:"userName", parent: name, min: 1)
+            try validate(self.userName, name:"userName", parent: name, pattern: "[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}]+")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -965,7 +1028,7 @@ extension AppStream {
         }
 
         public func validate(name: String) throws {
-            try validate(name, name:"name", parent: name, min: 1)
+            try validate(self.name, name:"name", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -994,7 +1057,7 @@ extension AppStream {
         }
 
         public func validate(name: String) throws {
-            try validate(name, name:"name", parent: name, pattern: "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,100}$")
+            try validate(self.name, name:"name", parent: name, pattern: "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,100}$")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1036,8 +1099,8 @@ extension AppStream {
         }
 
         public func validate(name: String) throws {
-            try validate(name, name:"name", parent: name, pattern: "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,100}$")
-            try validate(sharedAccountId, name:"sharedAccountId", parent: name, pattern: "^\\d+$")
+            try validate(self.name, name:"name", parent: name, pattern: "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,100}$")
+            try validate(self.sharedAccountId, name:"sharedAccountId", parent: name, pattern: "^\\d+$")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1067,7 +1130,7 @@ extension AppStream {
         }
 
         public func validate(name: String) throws {
-            try validate(name, name:"name", parent: name, pattern: "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,100}$")
+            try validate(self.name, name:"name", parent: name, pattern: "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,100}$")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1105,7 +1168,7 @@ extension AppStream {
         }
 
         public func validate(name: String) throws {
-            try validate(name, name:"name", parent: name, min: 1)
+            try validate(self.name, name:"name", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1154,9 +1217,9 @@ extension AppStream {
         }
 
         public func validate(name: String) throws {
-            try validate(userName, name:"userName", parent: name, max: 128)
-            try validate(userName, name:"userName", parent: name, min: 1)
-            try validate(userName, name:"userName", parent: name, pattern: "[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}]+")
+            try validate(self.userName, name:"userName", parent: name, max: 128)
+            try validate(self.userName, name:"userName", parent: name, min: 1)
+            try validate(self.userName, name:"userName", parent: name, pattern: "[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}]+")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1194,7 +1257,7 @@ extension AppStream {
         }
 
         public func validate(name: String) throws {
-            try validate(nextToken, name:"nextToken", parent: name, min: 1)
+            try validate(self.nextToken, name:"nextToken", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1243,10 +1306,10 @@ extension AppStream {
         }
 
         public func validate(name: String) throws {
-            try names?.forEach {
+            try self.names?.forEach {
                 try validate($0, name: "names[]", parent: name, min: 1)
             }
-            try validate(nextToken, name:"nextToken", parent: name, min: 1)
+            try validate(self.nextToken, name:"nextToken", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1298,10 +1361,10 @@ extension AppStream {
         }
 
         public func validate(name: String) throws {
-            try names?.forEach {
+            try self.names?.forEach {
                 try validate($0, name: "names[]", parent: name, min: 1)
             }
-            try validate(nextToken, name:"nextToken", parent: name, min: 1)
+            try validate(self.nextToken, name:"nextToken", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1358,15 +1421,15 @@ extension AppStream {
         }
 
         public func validate(name: String) throws {
-            try validate(maxResults, name:"maxResults", parent: name, max: 500)
-            try validate(maxResults, name:"maxResults", parent: name, min: 0)
-            try validate(name, name:"name", parent: name, pattern: "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,100}$")
-            try validate(nextToken, name:"nextToken", parent: name, min: 1)
-            try sharedAwsAccountIds?.forEach {
+            try validate(self.maxResults, name:"maxResults", parent: name, max: 500)
+            try validate(self.maxResults, name:"maxResults", parent: name, min: 0)
+            try validate(self.name, name:"name", parent: name, pattern: "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,100}$")
+            try validate(self.nextToken, name:"nextToken", parent: name, min: 1)
+            try self.sharedAwsAccountIds?.forEach {
                 try validate($0, name: "sharedAwsAccountIds[]", parent: name, pattern: "^\\d+$")
             }
-            try validate(sharedAwsAccountIds, name:"sharedAwsAccountIds", parent: name, max: 5)
-            try validate(sharedAwsAccountIds, name:"sharedAwsAccountIds", parent: name, min: 1)
+            try validate(self.sharedAwsAccountIds, name:"sharedAwsAccountIds", parent: name, max: 5)
+            try validate(self.sharedAwsAccountIds, name:"sharedAwsAccountIds", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1433,15 +1496,15 @@ extension AppStream {
         }
 
         public func validate(name: String) throws {
-            try arns?.forEach {
+            try self.arns?.forEach {
                 try validate($0, name: "arns[]", parent: name, pattern: "^arn:aws:[A-Za-z0-9][A-Za-z0-9_/.-]{0,62}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9][A-Za-z0-9:_/+=,@.-]{0,1023}$")
             }
-            try validate(maxResults, name:"maxResults", parent: name, max: 25)
-            try validate(maxResults, name:"maxResults", parent: name, min: 0)
-            try names?.forEach {
+            try validate(self.maxResults, name:"maxResults", parent: name, max: 25)
+            try validate(self.maxResults, name:"maxResults", parent: name, min: 0)
+            try self.names?.forEach {
                 try validate($0, name: "names[]", parent: name, min: 1)
             }
-            try validate(nextToken, name:"nextToken", parent: name, min: 1)
+            try validate(self.nextToken, name:"nextToken", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1508,11 +1571,11 @@ extension AppStream {
         }
 
         public func validate(name: String) throws {
-            try validate(fleetName, name:"fleetName", parent: name, min: 1)
-            try validate(nextToken, name:"nextToken", parent: name, min: 1)
-            try validate(stackName, name:"stackName", parent: name, min: 1)
-            try validate(userId, name:"userId", parent: name, max: 32)
-            try validate(userId, name:"userId", parent: name, min: 2)
+            try validate(self.fleetName, name:"fleetName", parent: name, min: 1)
+            try validate(self.nextToken, name:"nextToken", parent: name, min: 1)
+            try validate(self.stackName, name:"stackName", parent: name, min: 1)
+            try validate(self.userId, name:"userId", parent: name, max: 32)
+            try validate(self.userId, name:"userId", parent: name, min: 2)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1564,10 +1627,10 @@ extension AppStream {
         }
 
         public func validate(name: String) throws {
-            try names?.forEach {
+            try self.names?.forEach {
                 try validate($0, name: "names[]", parent: name, min: 1)
             }
-            try validate(nextToken, name:"nextToken", parent: name, min: 1)
+            try validate(self.nextToken, name:"nextToken", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1615,7 +1678,7 @@ extension AppStream {
         }
 
         public func validate(name: String) throws {
-            try validate(nextToken, name:"nextToken", parent: name, min: 1)
+            try validate(self.nextToken, name:"nextToken", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1675,13 +1738,13 @@ extension AppStream {
         }
 
         public func validate(name: String) throws {
-            try validate(maxResults, name:"maxResults", parent: name, max: 500)
-            try validate(maxResults, name:"maxResults", parent: name, min: 0)
-            try validate(nextToken, name:"nextToken", parent: name, min: 1)
-            try validate(stackName, name:"stackName", parent: name, min: 1)
-            try validate(userName, name:"userName", parent: name, max: 128)
-            try validate(userName, name:"userName", parent: name, min: 1)
-            try validate(userName, name:"userName", parent: name, pattern: "[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}]+")
+            try validate(self.maxResults, name:"maxResults", parent: name, max: 500)
+            try validate(self.maxResults, name:"maxResults", parent: name, min: 0)
+            try validate(self.nextToken, name:"nextToken", parent: name, min: 1)
+            try validate(self.stackName, name:"stackName", parent: name, min: 1)
+            try validate(self.userName, name:"userName", parent: name, max: 128)
+            try validate(self.userName, name:"userName", parent: name, min: 1)
+            try validate(self.userName, name:"userName", parent: name, pattern: "[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}]+")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1736,7 +1799,7 @@ extension AppStream {
         }
 
         public func validate(name: String) throws {
-            try validate(nextToken, name:"nextToken", parent: name, min: 1)
+            try validate(self.nextToken, name:"nextToken", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1817,9 +1880,9 @@ extension AppStream {
         }
 
         public func validate(name: String) throws {
-            try validate(userName, name:"userName", parent: name, max: 128)
-            try validate(userName, name:"userName", parent: name, min: 1)
-            try validate(userName, name:"userName", parent: name, pattern: "[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}]+")
+            try validate(self.userName, name:"userName", parent: name, max: 128)
+            try validate(self.userName, name:"userName", parent: name, min: 1)
+            try validate(self.userName, name:"userName", parent: name, pattern: "[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}]+")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1853,8 +1916,8 @@ extension AppStream {
         }
 
         public func validate(name: String) throws {
-            try validate(fleetName, name:"fleetName", parent: name, min: 1)
-            try validate(stackName, name:"stackName", parent: name, min: 1)
+            try validate(self.fleetName, name:"fleetName", parent: name, min: 1)
+            try validate(self.stackName, name:"stackName", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1888,7 +1951,7 @@ extension AppStream {
         }
 
         public func validate(name: String) throws {
-            try validate(organizationalUnitDistinguishedName, name:"organizationalUnitDistinguishedName", parent: name, max: 2000)
+            try validate(self.organizationalUnitDistinguishedName, name:"organizationalUnitDistinguishedName", parent: name, max: 2000)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1914,9 +1977,9 @@ extension AppStream {
         }
 
         public func validate(name: String) throws {
-            try validate(userName, name:"userName", parent: name, max: 128)
-            try validate(userName, name:"userName", parent: name, min: 1)
-            try validate(userName, name:"userName", parent: name, pattern: "[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}]+")
+            try validate(self.userName, name:"userName", parent: name, max: 128)
+            try validate(self.userName, name:"userName", parent: name, min: 1)
+            try validate(self.userName, name:"userName", parent: name, pattern: "[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}]+")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1946,7 +2009,7 @@ extension AppStream {
         }
 
         public func validate(name: String) throws {
-            try validate(sessionId, name:"sessionId", parent: name, min: 1)
+            try validate(self.sessionId, name:"sessionId", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1974,6 +2037,7 @@ extension AppStream {
             AWSShapeMember(label: "EnableDefaultInternetAccess", required: false, type: .boolean), 
             AWSShapeMember(label: "FleetErrors", required: false, type: .list), 
             AWSShapeMember(label: "FleetType", required: false, type: .enum), 
+            AWSShapeMember(label: "IamRoleArn", required: false, type: .string), 
             AWSShapeMember(label: "IdleDisconnectTimeoutInSeconds", required: false, type: .integer), 
             AWSShapeMember(label: "ImageArn", required: false, type: .string), 
             AWSShapeMember(label: "ImageName", required: false, type: .string), 
@@ -1984,7 +2048,7 @@ extension AppStream {
             AWSShapeMember(label: "VpcConfig", required: false, type: .structure)
         ]
 
-        /// The ARN for the fleet.
+        /// The Amazon Resource Name (ARN) for the fleet.
         public let arn: String
         /// The capacity status for the fleet.
         public let computeCapacityStatus: ComputeCapacityStatus
@@ -2004,6 +2068,8 @@ extension AppStream {
         public let fleetErrors: [FleetError]?
         /// The fleet type.  ALWAYS_ON  Provides users with instant-on access to their apps. You are charged for all running instances in your fleet, even if no users are streaming apps.  ON_DEMAND  Provide users with access to applications after they connect, which takes one to two minutes. You are charged for instance streaming when users are connected and a small hourly fee for instances that are not streaming apps.  
         public let fleetType: FleetType?
+        /// The ARN of the IAM role that is applied to the fleet. To assume a role, the fleet instance calls the AWS Security Token Service (STS) AssumeRole API operation and passes the ARN of the role to use. The operation creates a new session with temporary credentials.
+        public let iamRoleArn: String?
         /// The amount of time that users can be idle (inactive) before they are disconnected from their streaming session and the DisconnectTimeoutInSeconds time interval begins. Users are notified before they are disconnected due to inactivity. If users try to reconnect to the streaming session before the time interval specified in DisconnectTimeoutInSeconds elapses, they are connected to their previous session. Users are considered idle when they stop providing keyboard or mouse input during their streaming session. File uploads and downloads, audio in, audio out, and pixels changing do not qualify as user activity. If users continue to be idle after the time interval in IdleDisconnectTimeoutInSeconds elapses, they are disconnected. To prevent users from being disconnected due to inactivity, specify a value of 0. Otherwise, specify a value between 60 and 3600. The default value is 0.  If you enable this feature, we recommend that you specify a value that corresponds exactly to a whole number of minutes (for example, 60, 120, and 180). If you don't do this, the value is rounded to the nearest minute. For example, if you specify a value of 70, users are disconnected after 1 minute of inactivity. If you specify a value that is at the midpoint between two different minutes, the value is rounded up. For example, if you specify a value of 90, users are disconnected after 2 minutes of inactivity.  
         public let idleDisconnectTimeoutInSeconds: Int?
         /// The ARN for the public, private, or shared image.
@@ -2021,7 +2087,7 @@ extension AppStream {
         /// The VPC configuration for the fleet.
         public let vpcConfig: VpcConfig?
 
-        public init(arn: String, computeCapacityStatus: ComputeCapacityStatus, createdTime: TimeStamp? = nil, description: String? = nil, disconnectTimeoutInSeconds: Int? = nil, displayName: String? = nil, domainJoinInfo: DomainJoinInfo? = nil, enableDefaultInternetAccess: Bool? = nil, fleetErrors: [FleetError]? = nil, fleetType: FleetType? = nil, idleDisconnectTimeoutInSeconds: Int? = nil, imageArn: String? = nil, imageName: String? = nil, instanceType: String, maxUserDurationInSeconds: Int? = nil, name: String, state: FleetState, vpcConfig: VpcConfig? = nil) {
+        public init(arn: String, computeCapacityStatus: ComputeCapacityStatus, createdTime: TimeStamp? = nil, description: String? = nil, disconnectTimeoutInSeconds: Int? = nil, displayName: String? = nil, domainJoinInfo: DomainJoinInfo? = nil, enableDefaultInternetAccess: Bool? = nil, fleetErrors: [FleetError]? = nil, fleetType: FleetType? = nil, iamRoleArn: String? = nil, idleDisconnectTimeoutInSeconds: Int? = nil, imageArn: String? = nil, imageName: String? = nil, instanceType: String, maxUserDurationInSeconds: Int? = nil, name: String, state: FleetState, vpcConfig: VpcConfig? = nil) {
             self.arn = arn
             self.computeCapacityStatus = computeCapacityStatus
             self.createdTime = createdTime
@@ -2032,6 +2098,7 @@ extension AppStream {
             self.enableDefaultInternetAccess = enableDefaultInternetAccess
             self.fleetErrors = fleetErrors
             self.fleetType = fleetType
+            self.iamRoleArn = iamRoleArn
             self.idleDisconnectTimeoutInSeconds = idleDisconnectTimeoutInSeconds
             self.imageArn = imageArn
             self.imageName = imageName
@@ -2053,6 +2120,7 @@ extension AppStream {
             case enableDefaultInternetAccess = "EnableDefaultInternetAccess"
             case fleetErrors = "FleetErrors"
             case fleetType = "FleetType"
+            case iamRoleArn = "IamRoleArn"
             case idleDisconnectTimeoutInSeconds = "IdleDisconnectTimeoutInSeconds"
             case imageArn = "ImageArn"
             case imageName = "ImageName"
@@ -2068,6 +2136,7 @@ extension AppStream {
         case vpcConfiguration = "VPC_CONFIGURATION"
         case vpcConfigurationSecurityGroupIds = "VPC_CONFIGURATION_SECURITY_GROUP_IDS"
         case domainJoinInfo = "DOMAIN_JOIN_INFO"
+        case iamRoleArn = "IAM_ROLE_ARN"
         public var description: String { return self.rawValue }
     }
 
@@ -2100,6 +2169,8 @@ extension AppStream {
         case networkInterfaceLimitExceeded = "NETWORK_INTERFACE_LIMIT_EXCEEDED"
         case internalServiceError = "INTERNAL_SERVICE_ERROR"
         case iamServiceRoleIsMissing = "IAM_SERVICE_ROLE_IS_MISSING"
+        case machineRoleIsMissing = "MACHINE_ROLE_IS_MISSING"
+        case stsDisabledInRegion = "STS_DISABLED_IN_REGION"
         case subnetHasInsufficientIpAddresses = "SUBNET_HAS_INSUFFICIENT_IP_ADDRESSES"
         case iamServiceRoleMissingDescribeSubnetAction = "IAM_SERVICE_ROLE_MISSING_DESCRIBE_SUBNET_ACTION"
         case subnetNotFound = "SUBNET_NOT_FOUND"
@@ -2231,6 +2302,7 @@ extension AppStream {
 
     public struct ImageBuilder: AWSShape {
         public static var _members: [AWSShapeMember] = [
+            AWSShapeMember(label: "AccessEndpoints", required: false, type: .list), 
             AWSShapeMember(label: "AppstreamAgentVersion", required: false, type: .string), 
             AWSShapeMember(label: "Arn", required: false, type: .string), 
             AWSShapeMember(label: "CreatedTime", required: false, type: .timestamp), 
@@ -2238,6 +2310,7 @@ extension AppStream {
             AWSShapeMember(label: "DisplayName", required: false, type: .string), 
             AWSShapeMember(label: "DomainJoinInfo", required: false, type: .structure), 
             AWSShapeMember(label: "EnableDefaultInternetAccess", required: false, type: .boolean), 
+            AWSShapeMember(label: "IamRoleArn", required: false, type: .string), 
             AWSShapeMember(label: "ImageArn", required: false, type: .string), 
             AWSShapeMember(label: "ImageBuilderErrors", required: false, type: .list), 
             AWSShapeMember(label: "InstanceType", required: false, type: .string), 
@@ -2249,6 +2322,8 @@ extension AppStream {
             AWSShapeMember(label: "VpcConfig", required: false, type: .structure)
         ]
 
+        /// The list of virtual private cloud (VPC) interface endpoint objects. Administrators can connect to the image builder only through the specified endpoints.
+        public let accessEndpoints: [AccessEndpoint]?
         /// The version of the AppStream 2.0 agent that is currently being used by the image builder. 
         public let appstreamAgentVersion: String?
         /// The ARN for the image builder.
@@ -2263,6 +2338,8 @@ extension AppStream {
         public let domainJoinInfo: DomainJoinInfo?
         /// Enables or disables default internet access for the image builder.
         public let enableDefaultInternetAccess: Bool?
+        /// The ARN of the IAM role that is applied to the image builder. To assume a role, the image builder calls the AWS Security Token Service (STS) AssumeRole API operation and passes the ARN of the role to use. The operation creates a new session with temporary credentials. 
+        public let iamRoleArn: String?
         /// The ARN of the image from which this builder was created.
         public let imageArn: String?
         /// The image builder errors.
@@ -2281,7 +2358,8 @@ extension AppStream {
         /// The VPC configuration of the image builder.
         public let vpcConfig: VpcConfig?
 
-        public init(appstreamAgentVersion: String? = nil, arn: String? = nil, createdTime: TimeStamp? = nil, description: String? = nil, displayName: String? = nil, domainJoinInfo: DomainJoinInfo? = nil, enableDefaultInternetAccess: Bool? = nil, imageArn: String? = nil, imageBuilderErrors: [ResourceError]? = nil, instanceType: String? = nil, name: String, networkAccessConfiguration: NetworkAccessConfiguration? = nil, platform: PlatformType? = nil, state: ImageBuilderState? = nil, stateChangeReason: ImageBuilderStateChangeReason? = nil, vpcConfig: VpcConfig? = nil) {
+        public init(accessEndpoints: [AccessEndpoint]? = nil, appstreamAgentVersion: String? = nil, arn: String? = nil, createdTime: TimeStamp? = nil, description: String? = nil, displayName: String? = nil, domainJoinInfo: DomainJoinInfo? = nil, enableDefaultInternetAccess: Bool? = nil, iamRoleArn: String? = nil, imageArn: String? = nil, imageBuilderErrors: [ResourceError]? = nil, instanceType: String? = nil, name: String, networkAccessConfiguration: NetworkAccessConfiguration? = nil, platform: PlatformType? = nil, state: ImageBuilderState? = nil, stateChangeReason: ImageBuilderStateChangeReason? = nil, vpcConfig: VpcConfig? = nil) {
+            self.accessEndpoints = accessEndpoints
             self.appstreamAgentVersion = appstreamAgentVersion
             self.arn = arn
             self.createdTime = createdTime
@@ -2289,6 +2367,7 @@ extension AppStream {
             self.displayName = displayName
             self.domainJoinInfo = domainJoinInfo
             self.enableDefaultInternetAccess = enableDefaultInternetAccess
+            self.iamRoleArn = iamRoleArn
             self.imageArn = imageArn
             self.imageBuilderErrors = imageBuilderErrors
             self.instanceType = instanceType
@@ -2301,6 +2380,7 @@ extension AppStream {
         }
 
         private enum CodingKeys: String, CodingKey {
+            case accessEndpoints = "AccessEndpoints"
             case appstreamAgentVersion = "AppstreamAgentVersion"
             case arn = "Arn"
             case createdTime = "CreatedTime"
@@ -2308,6 +2388,7 @@ extension AppStream {
             case displayName = "DisplayName"
             case domainJoinInfo = "DomainJoinInfo"
             case enableDefaultInternetAccess = "EnableDefaultInternetAccess"
+            case iamRoleArn = "IamRoleArn"
             case imageArn = "ImageArn"
             case imageBuilderErrors = "ImageBuilderErrors"
             case instanceType = "InstanceType"
@@ -2460,8 +2541,8 @@ extension AppStream {
         }
 
         public func validate(name: String) throws {
-            try validate(nextToken, name:"nextToken", parent: name, min: 1)
-            try validate(stackName, name:"stackName", parent: name, min: 1)
+            try validate(self.nextToken, name:"nextToken", parent: name, min: 1)
+            try validate(self.stackName, name:"stackName", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -2509,8 +2590,8 @@ extension AppStream {
         }
 
         public func validate(name: String) throws {
-            try validate(fleetName, name:"fleetName", parent: name, min: 1)
-            try validate(nextToken, name:"nextToken", parent: name, min: 1)
+            try validate(self.fleetName, name:"fleetName", parent: name, min: 1)
+            try validate(self.nextToken, name:"nextToken", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -2554,7 +2635,7 @@ extension AppStream {
         }
 
         public func validate(name: String) throws {
-            try validate(resourceArn, name:"resourceArn", parent: name, pattern: "^arn:aws:[A-Za-z0-9][A-Za-z0-9_/.-]{0,62}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9][A-Za-z0-9:_/+=,@.-]{0,1023}$")
+            try validate(self.resourceArn, name:"resourceArn", parent: name, pattern: "^arn:aws:[A-Za-z0-9][A-Za-z0-9_/.-]{0,62}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9][A-Za-z0-9:_/+=,@.-]{0,1023}$")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -2664,9 +2745,9 @@ extension AppStream {
         }
 
         public func validate(name: String) throws {
-            try validate(accountName, name:"accountName", parent: name, min: 1)
-            try validate(accountPassword, name:"accountPassword", parent: name, max: 127)
-            try validate(accountPassword, name:"accountPassword", parent: name, min: 1)
+            try validate(self.accountName, name:"accountName", parent: name, min: 1)
+            try validate(self.accountPassword, name:"accountPassword", parent: name, max: 127)
+            try validate(self.accountPassword, name:"accountPassword", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -2774,6 +2855,7 @@ extension AppStream {
 
     public struct Stack: AWSShape {
         public static var _members: [AWSShapeMember] = [
+            AWSShapeMember(label: "AccessEndpoints", required: false, type: .list), 
             AWSShapeMember(label: "ApplicationSettings", required: false, type: .structure), 
             AWSShapeMember(label: "Arn", required: false, type: .string), 
             AWSShapeMember(label: "CreatedTime", required: false, type: .timestamp), 
@@ -2787,6 +2869,8 @@ extension AppStream {
             AWSShapeMember(label: "UserSettings", required: false, type: .list)
         ]
 
+        /// The list of virtual private cloud (VPC) interface endpoint objects. Users of the stack can connect to AppStream 2.0 only through the specified endpoints. 
+        public let accessEndpoints: [AccessEndpoint]?
         /// The persistent application settings for users of the stack.
         public let applicationSettings: ApplicationSettingsResponse?
         /// The ARN of the stack.
@@ -2810,7 +2894,8 @@ extension AppStream {
         /// The actions that are enabled or disabled for users during their streaming sessions. By default these actions are enabled.
         public let userSettings: [UserSetting]?
 
-        public init(applicationSettings: ApplicationSettingsResponse? = nil, arn: String? = nil, createdTime: TimeStamp? = nil, description: String? = nil, displayName: String? = nil, feedbackURL: String? = nil, name: String, redirectURL: String? = nil, stackErrors: [StackError]? = nil, storageConnectors: [StorageConnector]? = nil, userSettings: [UserSetting]? = nil) {
+        public init(accessEndpoints: [AccessEndpoint]? = nil, applicationSettings: ApplicationSettingsResponse? = nil, arn: String? = nil, createdTime: TimeStamp? = nil, description: String? = nil, displayName: String? = nil, feedbackURL: String? = nil, name: String, redirectURL: String? = nil, stackErrors: [StackError]? = nil, storageConnectors: [StorageConnector]? = nil, userSettings: [UserSetting]? = nil) {
+            self.accessEndpoints = accessEndpoints
             self.applicationSettings = applicationSettings
             self.arn = arn
             self.createdTime = createdTime
@@ -2825,6 +2910,7 @@ extension AppStream {
         }
 
         private enum CodingKeys: String, CodingKey {
+            case accessEndpoints = "AccessEndpoints"
             case applicationSettings = "ApplicationSettings"
             case arn = "Arn"
             case createdTime = "CreatedTime"
@@ -2848,6 +2934,8 @@ extension AppStream {
         case feedbackUrl = "FEEDBACK_URL"
         case themeName = "THEME_NAME"
         case userSettings = "USER_SETTINGS"
+        case iamRoleArn = "IAM_ROLE_ARN"
+        case accessEndpoints = "ACCESS_ENDPOINTS"
         public var description: String { return self.rawValue }
     }
 
@@ -2892,7 +2980,7 @@ extension AppStream {
         }
 
         public func validate(name: String) throws {
-            try validate(name, name:"name", parent: name, min: 1)
+            try validate(self.name, name:"name", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -2925,9 +3013,9 @@ extension AppStream {
         }
 
         public func validate(name: String) throws {
-            try validate(appstreamAgentVersion, name:"appstreamAgentVersion", parent: name, max: 100)
-            try validate(appstreamAgentVersion, name:"appstreamAgentVersion", parent: name, min: 1)
-            try validate(name, name:"name", parent: name, min: 1)
+            try validate(self.appstreamAgentVersion, name:"appstreamAgentVersion", parent: name, max: 100)
+            try validate(self.appstreamAgentVersion, name:"appstreamAgentVersion", parent: name, min: 1)
+            try validate(self.name, name:"name", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -2966,7 +3054,7 @@ extension AppStream {
         }
 
         public func validate(name: String) throws {
-            try validate(name, name:"name", parent: name, min: 1)
+            try validate(self.name, name:"name", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -2995,7 +3083,7 @@ extension AppStream {
         }
 
         public func validate(name: String) throws {
-            try validate(name, name:"name", parent: name, min: 1)
+            try validate(self.name, name:"name", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -3041,11 +3129,11 @@ extension AppStream {
         }
 
         public func validate(name: String) throws {
-            try domains?.forEach {
+            try self.domains?.forEach {
                 try validate($0, name: "domains[]", parent: name, max: 64)
             }
-            try validate(domains, name:"domains", parent: name, max: 10)
-            try validate(resourceIdentifier, name:"resourceIdentifier", parent: name, min: 1)
+            try validate(self.domains, name:"domains", parent: name, max: 10)
+            try validate(self.resourceIdentifier, name:"resourceIdentifier", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -3079,8 +3167,8 @@ extension AppStream {
         }
 
         public func validate(name: String) throws {
-            try validate(resourceArn, name:"resourceArn", parent: name, pattern: "^arn:aws:[A-Za-z0-9][A-Za-z0-9_/.-]{0,62}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9][A-Za-z0-9:_/+=,@.-]{0,1023}$")
-            try tags.forEach {
+            try validate(self.resourceArn, name:"resourceArn", parent: name, pattern: "^arn:aws:[A-Za-z0-9][A-Za-z0-9_/.-]{0,62}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9][A-Za-z0-9:_/+=,@.-]{0,1023}$")
+            try self.tags.forEach {
                 try validate($0.key, name:"tags.key", parent: name, max: 128)
                 try validate($0.key, name:"tags.key", parent: name, min: 1)
                 try validate($0.key, name:"tags.key", parent: name, pattern: "^(^(?!aws:).[\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$")
@@ -3121,14 +3209,14 @@ extension AppStream {
         }
 
         public func validate(name: String) throws {
-            try validate(resourceArn, name:"resourceArn", parent: name, pattern: "^arn:aws:[A-Za-z0-9][A-Za-z0-9_/.-]{0,62}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9][A-Za-z0-9:_/+=,@.-]{0,1023}$")
-            try tagKeys.forEach {
+            try validate(self.resourceArn, name:"resourceArn", parent: name, pattern: "^arn:aws:[A-Za-z0-9][A-Za-z0-9_/.-]{0,62}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9][A-Za-z0-9:_/+=,@.-]{0,1023}$")
+            try self.tagKeys.forEach {
                 try validate($0, name: "tagKeys[]", parent: name, max: 128)
                 try validate($0, name: "tagKeys[]", parent: name, min: 1)
                 try validate($0, name: "tagKeys[]", parent: name, pattern: "^(^(?!aws:).[\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$")
             }
-            try validate(tagKeys, name:"tagKeys", parent: name, max: 50)
-            try validate(tagKeys, name:"tagKeys", parent: name, min: 1)
+            try validate(self.tagKeys, name:"tagKeys", parent: name, max: 50)
+            try validate(self.tagKeys, name:"tagKeys", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -3166,10 +3254,10 @@ extension AppStream {
         }
 
         public func validate(name: String) throws {
-            try organizationalUnitDistinguishedNames?.forEach {
+            try self.organizationalUnitDistinguishedNames?.forEach {
                 try validate($0, name: "organizationalUnitDistinguishedNames[]", parent: name, max: 2000)
             }
-            try serviceAccountCredentials?.validate(name: "\(name).serviceAccountCredentials")
+            try self.serviceAccountCredentials?.validate(name: "\(name).serviceAccountCredentials")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -3205,6 +3293,7 @@ extension AppStream {
             AWSShapeMember(label: "DisplayName", required: false, type: .string), 
             AWSShapeMember(label: "DomainJoinInfo", required: false, type: .structure), 
             AWSShapeMember(label: "EnableDefaultInternetAccess", required: false, type: .boolean), 
+            AWSShapeMember(label: "IamRoleArn", required: false, type: .string), 
             AWSShapeMember(label: "IdleDisconnectTimeoutInSeconds", required: false, type: .integer), 
             AWSShapeMember(label: "ImageArn", required: false, type: .string), 
             AWSShapeMember(label: "ImageName", required: false, type: .string), 
@@ -3228,6 +3317,8 @@ extension AppStream {
         public let domainJoinInfo: DomainJoinInfo?
         /// Enables or disables default internet access for the fleet.
         public let enableDefaultInternetAccess: Bool?
+        /// The Amazon Resource Name (ARN) of the IAM role to apply to the fleet. To assume a role, a fleet instance calls the AWS Security Token Service (STS) AssumeRole API operation and passes the ARN of the role to use. The operation creates a new session with temporary credentials.
+        public let iamRoleArn: String?
         /// The amount of time that users can be idle (inactive) before they are disconnected from their streaming session and the DisconnectTimeoutInSeconds time interval begins. Users are notified before they are disconnected due to inactivity. If users try to reconnect to the streaming session before the time interval specified in DisconnectTimeoutInSeconds elapses, they are connected to their previous session. Users are considered idle when they stop providing keyboard or mouse input during their streaming session. File uploads and downloads, audio in, audio out, and pixels changing do not qualify as user activity. If users continue to be idle after the time interval in IdleDisconnectTimeoutInSeconds elapses, they are disconnected.  To prevent users from being disconnected due to inactivity, specify a value of 0. Otherwise, specify a value between 60 and 3600. The default value is 0.  If you enable this feature, we recommend that you specify a value that corresponds exactly to a whole number of minutes (for example, 60, 120, and 180). If you don't do this, the value is rounded to the nearest minute. For example, if you specify a value of 70, users are disconnected after 1 minute of inactivity. If you specify a value that is at the midpoint between two different minutes, the value is rounded up. For example, if you specify a value of 90, users are disconnected after 2 minutes of inactivity.  
         public let idleDisconnectTimeoutInSeconds: Int?
         /// The ARN of the public, private, or shared image to use.
@@ -3243,7 +3334,7 @@ extension AppStream {
         /// The VPC configuration for the fleet.
         public let vpcConfig: VpcConfig?
 
-        public init(attributesToDelete: [FleetAttribute]? = nil, computeCapacity: ComputeCapacity? = nil, description: String? = nil, disconnectTimeoutInSeconds: Int? = nil, displayName: String? = nil, domainJoinInfo: DomainJoinInfo? = nil, enableDefaultInternetAccess: Bool? = nil, idleDisconnectTimeoutInSeconds: Int? = nil, imageArn: String? = nil, imageName: String? = nil, instanceType: String? = nil, maxUserDurationInSeconds: Int? = nil, name: String? = nil, vpcConfig: VpcConfig? = nil) {
+        public init(attributesToDelete: [FleetAttribute]? = nil, computeCapacity: ComputeCapacity? = nil, description: String? = nil, disconnectTimeoutInSeconds: Int? = nil, displayName: String? = nil, domainJoinInfo: DomainJoinInfo? = nil, enableDefaultInternetAccess: Bool? = nil, iamRoleArn: String? = nil, idleDisconnectTimeoutInSeconds: Int? = nil, imageArn: String? = nil, imageName: String? = nil, instanceType: String? = nil, maxUserDurationInSeconds: Int? = nil, name: String? = nil, vpcConfig: VpcConfig? = nil) {
             self.attributesToDelete = attributesToDelete
             self.computeCapacity = computeCapacity
             self.description = description
@@ -3251,6 +3342,7 @@ extension AppStream {
             self.displayName = displayName
             self.domainJoinInfo = domainJoinInfo
             self.enableDefaultInternetAccess = enableDefaultInternetAccess
+            self.iamRoleArn = iamRoleArn
             self.idleDisconnectTimeoutInSeconds = idleDisconnectTimeoutInSeconds
             self.imageArn = imageArn
             self.imageName = imageName
@@ -3261,14 +3353,15 @@ extension AppStream {
         }
 
         public func validate(name: String) throws {
-            try validate(description, name:"description", parent: name, max: 256)
-            try validate(displayName, name:"displayName", parent: name, max: 100)
-            try domainJoinInfo?.validate(name: "\(name).domainJoinInfo")
-            try validate(imageArn, name:"imageArn", parent: name, pattern: "^arn:aws:[A-Za-z0-9][A-Za-z0-9_/.-]{0,62}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9][A-Za-z0-9:_/+=,@.-]{0,1023}$")
-            try validate(imageName, name:"imageName", parent: name, min: 1)
-            try validate(instanceType, name:"instanceType", parent: name, min: 1)
-            try validate(name, name:"name", parent: name, min: 1)
-            try vpcConfig?.validate(name: "\(name).vpcConfig")
+            try validate(self.description, name:"description", parent: name, max: 256)
+            try validate(self.displayName, name:"displayName", parent: name, max: 100)
+            try self.domainJoinInfo?.validate(name: "\(name).domainJoinInfo")
+            try validate(self.iamRoleArn, name:"iamRoleArn", parent: name, pattern: "^arn:aws:[A-Za-z0-9][A-Za-z0-9_/.-]{0,62}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9][A-Za-z0-9:_/+=,@.-]{0,1023}$")
+            try validate(self.imageArn, name:"imageArn", parent: name, pattern: "^arn:aws:[A-Za-z0-9][A-Za-z0-9_/.-]{0,62}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9][A-Za-z0-9:_/+=,@.-]{0,1023}$")
+            try validate(self.imageName, name:"imageName", parent: name, min: 1)
+            try validate(self.instanceType, name:"instanceType", parent: name, min: 1)
+            try validate(self.name, name:"name", parent: name, min: 1)
+            try self.vpcConfig?.validate(name: "\(name).vpcConfig")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -3279,6 +3372,7 @@ extension AppStream {
             case displayName = "DisplayName"
             case domainJoinInfo = "DomainJoinInfo"
             case enableDefaultInternetAccess = "EnableDefaultInternetAccess"
+            case iamRoleArn = "IamRoleArn"
             case idleDisconnectTimeoutInSeconds = "IdleDisconnectTimeoutInSeconds"
             case imageArn = "ImageArn"
             case imageName = "ImageName"
@@ -3327,8 +3421,8 @@ extension AppStream {
         }
 
         public func validate(name: String) throws {
-            try validate(name, name:"name", parent: name, pattern: "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,100}$")
-            try validate(sharedAccountId, name:"sharedAccountId", parent: name, pattern: "^\\d+$")
+            try validate(self.name, name:"name", parent: name, pattern: "^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,100}$")
+            try validate(self.sharedAccountId, name:"sharedAccountId", parent: name, pattern: "^\\d+$")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -3348,6 +3442,7 @@ extension AppStream {
 
     public struct UpdateStackRequest: AWSShape {
         public static var _members: [AWSShapeMember] = [
+            AWSShapeMember(label: "AccessEndpoints", required: false, type: .list), 
             AWSShapeMember(label: "ApplicationSettings", required: false, type: .structure), 
             AWSShapeMember(label: "AttributesToDelete", required: false, type: .list), 
             AWSShapeMember(label: "Description", required: false, type: .string), 
@@ -3359,6 +3454,8 @@ extension AppStream {
             AWSShapeMember(label: "UserSettings", required: false, type: .list)
         ]
 
+        /// The list of interface VPC endpoint (interface endpoint) objects. Users of the stack can connect to AppStream 2.0 only through the specified endpoints.
+        public let accessEndpoints: [AccessEndpoint]?
         /// The persistent application settings for users of a stack. When these settings are enabled, changes that users make to applications and Windows settings are automatically saved after each session and applied to the next session.
         public let applicationSettings: ApplicationSettings?
         /// The stack attributes to delete.
@@ -3378,7 +3475,8 @@ extension AppStream {
         /// The actions that are enabled or disabled for users during their streaming sessions. By default, these actions are enabled.
         public let userSettings: [UserSetting]?
 
-        public init(applicationSettings: ApplicationSettings? = nil, attributesToDelete: [StackAttribute]? = nil, description: String? = nil, displayName: String? = nil, feedbackURL: String? = nil, name: String, redirectURL: String? = nil, storageConnectors: [StorageConnector]? = nil, userSettings: [UserSetting]? = nil) {
+        public init(accessEndpoints: [AccessEndpoint]? = nil, applicationSettings: ApplicationSettings? = nil, attributesToDelete: [StackAttribute]? = nil, description: String? = nil, displayName: String? = nil, feedbackURL: String? = nil, name: String, redirectURL: String? = nil, storageConnectors: [StorageConnector]? = nil, userSettings: [UserSetting]? = nil) {
+            self.accessEndpoints = accessEndpoints
             self.applicationSettings = applicationSettings
             self.attributesToDelete = attributesToDelete
             self.description = description
@@ -3391,19 +3489,25 @@ extension AppStream {
         }
 
         public func validate(name: String) throws {
-            try applicationSettings?.validate(name: "\(name).applicationSettings")
-            try validate(description, name:"description", parent: name, max: 256)
-            try validate(displayName, name:"displayName", parent: name, max: 100)
-            try validate(feedbackURL, name:"feedbackURL", parent: name, max: 1000)
-            try validate(name, name:"name", parent: name, min: 1)
-            try validate(redirectURL, name:"redirectURL", parent: name, max: 1000)
-            try storageConnectors?.forEach {
+            try self.accessEndpoints?.forEach {
+                try $0.validate(name: "\(name).accessEndpoints[]")
+            }
+            try validate(self.accessEndpoints, name:"accessEndpoints", parent: name, max: 4)
+            try validate(self.accessEndpoints, name:"accessEndpoints", parent: name, min: 1)
+            try self.applicationSettings?.validate(name: "\(name).applicationSettings")
+            try validate(self.description, name:"description", parent: name, max: 256)
+            try validate(self.displayName, name:"displayName", parent: name, max: 100)
+            try validate(self.feedbackURL, name:"feedbackURL", parent: name, max: 1000)
+            try validate(self.name, name:"name", parent: name, min: 1)
+            try validate(self.redirectURL, name:"redirectURL", parent: name, max: 1000)
+            try self.storageConnectors?.forEach {
                 try $0.validate(name: "\(name).storageConnectors[]")
             }
-            try validate(userSettings, name:"userSettings", parent: name, min: 1)
+            try validate(self.userSettings, name:"userSettings", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
+            case accessEndpoints = "AccessEndpoints"
             case applicationSettings = "ApplicationSettings"
             case attributesToDelete = "AttributesToDelete"
             case description = "Description"
@@ -3576,10 +3680,10 @@ extension AppStream {
         }
 
         public func validate(name: String) throws {
-            try validate(stackName, name:"stackName", parent: name, min: 1)
-            try validate(userName, name:"userName", parent: name, max: 128)
-            try validate(userName, name:"userName", parent: name, min: 1)
-            try validate(userName, name:"userName", parent: name, pattern: "[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}]+")
+            try validate(self.stackName, name:"stackName", parent: name, min: 1)
+            try validate(self.userName, name:"userName", parent: name, max: 128)
+            try validate(self.userName, name:"userName", parent: name, min: 1)
+            try validate(self.userName, name:"userName", parent: name, pattern: "[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}]+")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -3648,11 +3752,11 @@ extension AppStream {
         }
 
         public func validate(name: String) throws {
-            try securityGroupIds?.forEach {
+            try self.securityGroupIds?.forEach {
                 try validate($0, name: "securityGroupIds[]", parent: name, min: 1)
             }
-            try validate(securityGroupIds, name:"securityGroupIds", parent: name, max: 5)
-            try subnetIds?.forEach {
+            try validate(self.securityGroupIds, name:"securityGroupIds", parent: name, max: 5)
+            try self.subnetIds?.forEach {
                 try validate($0, name: "subnetIds[]", parent: name, min: 1)
             }
         }

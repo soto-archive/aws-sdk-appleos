@@ -11,23 +11,25 @@ public struct MarketplaceEntitlementService {
 
     public let client: AWSClient
 
-    public init(accessKeyId: String? = nil, secretAccessKey: String? = nil, region: AWSSDKSwiftCore.Region? = nil, endpoint: String? = nil) {
+    public init(accessKeyId: String? = nil, secretAccessKey: String? = nil, sessionToken: String? = nil, region: AWSSDKSwiftCore.Region? = nil, endpoint: String? = nil, middlewares: [AWSServiceMiddleware] = []) {
         self.client = AWSClient(
             accessKeyId: accessKeyId,
             secretAccessKey: secretAccessKey,
+            sessionToken: sessionToken,
             region: region,
             amzTarget: "AWSMPEntitlementService",
             service: "entitlement.marketplace",
+            signingName: "aws-marketplace",
             serviceProtocol: ServiceProtocol(type: .json, version: ServiceProtocol.Version(major: 1, minor: 1)),
             apiVersion: "2017-01-11",
             endpoint: endpoint,
-            middlewares: [],
+            middlewares: middlewares,
             possibleErrorTypes: [MarketplaceEntitlementServiceErrorType.self]
         )
     }
 
     ///  GetEntitlements retrieves entitlement values for a given product. The results can be filtered based on customer identifier or product dimensions.
-    public func getEntitlements(_ input: GetEntitlementsRequest) throws -> Future<GetEntitlementsResult> {
-        return try client.send(operation: "GetEntitlements", path: "/", httpMethod: "POST", input: input)
+    public func getEntitlements(_ input: GetEntitlementsRequest) -> Future<GetEntitlementsResult> {
+        return client.send(operation: "GetEntitlements", path: "/", httpMethod: "POST", input: input)
     }
 }

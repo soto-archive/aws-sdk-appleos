@@ -10,7 +10,7 @@ extension Shield {
             AWSShapeMember(label: "LogBucket", required: true, type: .string)
         ]
 
-        /// The Amazon S3 bucket that contains your flow logs.
+        /// The Amazon S3 bucket that contains your AWS WAF logs.
         public let logBucket: String
 
         public init(logBucket: String) {
@@ -18,9 +18,9 @@ extension Shield {
         }
 
         public func validate(name: String) throws {
-            try validate(logBucket, name:"logBucket", parent: name, max: 63)
-            try validate(logBucket, name:"logBucket", parent: name, min: 3)
-            try validate(logBucket, name:"logBucket", parent: name, pattern: "^([a-z]|(\\d(?!\\d{0,2}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3})))([a-z\\d]|(\\.(?!(\\.|-)))|(-(?!\\.))){1,61}[a-z\\d]$")
+            try validate(self.logBucket, name:"logBucket", parent: name, max: 63)
+            try validate(self.logBucket, name:"logBucket", parent: name, min: 3)
+            try validate(self.logBucket, name:"logBucket", parent: name, pattern: "^([a-z]|(\\d(?!\\d{0,2}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3})))([a-z\\d]|(\\.(?!(\\.|-)))|(-(?!\\.))){1,61}[a-z\\d]$")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -49,9 +49,9 @@ extension Shield {
         }
 
         public func validate(name: String) throws {
-            try validate(roleArn, name:"roleArn", parent: name, max: 2048)
-            try validate(roleArn, name:"roleArn", parent: name, min: 1)
-            try validate(roleArn, name:"roleArn", parent: name, pattern: "^arn:aws:iam::\\d{12}:role/?[a-zA-Z_0-9+=,.@\\-_/]+")
+            try validate(self.roleArn, name:"roleArn", parent: name, max: 2048)
+            try validate(self.roleArn, name:"roleArn", parent: name, min: 1)
+            try validate(self.roleArn, name:"roleArn", parent: name, pattern: "^arn:aws:iam::\\d{12}:role/?[a-zA-Z_0-9+=,.@\\-_/]+")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -134,9 +134,9 @@ extension Shield {
             AWSShapeMember(label: "Unit", required: false, type: .enum)
         ]
 
-        /// The type of DDoS event that was observed. NETWORK indicates layer 3 and layer 4 events and APPLICATION indicates layer 7 events.
+        /// The type of distributed denial of service (DDoS) event that was observed. NETWORK indicates layer 3 and layer 4 events and APPLICATION indicates layer 7 events.
         public let attackLayer: AttackLayer?
-        /// Defines the DDoS attack property information that is provided.
+        /// Defines the DDoS attack property information that is provided. The WORDPRESS_PINGBACK_REFLECTOR and WORDPRESS_PINGBACK_SOURCE values are valid only for WordPress reflective pingback DDoS attacks.
         public let attackPropertyIdentifier: AttackPropertyIdentifier?
         /// The array of Contributor objects that includes the top five contributors to an attack. 
         public let topContributors: [Contributor]?
@@ -169,6 +169,8 @@ extension Shield {
         case sourceCountry = "SOURCE_COUNTRY"
         case sourceIpAddress = "SOURCE_IP_ADDRESS"
         case sourceUserAgent = "SOURCE_USER_AGENT"
+        case wordpressPingbackReflector = "WORDPRESS_PINGBACK_REFLECTOR"
+        case wordpressPingbackSource = "WORDPRESS_PINGBACK_SOURCE"
         public var description: String { return self.rawValue }
     }
 
@@ -214,7 +216,7 @@ extension Shield {
             AWSShapeMember(label: "VectorType", required: true, type: .string)
         ]
 
-        /// The attack type. Valid values:   UDP_TRAFFIC   UDP_FRAGMENT   GENERIC_UDP_REFLECTION   DNS_REFLECTION   NTP_REFLECTION   CHARGEN_REFLECTION   SSDP_REFLECTION   PORT_MAPPER   RIP_REFLECTION   SNMP_REFLECTION   MSSQL_REFLECTION   NET_BIOS_REFLECTION   SYN_FLOOD   ACK_FLOOD   REQUEST_FLOOD  
+        /// The attack type. Valid values:   UDP_TRAFFIC   UDP_FRAGMENT   GENERIC_UDP_REFLECTION   DNS_REFLECTION   NTP_REFLECTION   CHARGEN_REFLECTION   SSDP_REFLECTION   PORT_MAPPER   RIP_REFLECTION   SNMP_REFLECTION   MSSQL_REFLECTION   NET_BIOS_REFLECTION   SYN_FLOOD   ACK_FLOOD   REQUEST_FLOOD   HTTP_REFLECTION   UDS_REFLECTION   MEMCACHED_REFLECTION  
         public let vectorType: String
 
         public init(vectorType: String) {
@@ -271,12 +273,12 @@ extension Shield {
         }
 
         public func validate(name: String) throws {
-            try validate(name, name:"name", parent: name, max: 128)
-            try validate(name, name:"name", parent: name, min: 1)
-            try validate(name, name:"name", parent: name, pattern: "[ a-zA-Z0-9_\\\\.\\\\-]*")
-            try validate(resourceArn, name:"resourceArn", parent: name, max: 2048)
-            try validate(resourceArn, name:"resourceArn", parent: name, min: 1)
-            try validate(resourceArn, name:"resourceArn", parent: name, pattern: "^arn:aws.*")
+            try validate(self.name, name:"name", parent: name, max: 128)
+            try validate(self.name, name:"name", parent: name, min: 1)
+            try validate(self.name, name:"name", parent: name, pattern: "[ a-zA-Z0-9_\\\\.\\\\-]*")
+            try validate(self.resourceArn, name:"resourceArn", parent: name, max: 2048)
+            try validate(self.resourceArn, name:"resourceArn", parent: name, min: 1)
+            try validate(self.resourceArn, name:"resourceArn", parent: name, pattern: "^arn:aws.*")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -331,9 +333,9 @@ extension Shield {
         }
 
         public func validate(name: String) throws {
-            try validate(protectionId, name:"protectionId", parent: name, max: 36)
-            try validate(protectionId, name:"protectionId", parent: name, min: 1)
-            try validate(protectionId, name:"protectionId", parent: name, pattern: "[a-zA-Z0-9\\\\-]*")
+            try validate(self.protectionId, name:"protectionId", parent: name, max: 36)
+            try validate(self.protectionId, name:"protectionId", parent: name, min: 1)
+            try validate(self.protectionId, name:"protectionId", parent: name, pattern: "[a-zA-Z0-9\\\\-]*")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -378,9 +380,9 @@ extension Shield {
         }
 
         public func validate(name: String) throws {
-            try validate(attackId, name:"attackId", parent: name, max: 128)
-            try validate(attackId, name:"attackId", parent: name, min: 1)
-            try validate(attackId, name:"attackId", parent: name, pattern: "[a-zA-Z0-9\\\\-]*")
+            try validate(self.attackId, name:"attackId", parent: name, max: 128)
+            try validate(self.attackId, name:"attackId", parent: name, min: 1)
+            try validate(self.attackId, name:"attackId", parent: name, pattern: "[a-zA-Z0-9\\\\-]*")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -477,12 +479,12 @@ extension Shield {
         }
 
         public func validate(name: String) throws {
-            try validate(protectionId, name:"protectionId", parent: name, max: 36)
-            try validate(protectionId, name:"protectionId", parent: name, min: 1)
-            try validate(protectionId, name:"protectionId", parent: name, pattern: "[a-zA-Z0-9\\\\-]*")
-            try validate(resourceArn, name:"resourceArn", parent: name, max: 2048)
-            try validate(resourceArn, name:"resourceArn", parent: name, min: 1)
-            try validate(resourceArn, name:"resourceArn", parent: name, pattern: "^arn:aws.*")
+            try validate(self.protectionId, name:"protectionId", parent: name, max: 36)
+            try validate(self.protectionId, name:"protectionId", parent: name, min: 1)
+            try validate(self.protectionId, name:"protectionId", parent: name, pattern: "[a-zA-Z0-9\\\\-]*")
+            try validate(self.resourceArn, name:"resourceArn", parent: name, max: 2048)
+            try validate(self.resourceArn, name:"resourceArn", parent: name, min: 1)
+            try validate(self.resourceArn, name:"resourceArn", parent: name, pattern: "^arn:aws.*")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -538,7 +540,7 @@ extension Shield {
             AWSShapeMember(label: "LogBucket", required: true, type: .string)
         ]
 
-        /// The Amazon S3 bucket that contains your flow logs.
+        /// The Amazon S3 bucket that contains your AWS WAF logs.
         public let logBucket: String
 
         public init(logBucket: String) {
@@ -546,9 +548,9 @@ extension Shield {
         }
 
         public func validate(name: String) throws {
-            try validate(logBucket, name:"logBucket", parent: name, max: 63)
-            try validate(logBucket, name:"logBucket", parent: name, min: 3)
-            try validate(logBucket, name:"logBucket", parent: name, pattern: "^([a-z]|(\\d(?!\\d{0,2}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3})))([a-z\\d]|(\\.(?!(\\.|-)))|(-(?!\\.))){1,61}[a-z\\d]$")
+            try validate(self.logBucket, name:"logBucket", parent: name, max: 63)
+            try validate(self.logBucket, name:"logBucket", parent: name, min: 3)
+            try validate(self.logBucket, name:"logBucket", parent: name, pattern: "^([a-z]|(\\d(?!\\d{0,2}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3})))([a-z\\d]|(\\.(?!(\\.|-)))|(-(?!\\.))){1,61}[a-z\\d]$")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -593,9 +595,9 @@ extension Shield {
         }
 
         public func validate(name: String) throws {
-            try validate(emailAddress, name:"emailAddress", parent: name, max: 150)
-            try validate(emailAddress, name:"emailAddress", parent: name, min: 1)
-            try validate(emailAddress, name:"emailAddress", parent: name, pattern: "^\\S+@\\S+\\.\\S+$")
+            try validate(self.emailAddress, name:"emailAddress", parent: name, max: 150)
+            try validate(self.emailAddress, name:"emailAddress", parent: name, min: 1)
+            try validate(self.emailAddress, name:"emailAddress", parent: name, pattern: "^\\S+@\\S+\\.\\S+$")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -679,12 +681,12 @@ extension Shield {
         }
 
         public func validate(name: String) throws {
-            try validate(maxResults, name:"maxResults", parent: name, max: 10000)
-            try validate(maxResults, name:"maxResults", parent: name, min: 0)
-            try validate(nextToken, name:"nextToken", parent: name, max: 4096)
-            try validate(nextToken, name:"nextToken", parent: name, min: 1)
-            try validate(nextToken, name:"nextToken", parent: name, pattern: "^.*$")
-            try resourceArns?.forEach {
+            try validate(self.maxResults, name:"maxResults", parent: name, max: 10000)
+            try validate(self.maxResults, name:"maxResults", parent: name, min: 0)
+            try validate(self.nextToken, name:"nextToken", parent: name, max: 4096)
+            try validate(self.nextToken, name:"nextToken", parent: name, min: 1)
+            try validate(self.nextToken, name:"nextToken", parent: name, pattern: "^.*$")
+            try self.resourceArns?.forEach {
                 try validate($0, name: "resourceArns[]", parent: name, max: 2048)
                 try validate($0, name: "resourceArns[]", parent: name, min: 1)
                 try validate($0, name: "resourceArns[]", parent: name, pattern: "^arn:aws.*")
@@ -739,11 +741,11 @@ extension Shield {
         }
 
         public func validate(name: String) throws {
-            try validate(maxResults, name:"maxResults", parent: name, max: 10000)
-            try validate(maxResults, name:"maxResults", parent: name, min: 0)
-            try validate(nextToken, name:"nextToken", parent: name, max: 4096)
-            try validate(nextToken, name:"nextToken", parent: name, min: 1)
-            try validate(nextToken, name:"nextToken", parent: name, pattern: "^.*$")
+            try validate(self.maxResults, name:"maxResults", parent: name, max: 10000)
+            try validate(self.maxResults, name:"maxResults", parent: name, min: 0)
+            try validate(self.nextToken, name:"nextToken", parent: name, max: 4096)
+            try validate(self.nextToken, name:"nextToken", parent: name, min: 1)
+            try validate(self.nextToken, name:"nextToken", parent: name, pattern: "^.*$")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1006,11 +1008,11 @@ extension Shield {
         }
 
         public func validate(name: String) throws {
-            try emergencyContactList?.forEach {
+            try self.emergencyContactList?.forEach {
                 try $0.validate(name: "\(name).emergencyContactList[]")
             }
-            try validate(emergencyContactList, name:"emergencyContactList", parent: name, max: 10)
-            try validate(emergencyContactList, name:"emergencyContactList", parent: name, min: 0)
+            try validate(self.emergencyContactList, name:"emergencyContactList", parent: name, max: 10)
+            try validate(self.emergencyContactList, name:"emergencyContactList", parent: name, min: 0)
         }
 
         private enum CodingKeys: String, CodingKey {

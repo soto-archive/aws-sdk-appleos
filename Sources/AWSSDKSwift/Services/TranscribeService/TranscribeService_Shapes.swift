@@ -30,15 +30,15 @@ extension TranscribeService {
         }
 
         public func validate(name: String) throws {
-            try phrases?.forEach {
+            try self.phrases?.forEach {
                 try validate($0, name: "phrases[]", parent: name, max: 256)
                 try validate($0, name: "phrases[]", parent: name, min: 0)
             }
-            try validate(vocabularyFileUri, name:"vocabularyFileUri", parent: name, max: 2000)
-            try validate(vocabularyFileUri, name:"vocabularyFileUri", parent: name, min: 1)
-            try validate(vocabularyName, name:"vocabularyName", parent: name, max: 200)
-            try validate(vocabularyName, name:"vocabularyName", parent: name, min: 1)
-            try validate(vocabularyName, name:"vocabularyName", parent: name, pattern: "^[0-9a-zA-Z._-]+")
+            try validate(self.vocabularyFileUri, name:"vocabularyFileUri", parent: name, max: 2000)
+            try validate(self.vocabularyFileUri, name:"vocabularyFileUri", parent: name, min: 1)
+            try validate(self.vocabularyName, name:"vocabularyName", parent: name, max: 200)
+            try validate(self.vocabularyName, name:"vocabularyName", parent: name, min: 1)
+            try validate(self.vocabularyName, name:"vocabularyName", parent: name, pattern: "^[0-9a-zA-Z._-]+")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -99,9 +99,9 @@ extension TranscribeService {
         }
 
         public func validate(name: String) throws {
-            try validate(transcriptionJobName, name:"transcriptionJobName", parent: name, max: 200)
-            try validate(transcriptionJobName, name:"transcriptionJobName", parent: name, min: 1)
-            try validate(transcriptionJobName, name:"transcriptionJobName", parent: name, pattern: "^[0-9a-zA-Z._-]+")
+            try validate(self.transcriptionJobName, name:"transcriptionJobName", parent: name, max: 200)
+            try validate(self.transcriptionJobName, name:"transcriptionJobName", parent: name, min: 1)
+            try validate(self.transcriptionJobName, name:"transcriptionJobName", parent: name, pattern: "^[0-9a-zA-Z._-]+")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -122,9 +122,9 @@ extension TranscribeService {
         }
 
         public func validate(name: String) throws {
-            try validate(vocabularyName, name:"vocabularyName", parent: name, max: 200)
-            try validate(vocabularyName, name:"vocabularyName", parent: name, min: 1)
-            try validate(vocabularyName, name:"vocabularyName", parent: name, pattern: "^[0-9a-zA-Z._-]+")
+            try validate(self.vocabularyName, name:"vocabularyName", parent: name, max: 200)
+            try validate(self.vocabularyName, name:"vocabularyName", parent: name, min: 1)
+            try validate(self.vocabularyName, name:"vocabularyName", parent: name, pattern: "^[0-9a-zA-Z._-]+")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -145,9 +145,9 @@ extension TranscribeService {
         }
 
         public func validate(name: String) throws {
-            try validate(transcriptionJobName, name:"transcriptionJobName", parent: name, max: 200)
-            try validate(transcriptionJobName, name:"transcriptionJobName", parent: name, min: 1)
-            try validate(transcriptionJobName, name:"transcriptionJobName", parent: name, pattern: "^[0-9a-zA-Z._-]+")
+            try validate(self.transcriptionJobName, name:"transcriptionJobName", parent: name, max: 200)
+            try validate(self.transcriptionJobName, name:"transcriptionJobName", parent: name, min: 1)
+            try validate(self.transcriptionJobName, name:"transcriptionJobName", parent: name, pattern: "^[0-9a-zA-Z._-]+")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -185,9 +185,9 @@ extension TranscribeService {
         }
 
         public func validate(name: String) throws {
-            try validate(vocabularyName, name:"vocabularyName", parent: name, max: 200)
-            try validate(vocabularyName, name:"vocabularyName", parent: name, min: 1)
-            try validate(vocabularyName, name:"vocabularyName", parent: name, pattern: "^[0-9a-zA-Z._-]+")
+            try validate(self.vocabularyName, name:"vocabularyName", parent: name, max: 200)
+            try validate(self.vocabularyName, name:"vocabularyName", parent: name, min: 1)
+            try validate(self.vocabularyName, name:"vocabularyName", parent: name, pattern: "^[0-9a-zA-Z._-]+")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -252,6 +252,8 @@ extension TranscribeService {
         case enIn = "en-IN"
         case hiIn = "hi-IN"
         case arSa = "ar-SA"
+        case ruRu = "ru-RU"
+        case zhCn = "zh-CN"
         public var description: String { return self.rawValue }
     }
 
@@ -280,12 +282,12 @@ extension TranscribeService {
         }
 
         public func validate(name: String) throws {
-            try validate(jobNameContains, name:"jobNameContains", parent: name, max: 200)
-            try validate(jobNameContains, name:"jobNameContains", parent: name, min: 1)
-            try validate(jobNameContains, name:"jobNameContains", parent: name, pattern: "^[0-9a-zA-Z._-]+")
-            try validate(maxResults, name:"maxResults", parent: name, max: 100)
-            try validate(maxResults, name:"maxResults", parent: name, min: 1)
-            try validate(nextToken, name:"nextToken", parent: name, max: 8192)
+            try validate(self.jobNameContains, name:"jobNameContains", parent: name, max: 200)
+            try validate(self.jobNameContains, name:"jobNameContains", parent: name, min: 1)
+            try validate(self.jobNameContains, name:"jobNameContains", parent: name, pattern: "^[0-9a-zA-Z._-]+")
+            try validate(self.maxResults, name:"maxResults", parent: name, max: 100)
+            try validate(self.maxResults, name:"maxResults", parent: name, min: 1)
+            try validate(self.nextToken, name:"nextToken", parent: name, max: 8192)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -348,12 +350,12 @@ extension TranscribeService {
         }
 
         public func validate(name: String) throws {
-            try validate(maxResults, name:"maxResults", parent: name, max: 100)
-            try validate(maxResults, name:"maxResults", parent: name, min: 1)
-            try validate(nameContains, name:"nameContains", parent: name, max: 200)
-            try validate(nameContains, name:"nameContains", parent: name, min: 1)
-            try validate(nameContains, name:"nameContains", parent: name, pattern: "^[0-9a-zA-Z._-]+")
-            try validate(nextToken, name:"nextToken", parent: name, max: 8192)
+            try validate(self.maxResults, name:"maxResults", parent: name, max: 100)
+            try validate(self.maxResults, name:"maxResults", parent: name, min: 1)
+            try validate(self.nameContains, name:"nameContains", parent: name, max: 200)
+            try validate(self.nameContains, name:"nameContains", parent: name, min: 1)
+            try validate(self.nameContains, name:"nameContains", parent: name, pattern: "^[0-9a-zA-Z._-]+")
+            try validate(self.nextToken, name:"nextToken", parent: name, max: 8192)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -404,8 +406,8 @@ extension TranscribeService {
         }
 
         public func validate(name: String) throws {
-            try validate(mediaFileUri, name:"mediaFileUri", parent: name, max: 2000)
-            try validate(mediaFileUri, name:"mediaFileUri", parent: name, min: 1)
+            try validate(self.mediaFileUri, name:"mediaFileUri", parent: name, max: 2000)
+            try validate(self.mediaFileUri, name:"mediaFileUri", parent: name, min: 1)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -452,11 +454,11 @@ extension TranscribeService {
         }
 
         public func validate(name: String) throws {
-            try validate(maxSpeakerLabels, name:"maxSpeakerLabels", parent: name, max: 10)
-            try validate(maxSpeakerLabels, name:"maxSpeakerLabels", parent: name, min: 2)
-            try validate(vocabularyName, name:"vocabularyName", parent: name, max: 200)
-            try validate(vocabularyName, name:"vocabularyName", parent: name, min: 1)
-            try validate(vocabularyName, name:"vocabularyName", parent: name, pattern: "^[0-9a-zA-Z._-]+")
+            try validate(self.maxSpeakerLabels, name:"maxSpeakerLabels", parent: name, max: 10)
+            try validate(self.maxSpeakerLabels, name:"maxSpeakerLabels", parent: name, min: 2)
+            try validate(self.vocabularyName, name:"vocabularyName", parent: name, max: 200)
+            try validate(self.vocabularyName, name:"vocabularyName", parent: name, min: 1)
+            try validate(self.vocabularyName, name:"vocabularyName", parent: name, pattern: "^[0-9a-zA-Z._-]+")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -471,7 +473,7 @@ extension TranscribeService {
         public static var _members: [AWSShapeMember] = [
             AWSShapeMember(label: "LanguageCode", required: true, type: .enum), 
             AWSShapeMember(label: "Media", required: true, type: .structure), 
-            AWSShapeMember(label: "MediaFormat", required: true, type: .enum), 
+            AWSShapeMember(label: "MediaFormat", required: false, type: .enum), 
             AWSShapeMember(label: "MediaSampleRateHertz", required: false, type: .integer), 
             AWSShapeMember(label: "OutputBucketName", required: false, type: .string), 
             AWSShapeMember(label: "Settings", required: false, type: .structure), 
@@ -482,9 +484,9 @@ extension TranscribeService {
         public let languageCode: LanguageCode
         /// An object that describes the input media for a transcription job.
         public let media: Media
-        /// The format of the input media file.
-        public let mediaFormat: MediaFormat
-        /// The sample rate, in Hertz, of the audio track in the input media file. 
+        /// The format of the input media file.  If you do not specify the format of the media file, Amazon Transcribe determines the format. If the format is not recognized, Amazon Transcribe returns an InternalFailureException exception. If you specify the format, it must match the format detected by Amazon Transcribe, otherwise you get an InternalFailureException exception.
+        public let mediaFormat: MediaFormat?
+        /// The sample rate of the audio track in the input media file in Hertz.  If you do not specify the media sample rate, Amazon Transcribe determines the sample rate. If you specify the sample rate, it must match the sample rate detected by Amazon Transcribe. In most cases, you should leave the MediaSampleRateHertz field blank and let Amazon Transcribe determine the sample rate.
         public let mediaSampleRateHertz: Int?
         /// The location where the transcription is stored. If you set the OutputBucketName, Amazon Transcribe puts the transcription in the specified S3 bucket. When you call the GetTranscriptionJob operation, the operation returns this location in the TranscriptFileUri field. The S3 bucket must have permissions that allow Amazon Transcribe to put files in the bucket. For more information, see Permissions Required for IAM User Roles. Amazon Transcribe uses the default Amazon S3 key for server-side encryption of transcripts that are placed in your S3 bucket. You can't specify your own encryption key. If you don't set the OutputBucketName, Amazon Transcribe generates a pre-signed URL, a shareable URL that provides secure access to your transcription, and returns it in the TranscriptFileUri field. Use this URL to download the transcription.
         public let outputBucketName: String?
@@ -493,7 +495,7 @@ extension TranscribeService {
         /// The name of the job. Note that you can't use the strings "." or ".." by themselves as the job name. The name must also be unique within an AWS account.
         public let transcriptionJobName: String
 
-        public init(languageCode: LanguageCode, media: Media, mediaFormat: MediaFormat, mediaSampleRateHertz: Int? = nil, outputBucketName: String? = nil, settings: Settings? = nil, transcriptionJobName: String) {
+        public init(languageCode: LanguageCode, media: Media, mediaFormat: MediaFormat? = nil, mediaSampleRateHertz: Int? = nil, outputBucketName: String? = nil, settings: Settings? = nil, transcriptionJobName: String) {
             self.languageCode = languageCode
             self.media = media
             self.mediaFormat = mediaFormat
@@ -504,14 +506,14 @@ extension TranscribeService {
         }
 
         public func validate(name: String) throws {
-            try media.validate(name: "\(name).media")
-            try validate(mediaSampleRateHertz, name:"mediaSampleRateHertz", parent: name, max: 48000)
-            try validate(mediaSampleRateHertz, name:"mediaSampleRateHertz", parent: name, min: 8000)
-            try validate(outputBucketName, name:"outputBucketName", parent: name, pattern: "[a-z0-9][\\.\\-a-z0-9]{1,61}[a-z0-9]")
-            try settings?.validate(name: "\(name).settings")
-            try validate(transcriptionJobName, name:"transcriptionJobName", parent: name, max: 200)
-            try validate(transcriptionJobName, name:"transcriptionJobName", parent: name, min: 1)
-            try validate(transcriptionJobName, name:"transcriptionJobName", parent: name, pattern: "^[0-9a-zA-Z._-]+")
+            try self.media.validate(name: "\(name).media")
+            try validate(self.mediaSampleRateHertz, name:"mediaSampleRateHertz", parent: name, max: 48000)
+            try validate(self.mediaSampleRateHertz, name:"mediaSampleRateHertz", parent: name, min: 8000)
+            try validate(self.outputBucketName, name:"outputBucketName", parent: name, pattern: "[a-z0-9][\\.\\-a-z0-9]{1,61}[a-z0-9]")
+            try self.settings?.validate(name: "\(name).settings")
+            try validate(self.transcriptionJobName, name:"transcriptionJobName", parent: name, max: 200)
+            try validate(self.transcriptionJobName, name:"transcriptionJobName", parent: name, min: 1)
+            try validate(self.transcriptionJobName, name:"transcriptionJobName", parent: name, pattern: "^[0-9a-zA-Z._-]+")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -705,15 +707,15 @@ extension TranscribeService {
         }
 
         public func validate(name: String) throws {
-            try phrases?.forEach {
+            try self.phrases?.forEach {
                 try validate($0, name: "phrases[]", parent: name, max: 256)
                 try validate($0, name: "phrases[]", parent: name, min: 0)
             }
-            try validate(vocabularyFileUri, name:"vocabularyFileUri", parent: name, max: 2000)
-            try validate(vocabularyFileUri, name:"vocabularyFileUri", parent: name, min: 1)
-            try validate(vocabularyName, name:"vocabularyName", parent: name, max: 200)
-            try validate(vocabularyName, name:"vocabularyName", parent: name, min: 1)
-            try validate(vocabularyName, name:"vocabularyName", parent: name, pattern: "^[0-9a-zA-Z._-]+")
+            try validate(self.vocabularyFileUri, name:"vocabularyFileUri", parent: name, max: 2000)
+            try validate(self.vocabularyFileUri, name:"vocabularyFileUri", parent: name, min: 1)
+            try validate(self.vocabularyName, name:"vocabularyName", parent: name, max: 200)
+            try validate(self.vocabularyName, name:"vocabularyName", parent: name, min: 1)
+            try validate(self.vocabularyName, name:"vocabularyName", parent: name, pattern: "^[0-9a-zA-Z._-]+")
         }
 
         private enum CodingKeys: String, CodingKey {

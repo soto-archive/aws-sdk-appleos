@@ -16,6 +16,7 @@ extension CostandUsageReportService {
         case apNortheast1 = "ap-northeast-1"
         case euNorth1 = "eu-north-1"
         case apNortheast3 = "ap-northeast-3"
+        case apEast1 = "ap-east-1"
         public var description: String { return self.rawValue }
     }
 
@@ -45,8 +46,8 @@ extension CostandUsageReportService {
         }
 
         public func validate(name: String) throws {
-            try validate(reportName, name:"reportName", parent: name, max: 256)
-            try validate(reportName, name:"reportName", parent: name, pattern: "[0-9A-Za-z!\\-_.*\\'()]+")
+            try validate(self.reportName, name:"reportName", parent: name, max: 256)
+            try validate(self.reportName, name:"reportName", parent: name, pattern: "[0-9A-Za-z!\\-_.*\\'()]+")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -85,8 +86,8 @@ extension CostandUsageReportService {
         }
 
         public func validate(name: String) throws {
-            try validate(maxResults, name:"maxResults", parent: name, max: 5)
-            try validate(maxResults, name:"maxResults", parent: name, min: 5)
+            try validate(self.maxResults, name:"maxResults", parent: name, max: 5)
+            try validate(self.maxResults, name:"maxResults", parent: name, min: 5)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -116,6 +117,40 @@ extension CostandUsageReportService {
         }
     }
 
+    public struct ModifyReportDefinitionRequest: AWSShape {
+        public static var _members: [AWSShapeMember] = [
+            AWSShapeMember(label: "ReportDefinition", required: true, type: .structure), 
+            AWSShapeMember(label: "ReportName", required: true, type: .string)
+        ]
+
+        public let reportDefinition: ReportDefinition
+        public let reportName: String
+
+        public init(reportDefinition: ReportDefinition, reportName: String) {
+            self.reportDefinition = reportDefinition
+            self.reportName = reportName
+        }
+
+        public func validate(name: String) throws {
+            try self.reportDefinition.validate(name: "\(name).reportDefinition")
+            try validate(self.reportName, name:"reportName", parent: name, max: 256)
+            try validate(self.reportName, name:"reportName", parent: name, pattern: "[0-9A-Za-z!\\-_.*\\'()]+")
+        }
+
+        private enum CodingKeys: String, CodingKey {
+            case reportDefinition = "ReportDefinition"
+            case reportName = "ReportName"
+        }
+    }
+
+    public struct ModifyReportDefinitionResponse: AWSShape {
+
+
+        public init() {
+        }
+
+    }
+
     public struct PutReportDefinitionRequest: AWSShape {
         public static var _members: [AWSShapeMember] = [
             AWSShapeMember(label: "ReportDefinition", required: true, type: .structure)
@@ -129,7 +164,7 @@ extension CostandUsageReportService {
         }
 
         public func validate(name: String) throws {
-            try reportDefinition.validate(name: "\(name).reportDefinition")
+            try self.reportDefinition.validate(name: "\(name).reportDefinition")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -191,11 +226,11 @@ extension CostandUsageReportService {
         }
 
         public func validate(name: String) throws {
-            try validate(reportName, name:"reportName", parent: name, max: 256)
-            try validate(reportName, name:"reportName", parent: name, pattern: "[0-9A-Za-z!\\-_.*\\'()]+")
-            try validate(s3Bucket, name:"s3Bucket", parent: name, max: 256)
-            try validate(s3Prefix, name:"s3Prefix", parent: name, max: 256)
-            try validate(s3Prefix, name:"s3Prefix", parent: name, pattern: "[0-9A-Za-z!\\-_.*\\'()/]*")
+            try validate(self.reportName, name:"reportName", parent: name, max: 256)
+            try validate(self.reportName, name:"reportName", parent: name, pattern: "[0-9A-Za-z!\\-_.*\\'()]+")
+            try validate(self.s3Bucket, name:"s3Bucket", parent: name, max: 256)
+            try validate(self.s3Prefix, name:"s3Prefix", parent: name, max: 256)
+            try validate(self.s3Prefix, name:"s3Prefix", parent: name, pattern: "[0-9A-Za-z!\\-_.*\\'()/]*")
         }
 
         private enum CodingKeys: String, CodingKey {

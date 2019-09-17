@@ -30,10 +30,10 @@ extension EMR {
         }
 
         public func validate(name: String) throws {
-            try validate(clusterId, name:"clusterId", parent: name, max: 256)
-            try validate(clusterId, name:"clusterId", parent: name, min: 0)
-            try validate(clusterId, name:"clusterId", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
-            try instanceFleet.validate(name: "\(name).instanceFleet")
+            try validate(self.clusterId, name:"clusterId", parent: name, max: 256)
+            try validate(self.clusterId, name:"clusterId", parent: name, min: 0)
+            try validate(self.clusterId, name:"clusterId", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
+            try self.instanceFleet.validate(name: "\(name).instanceFleet")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -81,12 +81,12 @@ extension EMR {
         }
 
         public func validate(name: String) throws {
-            try instanceGroups.forEach {
+            try self.instanceGroups.forEach {
                 try $0.validate(name: "\(name).instanceGroups[]")
             }
-            try validate(jobFlowId, name:"jobFlowId", parent: name, max: 256)
-            try validate(jobFlowId, name:"jobFlowId", parent: name, min: 0)
-            try validate(jobFlowId, name:"jobFlowId", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
+            try validate(self.jobFlowId, name:"jobFlowId", parent: name, max: 256)
+            try validate(self.jobFlowId, name:"jobFlowId", parent: name, min: 0)
+            try validate(self.jobFlowId, name:"jobFlowId", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -134,10 +134,10 @@ extension EMR {
         }
 
         public func validate(name: String) throws {
-            try validate(jobFlowId, name:"jobFlowId", parent: name, max: 256)
-            try validate(jobFlowId, name:"jobFlowId", parent: name, min: 0)
-            try validate(jobFlowId, name:"jobFlowId", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
-            try steps.forEach {
+            try validate(self.jobFlowId, name:"jobFlowId", parent: name, max: 256)
+            try validate(self.jobFlowId, name:"jobFlowId", parent: name, min: 0)
+            try validate(self.jobFlowId, name:"jobFlowId", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
+            try self.steps.forEach {
                 try $0.validate(name: "\(name).steps[]")
             }
         }
@@ -251,7 +251,7 @@ extension EMR {
         }
 
         public func validate(name: String) throws {
-            try rules.forEach {
+            try self.rules.forEach {
                 try $0.validate(name: "\(name).rules[]")
             }
         }
@@ -350,6 +350,56 @@ extension EMR {
         }
     }
 
+    public struct BlockPublicAccessConfiguration: AWSShape {
+        public static var _members: [AWSShapeMember] = [
+            AWSShapeMember(label: "BlockPublicSecurityGroupRules", required: true, type: .boolean), 
+            AWSShapeMember(label: "PermittedPublicSecurityGroupRuleRanges", required: false, type: .list)
+        ]
+
+        /// Indicates whether EMR block public access is enabled (true) or disabled (false). By default, the value is false for accounts that have created EMR clusters before July 2019. For accounts created after this, the default is true.
+        public let blockPublicSecurityGroupRules: Bool
+        /// Specifies ports and port ranges that are permitted to have security group rules that allow inbound traffic from all public sources. For example, if Port 23 (Telnet) is specified for PermittedPublicSecurityGroupRuleRanges, Amazon EMR allows cluster creation if a security group associated with the cluster has a rule that allows inbound traffic on Port 23 from IPv4 0.0.0.0/0 or IPv6 port ::/0 as the source. By default, Port 22, which is used for SSH access to the cluster EC2 instances, is in the list of PermittedPublicSecurityGroupRuleRanges.
+        public let permittedPublicSecurityGroupRuleRanges: [PortRange]?
+
+        public init(blockPublicSecurityGroupRules: Bool, permittedPublicSecurityGroupRuleRanges: [PortRange]? = nil) {
+            self.blockPublicSecurityGroupRules = blockPublicSecurityGroupRules
+            self.permittedPublicSecurityGroupRuleRanges = permittedPublicSecurityGroupRuleRanges
+        }
+
+        public func validate(name: String) throws {
+            try self.permittedPublicSecurityGroupRuleRanges?.forEach {
+                try $0.validate(name: "\(name).permittedPublicSecurityGroupRuleRanges[]")
+            }
+        }
+
+        private enum CodingKeys: String, CodingKey {
+            case blockPublicSecurityGroupRules = "BlockPublicSecurityGroupRules"
+            case permittedPublicSecurityGroupRuleRanges = "PermittedPublicSecurityGroupRuleRanges"
+        }
+    }
+
+    public struct BlockPublicAccessConfigurationMetadata: AWSShape {
+        public static var _members: [AWSShapeMember] = [
+            AWSShapeMember(label: "CreatedByArn", required: true, type: .string), 
+            AWSShapeMember(label: "CreationDateTime", required: true, type: .timestamp)
+        ]
+
+        /// The Amazon Resource Name that created or last modified the configuration.
+        public let createdByArn: String
+        /// The date and time that the configuration was created.
+        public let creationDateTime: TimeStamp
+
+        public init(createdByArn: String, creationDateTime: TimeStamp) {
+            self.createdByArn = createdByArn
+            self.creationDateTime = creationDateTime
+        }
+
+        private enum CodingKeys: String, CodingKey {
+            case createdByArn = "CreatedByArn"
+            case creationDateTime = "CreationDateTime"
+        }
+    }
+
     public struct BootstrapActionConfig: AWSShape {
         public static var _members: [AWSShapeMember] = [
             AWSShapeMember(label: "Name", required: true, type: .string), 
@@ -367,10 +417,10 @@ extension EMR {
         }
 
         public func validate(name: String) throws {
-            try validate(name, name:"name", parent: name, max: 256)
-            try validate(name, name:"name", parent: name, min: 0)
-            try validate(name, name:"name", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
-            try scriptBootstrapAction.validate(name: "\(name).scriptBootstrapAction")
+            try validate(self.name, name:"name", parent: name, max: 256)
+            try validate(self.name, name:"name", parent: name, min: 0)
+            try validate(self.name, name:"name", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
+            try self.scriptBootstrapAction.validate(name: "\(name).scriptBootstrapAction")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -440,10 +490,10 @@ extension EMR {
         }
 
         public func validate(name: String) throws {
-            try validate(clusterId, name:"clusterId", parent: name, max: 256)
-            try validate(clusterId, name:"clusterId", parent: name, min: 0)
-            try validate(clusterId, name:"clusterId", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
-            try stepIds?.forEach {
+            try validate(self.clusterId, name:"clusterId", parent: name, max: 256)
+            try validate(self.clusterId, name:"clusterId", parent: name, min: 0)
+            try validate(self.clusterId, name:"clusterId", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
+            try self.stepIds?.forEach {
                 try validate($0, name: "stepIds[]", parent: name, max: 256)
                 try validate($0, name: "stepIds[]", parent: name, min: 0)
                 try validate($0, name: "stepIds[]", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
@@ -524,7 +574,7 @@ extension EMR {
         }
 
         public func validate(name: String) throws {
-            try validate(threshold, name:"threshold", parent: name, min: 0)
+            try validate(self.threshold, name:"threshold", parent: name, min: 0)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -597,7 +647,7 @@ extension EMR {
         public let name: String?
         /// An approximation of the cost of the cluster, represented in m1.small/hours. This value is incremented one time for every hour an m1.small instance runs. Larger instances are weighted more, so an EC2 instance that is roughly four times more expensive would result in the normalized instance hours being incremented by four. This result is only an approximation and does not reflect the actual billing rate.
         public let normalizedInstanceHours: Int?
-        /// The Amazon EMR release label, which determines the version of open-source application packages installed on the cluster. Release labels are in the form emr-x.x.x, where x.x.x is an Amazon EMR release version, for example, emr-5.14.0. For more information about Amazon EMR release versions and included application versions and features, see https://docs.aws.amazon.com/emr/latest/ReleaseGuide/. The release label applies only to Amazon EMR releases versions 4.x and later. Earlier versions use AmiVersion.
+        /// The Amazon EMR release label, which determines the version of open-source application packages installed on the cluster. Release labels are in the form emr-x.x.x, where x.x.x is an Amazon EMR release version such as emr-5.14.0. For more information about Amazon EMR release versions and included application versions and features, see https://docs.aws.amazon.com/emr/latest/ReleaseGuide/. The release label applies only to Amazon EMR releases version 4.0 and later. Earlier versions use AmiVersion.
         public let releaseLabel: String?
         /// Applies only when CustomAmiID is used. Specifies the type of updates that are applied from the Amazon Linux AMI package repositories when an instance boots using the AMI.
         public let repoUpgradeOnBoot: RepoUpgradeOnBoot?
@@ -617,7 +667,7 @@ extension EMR {
         public let tags: [Tag]?
         /// Indicates whether Amazon EMR will lock the cluster to prevent the EC2 instances from being terminated by an API call or user intervention, or in the event of a cluster error.
         public let terminationProtected: Bool?
-        /// Indicates whether the cluster is visible to all IAM users of the AWS account associated with the cluster. If this value is set to true, all IAM users of that AWS account can view and manage the cluster if they have the proper policy permissions set. If this value is false, only the IAM user that created the cluster can view and manage it. This value can be changed using the SetVisibleToAllUsers action.
+        ///  This member will be deprecated.  Indicates whether the cluster is visible to all IAM users of the AWS account associated with the cluster. If this value is set to true, all IAM users of that AWS account can view and manage the cluster if they have the proper policy permissions set. If this value is false, only the IAM user that created the cluster can view and manage it. This value can be changed using the SetVisibleToAllUsers action.
         public let visibleToAllUsers: Bool?
 
         public init(applications: [Application]? = nil, autoScalingRole: String? = nil, autoTerminate: Bool? = nil, configurations: [Configuration]? = nil, customAmiId: String? = nil, ebsRootVolumeSize: Int? = nil, ec2InstanceAttributes: Ec2InstanceAttributes? = nil, id: String? = nil, instanceCollectionType: InstanceCollectionType? = nil, kerberosAttributes: KerberosAttributes? = nil, logUri: String? = nil, masterPublicDnsName: String? = nil, name: String? = nil, normalizedInstanceHours: Int? = nil, releaseLabel: String? = nil, repoUpgradeOnBoot: RepoUpgradeOnBoot? = nil, requestedAmiVersion: String? = nil, runningAmiVersion: String? = nil, scaleDownBehavior: ScaleDownBehavior? = nil, securityConfiguration: String? = nil, serviceRole: String? = nil, status: ClusterStatus? = nil, tags: [Tag]? = nil, terminationProtected: Bool? = nil, visibleToAllUsers: Bool? = nil) {
@@ -887,9 +937,9 @@ extension EMR {
         }
 
         public func validate(name: String) throws {
-            try validate(name, name:"name", parent: name, max: 10280)
-            try validate(name, name:"name", parent: name, min: 0)
-            try validate(name, name:"name", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
+            try validate(self.name, name:"name", parent: name, max: 10280)
+            try validate(self.name, name:"name", parent: name, min: 0)
+            try validate(self.name, name:"name", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -933,9 +983,9 @@ extension EMR {
         }
 
         public func validate(name: String) throws {
-            try validate(name, name:"name", parent: name, max: 10280)
-            try validate(name, name:"name", parent: name, min: 0)
-            try validate(name, name:"name", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
+            try validate(self.name, name:"name", parent: name, max: 10280)
+            try validate(self.name, name:"name", parent: name, min: 0)
+            try validate(self.name, name:"name", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1010,7 +1060,7 @@ extension EMR {
         }
 
         public func validate(name: String) throws {
-            try jobFlowIds?.forEach {
+            try self.jobFlowIds?.forEach {
                 try validate($0, name: "jobFlowIds[]", parent: name, max: 10280)
                 try validate($0, name: "jobFlowIds[]", parent: name, min: 0)
                 try validate($0, name: "jobFlowIds[]", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
@@ -1055,9 +1105,9 @@ extension EMR {
         }
 
         public func validate(name: String) throws {
-            try validate(name, name:"name", parent: name, max: 10280)
-            try validate(name, name:"name", parent: name, min: 0)
-            try validate(name, name:"name", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
+            try validate(self.name, name:"name", parent: name, max: 10280)
+            try validate(self.name, name:"name", parent: name, min: 0)
+            try validate(self.name, name:"name", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1242,7 +1292,7 @@ extension EMR {
         public let ec2AvailabilityZone: String?
         /// The name of the Amazon EC2 key pair to use when connecting with SSH into the master node as a user named "hadoop".
         public let ec2KeyName: String?
-        /// To launch the cluster in Amazon VPC, set this parameter to the identifier of the Amazon VPC subnet where you want the cluster to launch. If you do not specify this value, the cluster is launched in the normal AWS cloud, outside of a VPC. Amazon VPC currently does not support cluster compute quadruple extra large (cc1.4xlarge) instances. Thus, you cannot specify the cc1.4xlarge instance type for nodes of a cluster launched in a VPC.
+        /// Set this parameter to the identifier of the Amazon VPC subnet where you want the cluster to launch. If you do not specify this value, and your account supports EC2-Classic, the cluster launches in EC2-Classic.
         public let ec2SubnetId: String?
         /// The identifier of the Amazon EC2 security group for the master node.
         public let emrManagedMasterSecurityGroup: String?
@@ -1252,7 +1302,7 @@ extension EMR {
         public let iamInstanceProfile: String?
         /// Applies to clusters configured with the instance fleets option. Specifies one or more Availability Zones in which to launch EC2 cluster instances when the EC2-Classic network configuration is supported. Amazon EMR chooses the Availability Zone with the best fit from among the list of RequestedEc2AvailabilityZones, and then launches all cluster instances within that Availability Zone. If you do not specify this value, Amazon EMR chooses the Availability Zone for you. RequestedEc2SubnetIDs and RequestedEc2AvailabilityZones cannot be specified together.
         public let requestedEc2AvailabilityZones: [String]?
-        /// Applies to clusters configured with the instance fleets option. Specifies the unique identifier of one or more Amazon EC2 subnets in which to launch EC2 cluster instances. Subnets must exist within the same VPC. Amazon EMR chooses the EC2 subnet with the best fit from among the list of RequestedEc2SubnetIds, and then launches all cluster instances within that Subnet. If this value is not specified, and the account and region support EC2-Classic networks, the cluster launches instances in the EC2-Classic network and uses RequestedEc2AvailabilityZones instead of this setting. If EC2-Classic is not supported, and no Subnet is specified, Amazon EMR chooses the subnet for you. RequestedEc2SubnetIDs and RequestedEc2AvailabilityZones cannot be specified together.
+        /// Applies to clusters configured with the instance fleets option. Specifies the unique identifier of one or more Amazon EC2 subnets in which to launch EC2 cluster instances. Subnets must exist within the same VPC. Amazon EMR chooses the EC2 subnet with the best fit from among the list of RequestedEc2SubnetIds, and then launches all cluster instances within that Subnet. If this value is not specified, and the account and Region support EC2-Classic networks, the cluster launches instances in the EC2-Classic network and uses RequestedEc2AvailabilityZones instead of this setting. If EC2-Classic is not supported, and no Subnet is specified, Amazon EMR chooses the subnet for you. RequestedEc2SubnetIDs and RequestedEc2AvailabilityZones cannot be specified together.
         public let requestedEc2SubnetIds: [String]?
         /// The identifier of the Amazon EC2 security group for the Amazon EMR service to access clusters in VPC private subnets.
         public let serviceAccessSecurityGroup: String?
@@ -1313,6 +1363,36 @@ extension EMR {
         }
     }
 
+    public struct GetBlockPublicAccessConfigurationInput: AWSShape {
+
+
+        public init() {
+        }
+
+    }
+
+    public struct GetBlockPublicAccessConfigurationOutput: AWSShape {
+        public static var _members: [AWSShapeMember] = [
+            AWSShapeMember(label: "BlockPublicAccessConfiguration", required: true, type: .structure), 
+            AWSShapeMember(label: "BlockPublicAccessConfigurationMetadata", required: true, type: .structure)
+        ]
+
+        /// A configuration for Amazon EMR block public access. The configuration applies to all clusters created in your account for the current Region. The configuration specifies whether block public access is enabled. If block public access is enabled, security groups associated with the cluster cannot have rules that allow inbound traffic from 0.0.0.0/0 or ::/0 on a port, unless the port is specified as an exception using PermittedPublicSecurityGroupRuleRanges in the BlockPublicAccessConfiguration. By default, Port 22 (SSH) is an exception, and public access is allowed on this port. You can change this by updating the block public access configuration to remove the exception.
+        public let blockPublicAccessConfiguration: BlockPublicAccessConfiguration
+        /// Properties that describe the AWS principal that created the BlockPublicAccessConfiguration using the PutBlockPublicAccessConfiguration action as well as the date and time that the configuration was created. Each time a configuration for block public access is updated, Amazon EMR updates this metadata.
+        public let blockPublicAccessConfigurationMetadata: BlockPublicAccessConfigurationMetadata
+
+        public init(blockPublicAccessConfiguration: BlockPublicAccessConfiguration, blockPublicAccessConfigurationMetadata: BlockPublicAccessConfigurationMetadata) {
+            self.blockPublicAccessConfiguration = blockPublicAccessConfiguration
+            self.blockPublicAccessConfigurationMetadata = blockPublicAccessConfigurationMetadata
+        }
+
+        private enum CodingKeys: String, CodingKey {
+            case blockPublicAccessConfiguration = "BlockPublicAccessConfiguration"
+            case blockPublicAccessConfigurationMetadata = "BlockPublicAccessConfigurationMetadata"
+        }
+    }
+
     public struct HadoopJarStepConfig: AWSShape {
         public static var _members: [AWSShapeMember] = [
             AWSShapeMember(label: "Args", required: false, type: .list), 
@@ -1338,18 +1418,18 @@ extension EMR {
         }
 
         public func validate(name: String) throws {
-            try args?.forEach {
+            try self.args?.forEach {
                 try validate($0, name: "args[]", parent: name, max: 10280)
                 try validate($0, name: "args[]", parent: name, min: 0)
                 try validate($0, name: "args[]", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
             }
-            try validate(jar, name:"jar", parent: name, max: 10280)
-            try validate(jar, name:"jar", parent: name, min: 0)
-            try validate(jar, name:"jar", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
-            try validate(mainClass, name:"mainClass", parent: name, max: 10280)
-            try validate(mainClass, name:"mainClass", parent: name, min: 0)
-            try validate(mainClass, name:"mainClass", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
-            try properties?.forEach {
+            try validate(self.jar, name:"jar", parent: name, max: 10280)
+            try validate(self.jar, name:"jar", parent: name, min: 0)
+            try validate(self.jar, name:"jar", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
+            try validate(self.mainClass, name:"mainClass", parent: name, max: 10280)
+            try validate(self.mainClass, name:"mainClass", parent: name, min: 0)
+            try validate(self.mainClass, name:"mainClass", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
+            try self.properties?.forEach {
                 try $0.validate(name: "\(name).properties[]")
             }
         }
@@ -1567,15 +1647,15 @@ extension EMR {
         }
 
         public func validate(name: String) throws {
-            try instanceTypeConfigs?.forEach {
+            try self.instanceTypeConfigs?.forEach {
                 try $0.validate(name: "\(name).instanceTypeConfigs[]")
             }
-            try launchSpecifications?.validate(name: "\(name).launchSpecifications")
-            try validate(name, name:"name", parent: name, max: 256)
-            try validate(name, name:"name", parent: name, min: 0)
-            try validate(name, name:"name", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
-            try validate(targetOnDemandCapacity, name:"targetOnDemandCapacity", parent: name, min: 0)
-            try validate(targetSpotCapacity, name:"targetSpotCapacity", parent: name, min: 0)
+            try self.launchSpecifications?.validate(name: "\(name).launchSpecifications")
+            try validate(self.name, name:"name", parent: name, max: 256)
+            try validate(self.name, name:"name", parent: name, min: 0)
+            try validate(self.name, name:"name", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
+            try validate(self.targetOnDemandCapacity, name:"targetOnDemandCapacity", parent: name, min: 0)
+            try validate(self.targetSpotCapacity, name:"targetSpotCapacity", parent: name, min: 0)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1609,8 +1689,8 @@ extension EMR {
         }
 
         public func validate(name: String) throws {
-            try validate(targetOnDemandCapacity, name:"targetOnDemandCapacity", parent: name, min: 0)
-            try validate(targetSpotCapacity, name:"targetSpotCapacity", parent: name, min: 0)
+            try validate(self.targetOnDemandCapacity, name:"targetOnDemandCapacity", parent: name, min: 0)
+            try validate(self.targetSpotCapacity, name:"targetSpotCapacity", parent: name, min: 0)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1633,7 +1713,7 @@ extension EMR {
         }
 
         public func validate(name: String) throws {
-            try spotSpecification.validate(name: "\(name).spotSpecification")
+            try self.spotSpecification.validate(name: "\(name).spotSpecification")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -1885,16 +1965,16 @@ extension EMR {
         }
 
         public func validate(name: String) throws {
-            try autoScalingPolicy?.validate(name: "\(name).autoScalingPolicy")
-            try validate(bidPrice, name:"bidPrice", parent: name, max: 256)
-            try validate(bidPrice, name:"bidPrice", parent: name, min: 0)
-            try validate(bidPrice, name:"bidPrice", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
-            try validate(instanceType, name:"instanceType", parent: name, max: 256)
-            try validate(instanceType, name:"instanceType", parent: name, min: 1)
-            try validate(instanceType, name:"instanceType", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
-            try validate(name, name:"name", parent: name, max: 256)
-            try validate(name, name:"name", parent: name, min: 0)
-            try validate(name, name:"name", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
+            try self.autoScalingPolicy?.validate(name: "\(name).autoScalingPolicy")
+            try validate(self.bidPrice, name:"bidPrice", parent: name, max: 256)
+            try validate(self.bidPrice, name:"bidPrice", parent: name, min: 0)
+            try validate(self.bidPrice, name:"bidPrice", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
+            try validate(self.instanceType, name:"instanceType", parent: name, max: 256)
+            try validate(self.instanceType, name:"instanceType", parent: name, min: 1)
+            try validate(self.instanceType, name:"instanceType", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
+            try validate(self.name, name:"name", parent: name, max: 256)
+            try validate(self.name, name:"name", parent: name, min: 0)
+            try validate(self.name, name:"name", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -2021,9 +2101,9 @@ extension EMR {
         }
 
         public func validate(name: String) throws {
-            try validate(instanceGroupId, name:"instanceGroupId", parent: name, max: 256)
-            try validate(instanceGroupId, name:"instanceGroupId", parent: name, min: 0)
-            try validate(instanceGroupId, name:"instanceGroupId", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
+            try validate(self.instanceGroupId, name:"instanceGroupId", parent: name, max: 256)
+            try validate(self.instanceGroupId, name:"instanceGroupId", parent: name, min: 0)
+            try validate(self.instanceGroupId, name:"instanceGroupId", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -2302,14 +2382,14 @@ extension EMR {
         }
 
         public func validate(name: String) throws {
-            try validate(bidPrice, name:"bidPrice", parent: name, max: 256)
-            try validate(bidPrice, name:"bidPrice", parent: name, min: 0)
-            try validate(bidPrice, name:"bidPrice", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
-            try validate(bidPriceAsPercentageOfOnDemandPrice, name:"bidPriceAsPercentageOfOnDemandPrice", parent: name, min: 0)
-            try validate(instanceType, name:"instanceType", parent: name, max: 256)
-            try validate(instanceType, name:"instanceType", parent: name, min: 1)
-            try validate(instanceType, name:"instanceType", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
-            try validate(weightedCapacity, name:"weightedCapacity", parent: name, min: 0)
+            try validate(self.bidPrice, name:"bidPrice", parent: name, max: 256)
+            try validate(self.bidPrice, name:"bidPrice", parent: name, min: 0)
+            try validate(self.bidPrice, name:"bidPrice", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
+            try validate(self.bidPriceAsPercentageOfOnDemandPrice, name:"bidPriceAsPercentageOfOnDemandPrice", parent: name, min: 0)
+            try validate(self.instanceType, name:"instanceType", parent: name, max: 256)
+            try validate(self.instanceType, name:"instanceType", parent: name, min: 1)
+            try validate(self.instanceType, name:"instanceType", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
+            try validate(self.weightedCapacity, name:"weightedCapacity", parent: name, min: 0)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -2413,7 +2493,7 @@ extension EMR {
         public let steps: [StepDetail]?
         /// A list of strings set by third party software when the job flow is launched. If you are not using third party software to manage the job flow this value is empty.
         public let supportedProducts: [String]?
-        /// Specifies whether the cluster is visible to all IAM users of the AWS account associated with the cluster. If this value is set to true, all IAM users of that AWS account can view and (if they have the proper policy permissions set) manage the cluster. If it is set to false, only the IAM user that created the cluster can view and manage it. This value can be changed using the SetVisibleToAllUsers action.
+        ///  This member will be deprecated.  Specifies whether the cluster is visible to all IAM users of the AWS account associated with the cluster. If this value is set to true, all IAM users of that AWS account can view and (if they have the proper policy permissions set) manage the cluster. If it is set to false, only the IAM user that created the cluster can view and manage it. This value can be changed using the SetVisibleToAllUsers action.
         public let visibleToAllUsers: Bool?
 
         public init(amiVersion: String? = nil, autoScalingRole: String? = nil, bootstrapActions: [BootstrapActionDetail]? = nil, executionStatusDetail: JobFlowExecutionStatusDetail, instances: JobFlowInstancesDetail, jobFlowId: String, jobFlowRole: String? = nil, logUri: String? = nil, name: String, scaleDownBehavior: ScaleDownBehavior? = nil, serviceRole: String? = nil, steps: [StepDetail]? = nil, supportedProducts: [String]? = nil, visibleToAllUsers: Bool? = nil) {
@@ -2532,7 +2612,7 @@ extension EMR {
         public let additionalSlaveSecurityGroups: [String]?
         /// The name of the EC2 key pair that can be used to ssh to the master node as the user called "hadoop."
         public let ec2KeyName: String?
-        /// Applies to clusters that use the uniform instance group configuration. To launch the cluster in Amazon Virtual Private Cloud (Amazon VPC), set this parameter to the identifier of the Amazon VPC subnet where you want the cluster to launch. If you do not specify this value, the cluster launches in the normal Amazon Web Services cloud, outside of an Amazon VPC, if the account launching the cluster supports EC2 Classic networks in the region where the cluster launches. Amazon VPC currently does not support cluster compute quadruple extra large (cc1.4xlarge) instances. Thus you cannot specify the cc1.4xlarge instance type for clusters launched in an Amazon VPC.
+        /// Applies to clusters that use the uniform instance group configuration. To launch the cluster in Amazon Virtual Private Cloud (Amazon VPC), set this parameter to the identifier of the Amazon VPC subnet where you want the cluster to launch. If you do not specify this value and your account supports EC2-Classic, the cluster launches in EC2-Classic.
         public let ec2SubnetId: String?
         /// Applies to clusters that use the instance fleet configuration. When multiple EC2 subnet IDs are specified, Amazon EMR evaluates them and launches instances in the optimal subnet.  The instance fleet configuration is available only in Amazon EMR versions 4.8.0 and later, excluding 5.0.x versions. 
         public let ec2SubnetIds: [String]?
@@ -2582,52 +2662,52 @@ extension EMR {
         }
 
         public func validate(name: String) throws {
-            try additionalMasterSecurityGroups?.forEach {
+            try self.additionalMasterSecurityGroups?.forEach {
                 try validate($0, name: "additionalMasterSecurityGroups[]", parent: name, max: 256)
                 try validate($0, name: "additionalMasterSecurityGroups[]", parent: name, min: 0)
                 try validate($0, name: "additionalMasterSecurityGroups[]", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
             }
-            try additionalSlaveSecurityGroups?.forEach {
+            try self.additionalSlaveSecurityGroups?.forEach {
                 try validate($0, name: "additionalSlaveSecurityGroups[]", parent: name, max: 256)
                 try validate($0, name: "additionalSlaveSecurityGroups[]", parent: name, min: 0)
                 try validate($0, name: "additionalSlaveSecurityGroups[]", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
             }
-            try validate(ec2KeyName, name:"ec2KeyName", parent: name, max: 256)
-            try validate(ec2KeyName, name:"ec2KeyName", parent: name, min: 0)
-            try validate(ec2KeyName, name:"ec2KeyName", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
-            try validate(ec2SubnetId, name:"ec2SubnetId", parent: name, max: 256)
-            try validate(ec2SubnetId, name:"ec2SubnetId", parent: name, min: 0)
-            try validate(ec2SubnetId, name:"ec2SubnetId", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
-            try ec2SubnetIds?.forEach {
+            try validate(self.ec2KeyName, name:"ec2KeyName", parent: name, max: 256)
+            try validate(self.ec2KeyName, name:"ec2KeyName", parent: name, min: 0)
+            try validate(self.ec2KeyName, name:"ec2KeyName", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
+            try validate(self.ec2SubnetId, name:"ec2SubnetId", parent: name, max: 256)
+            try validate(self.ec2SubnetId, name:"ec2SubnetId", parent: name, min: 0)
+            try validate(self.ec2SubnetId, name:"ec2SubnetId", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
+            try self.ec2SubnetIds?.forEach {
                 try validate($0, name: "ec2SubnetIds[]", parent: name, max: 256)
                 try validate($0, name: "ec2SubnetIds[]", parent: name, min: 0)
                 try validate($0, name: "ec2SubnetIds[]", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
             }
-            try validate(emrManagedMasterSecurityGroup, name:"emrManagedMasterSecurityGroup", parent: name, max: 256)
-            try validate(emrManagedMasterSecurityGroup, name:"emrManagedMasterSecurityGroup", parent: name, min: 0)
-            try validate(emrManagedMasterSecurityGroup, name:"emrManagedMasterSecurityGroup", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
-            try validate(emrManagedSlaveSecurityGroup, name:"emrManagedSlaveSecurityGroup", parent: name, max: 256)
-            try validate(emrManagedSlaveSecurityGroup, name:"emrManagedSlaveSecurityGroup", parent: name, min: 0)
-            try validate(emrManagedSlaveSecurityGroup, name:"emrManagedSlaveSecurityGroup", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
-            try validate(hadoopVersion, name:"hadoopVersion", parent: name, max: 256)
-            try validate(hadoopVersion, name:"hadoopVersion", parent: name, min: 0)
-            try validate(hadoopVersion, name:"hadoopVersion", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
-            try instanceFleets?.forEach {
+            try validate(self.emrManagedMasterSecurityGroup, name:"emrManagedMasterSecurityGroup", parent: name, max: 256)
+            try validate(self.emrManagedMasterSecurityGroup, name:"emrManagedMasterSecurityGroup", parent: name, min: 0)
+            try validate(self.emrManagedMasterSecurityGroup, name:"emrManagedMasterSecurityGroup", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
+            try validate(self.emrManagedSlaveSecurityGroup, name:"emrManagedSlaveSecurityGroup", parent: name, max: 256)
+            try validate(self.emrManagedSlaveSecurityGroup, name:"emrManagedSlaveSecurityGroup", parent: name, min: 0)
+            try validate(self.emrManagedSlaveSecurityGroup, name:"emrManagedSlaveSecurityGroup", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
+            try validate(self.hadoopVersion, name:"hadoopVersion", parent: name, max: 256)
+            try validate(self.hadoopVersion, name:"hadoopVersion", parent: name, min: 0)
+            try validate(self.hadoopVersion, name:"hadoopVersion", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
+            try self.instanceFleets?.forEach {
                 try $0.validate(name: "\(name).instanceFleets[]")
             }
-            try instanceGroups?.forEach {
+            try self.instanceGroups?.forEach {
                 try $0.validate(name: "\(name).instanceGroups[]")
             }
-            try validate(masterInstanceType, name:"masterInstanceType", parent: name, max: 256)
-            try validate(masterInstanceType, name:"masterInstanceType", parent: name, min: 1)
-            try validate(masterInstanceType, name:"masterInstanceType", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
-            try placement?.validate(name: "\(name).placement")
-            try validate(serviceAccessSecurityGroup, name:"serviceAccessSecurityGroup", parent: name, max: 256)
-            try validate(serviceAccessSecurityGroup, name:"serviceAccessSecurityGroup", parent: name, min: 0)
-            try validate(serviceAccessSecurityGroup, name:"serviceAccessSecurityGroup", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
-            try validate(slaveInstanceType, name:"slaveInstanceType", parent: name, max: 256)
-            try validate(slaveInstanceType, name:"slaveInstanceType", parent: name, min: 1)
-            try validate(slaveInstanceType, name:"slaveInstanceType", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
+            try validate(self.masterInstanceType, name:"masterInstanceType", parent: name, max: 256)
+            try validate(self.masterInstanceType, name:"masterInstanceType", parent: name, min: 1)
+            try validate(self.masterInstanceType, name:"masterInstanceType", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
+            try self.placement?.validate(name: "\(name).placement")
+            try validate(self.serviceAccessSecurityGroup, name:"serviceAccessSecurityGroup", parent: name, max: 256)
+            try validate(self.serviceAccessSecurityGroup, name:"serviceAccessSecurityGroup", parent: name, min: 0)
+            try validate(self.serviceAccessSecurityGroup, name:"serviceAccessSecurityGroup", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
+            try validate(self.slaveInstanceType, name:"slaveInstanceType", parent: name, max: 256)
+            try validate(self.slaveInstanceType, name:"slaveInstanceType", parent: name, min: 1)
+            try validate(self.slaveInstanceType, name:"slaveInstanceType", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -2757,21 +2837,21 @@ extension EMR {
         }
 
         public func validate(name: String) throws {
-            try validate(aDDomainJoinPassword, name:"aDDomainJoinPassword", parent: name, max: 256)
-            try validate(aDDomainJoinPassword, name:"aDDomainJoinPassword", parent: name, min: 0)
-            try validate(aDDomainJoinPassword, name:"aDDomainJoinPassword", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
-            try validate(aDDomainJoinUser, name:"aDDomainJoinUser", parent: name, max: 256)
-            try validate(aDDomainJoinUser, name:"aDDomainJoinUser", parent: name, min: 0)
-            try validate(aDDomainJoinUser, name:"aDDomainJoinUser", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
-            try validate(crossRealmTrustPrincipalPassword, name:"crossRealmTrustPrincipalPassword", parent: name, max: 256)
-            try validate(crossRealmTrustPrincipalPassword, name:"crossRealmTrustPrincipalPassword", parent: name, min: 0)
-            try validate(crossRealmTrustPrincipalPassword, name:"crossRealmTrustPrincipalPassword", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
-            try validate(kdcAdminPassword, name:"kdcAdminPassword", parent: name, max: 256)
-            try validate(kdcAdminPassword, name:"kdcAdminPassword", parent: name, min: 0)
-            try validate(kdcAdminPassword, name:"kdcAdminPassword", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
-            try validate(realm, name:"realm", parent: name, max: 256)
-            try validate(realm, name:"realm", parent: name, min: 0)
-            try validate(realm, name:"realm", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
+            try validate(self.aDDomainJoinPassword, name:"aDDomainJoinPassword", parent: name, max: 256)
+            try validate(self.aDDomainJoinPassword, name:"aDDomainJoinPassword", parent: name, min: 0)
+            try validate(self.aDDomainJoinPassword, name:"aDDomainJoinPassword", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
+            try validate(self.aDDomainJoinUser, name:"aDDomainJoinUser", parent: name, max: 256)
+            try validate(self.aDDomainJoinUser, name:"aDDomainJoinUser", parent: name, min: 0)
+            try validate(self.aDDomainJoinUser, name:"aDDomainJoinUser", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
+            try validate(self.crossRealmTrustPrincipalPassword, name:"crossRealmTrustPrincipalPassword", parent: name, max: 256)
+            try validate(self.crossRealmTrustPrincipalPassword, name:"crossRealmTrustPrincipalPassword", parent: name, min: 0)
+            try validate(self.crossRealmTrustPrincipalPassword, name:"crossRealmTrustPrincipalPassword", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
+            try validate(self.kdcAdminPassword, name:"kdcAdminPassword", parent: name, max: 256)
+            try validate(self.kdcAdminPassword, name:"kdcAdminPassword", parent: name, min: 0)
+            try validate(self.kdcAdminPassword, name:"kdcAdminPassword", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
+            try validate(self.realm, name:"realm", parent: name, max: 256)
+            try validate(self.realm, name:"realm", parent: name, min: 0)
+            try validate(self.realm, name:"realm", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -2800,12 +2880,12 @@ extension EMR {
         }
 
         public func validate(name: String) throws {
-            try validate(key, name:"key", parent: name, max: 10280)
-            try validate(key, name:"key", parent: name, min: 0)
-            try validate(key, name:"key", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
-            try validate(value, name:"value", parent: name, max: 10280)
-            try validate(value, name:"value", parent: name, min: 0)
-            try validate(value, name:"value", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
+            try validate(self.key, name:"key", parent: name, max: 10280)
+            try validate(self.key, name:"key", parent: name, min: 0)
+            try validate(self.key, name:"key", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
+            try validate(self.value, name:"value", parent: name, max: 10280)
+            try validate(self.value, name:"value", parent: name, min: 0)
+            try validate(self.value, name:"value", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -3133,7 +3213,7 @@ extension EMR {
         }
 
         public func validate(name: String) throws {
-            try stepIds?.forEach {
+            try self.stepIds?.forEach {
                 try validate($0, name: "stepIds[]", parent: name, max: 10280)
                 try validate($0, name: "stepIds[]", parent: name, min: 0)
                 try validate($0, name: "stepIds[]", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
@@ -3215,7 +3295,7 @@ extension EMR {
         }
 
         public func validate(name: String) throws {
-            try instanceFleet.validate(name: "\(name).instanceFleet")
+            try self.instanceFleet.validate(name: "\(name).instanceFleet")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -3241,7 +3321,7 @@ extension EMR {
         }
 
         public func validate(name: String) throws {
-            try instanceGroups?.forEach {
+            try self.instanceGroups?.forEach {
                 try $0.validate(name: "\(name).instanceGroups[]")
             }
         }
@@ -3269,10 +3349,10 @@ extension EMR {
         }
 
         public func validate(name: String) throws {
-            try validate(availabilityZone, name:"availabilityZone", parent: name, max: 10280)
-            try validate(availabilityZone, name:"availabilityZone", parent: name, min: 0)
-            try validate(availabilityZone, name:"availabilityZone", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
-            try availabilityZones?.forEach {
+            try validate(self.availabilityZone, name:"availabilityZone", parent: name, max: 10280)
+            try validate(self.availabilityZone, name:"availabilityZone", parent: name, min: 0)
+            try validate(self.availabilityZone, name:"availabilityZone", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
+            try self.availabilityZones?.forEach {
                 try validate($0, name: "availabilityZones[]", parent: name, max: 256)
                 try validate($0, name: "availabilityZones[]", parent: name, min: 0)
                 try validate($0, name: "availabilityZones[]", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
@@ -3282,6 +3362,35 @@ extension EMR {
         private enum CodingKeys: String, CodingKey {
             case availabilityZone = "AvailabilityZone"
             case availabilityZones = "AvailabilityZones"
+        }
+    }
+
+    public struct PortRange: AWSShape {
+        public static var _members: [AWSShapeMember] = [
+            AWSShapeMember(label: "MaxRange", required: false, type: .integer), 
+            AWSShapeMember(label: "MinRange", required: true, type: .integer)
+        ]
+
+        /// The smallest port number in a specified range of port numbers.
+        public let maxRange: Int?
+        /// The smallest port number in a specified range of port numbers.
+        public let minRange: Int
+
+        public init(maxRange: Int? = nil, minRange: Int) {
+            self.maxRange = maxRange
+            self.minRange = minRange
+        }
+
+        public func validate(name: String) throws {
+            try validate(self.maxRange, name:"maxRange", parent: name, max: 65535)
+            try validate(self.maxRange, name:"maxRange", parent: name, min: 0)
+            try validate(self.minRange, name:"minRange", parent: name, max: 65535)
+            try validate(self.minRange, name:"minRange", parent: name, min: 0)
+        }
+
+        private enum CodingKeys: String, CodingKey {
+            case maxRange = "MaxRange"
+            case minRange = "MinRange"
         }
     }
 
@@ -3306,7 +3415,7 @@ extension EMR {
         }
 
         public func validate(name: String) throws {
-            try autoScalingPolicy.validate(name: "\(name).autoScalingPolicy")
+            try self.autoScalingPolicy.validate(name: "\(name).autoScalingPolicy")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -3341,6 +3450,35 @@ extension EMR {
             case clusterId = "ClusterId"
             case instanceGroupId = "InstanceGroupId"
         }
+    }
+
+    public struct PutBlockPublicAccessConfigurationInput: AWSShape {
+        public static var _members: [AWSShapeMember] = [
+            AWSShapeMember(label: "BlockPublicAccessConfiguration", required: true, type: .structure)
+        ]
+
+        /// A configuration for Amazon EMR block public access. The configuration applies to all clusters created in your account for the current Region. The configuration specifies whether block public access is enabled. If block public access is enabled, security groups associated with the cluster cannot have rules that allow inbound traffic from 0.0.0.0/0 or ::/0 on a port, unless the port is specified as an exception using PermittedPublicSecurityGroupRuleRanges in the BlockPublicAccessConfiguration. By default, Port 22 (SSH) is an exception, and public access is allowed on this port. You can change this by updating BlockPublicSecurityGroupRules to remove the exception.
+        public let blockPublicAccessConfiguration: BlockPublicAccessConfiguration
+
+        public init(blockPublicAccessConfiguration: BlockPublicAccessConfiguration) {
+            self.blockPublicAccessConfiguration = blockPublicAccessConfiguration
+        }
+
+        public func validate(name: String) throws {
+            try self.blockPublicAccessConfiguration.validate(name: "\(name).blockPublicAccessConfiguration")
+        }
+
+        private enum CodingKeys: String, CodingKey {
+            case blockPublicAccessConfiguration = "BlockPublicAccessConfiguration"
+        }
+    }
+
+    public struct PutBlockPublicAccessConfigurationOutput: AWSShape {
+
+
+        public init() {
+        }
+
     }
 
     public struct RemoveAutoScalingPolicyInput: AWSShape {
@@ -3464,7 +3602,7 @@ extension EMR {
         public let name: String
         ///  For Amazon EMR releases 3.x and 2.x. For Amazon EMR releases 4.x and later, use Applications.  A list of strings that indicates third-party software to use with the job flow that accepts a user argument list. EMR accepts and forwards the argument list to the corresponding installation script as bootstrap action arguments. For more information, see "Launch a Job Flow on the MapR Distribution for Hadoop" in the Amazon EMR Developer Guide. Supported values are:   "mapr-m3" - launch the cluster using MapR M3 Edition.   "mapr-m5" - launch the cluster using MapR M5 Edition.   "mapr" with the user arguments specifying "--edition,m3" or "--edition,m5" - launch the job flow using MapR M3 or M5 Edition respectively.   "mapr-m7" - launch the cluster using MapR M7 Edition.   "hunk" - launch the cluster with the Hunk Big Data Analtics Platform.   "hue"- launch the cluster with Hue installed.   "spark" - launch the cluster with Apache Spark installed.   "ganglia" - launch the cluster with the Ganglia Monitoring System installed.  
         public let newSupportedProducts: [SupportedProductConfig]?
-        /// The Amazon EMR release label, which determines the version of open-source application packages installed on the cluster. Release labels are in the form emr-x.x.x, where x.x.x is an Amazon EMR release version, for example, emr-5.14.0. For more information about Amazon EMR release versions and included application versions and features, see https://docs.aws.amazon.com/emr/latest/ReleaseGuide/. The release label applies only to Amazon EMR releases versions 4.x and later. Earlier versions use AmiVersion.
+        /// The Amazon EMR release label, which determines the version of open-source application packages installed on the cluster. Release labels are in the form emr-x.x.x, where x.x.x is an Amazon EMR release version such as emr-5.14.0. For more information about Amazon EMR release versions and included application versions and features, see https://docs.aws.amazon.com/emr/latest/ReleaseGuide/. The release label applies only to Amazon EMR releases version 4.0 and later. Earlier versions use AmiVersion.
         public let releaseLabel: String?
         /// Applies only when CustomAmiID is used. Specifies which updates from the Amazon Linux AMI package repositories to apply automatically when the instance boots using the AMI. If omitted, the default is SECURITY, which indicates that only security updates are applied. If NONE is specified, no updates are applied, and all updates must be applied manually.
         public let repoUpgradeOnBoot: RepoUpgradeOnBoot?
@@ -3480,7 +3618,7 @@ extension EMR {
         public let supportedProducts: [String]?
         /// A list of tags to associate with a cluster and propagate to Amazon EC2 instances.
         public let tags: [Tag]?
-        /// Whether the cluster is visible to all IAM users of the AWS account associated with the cluster. If this value is set to true, all IAM users of that AWS account can view and (if they have the proper policy permissions set) manage the cluster. If it is set to false, only the IAM user that created the cluster can view and manage it.
+        ///  This member will be deprecated.  Whether the cluster is visible to all IAM users of the AWS account associated with the cluster. If this value is set to true, all IAM users of that AWS account can view and (if they have the proper policy permissions set) manage the cluster. If it is set to false, only the IAM user that created the cluster can view and manage it.
         public let visibleToAllUsers: Bool?
 
         public init(additionalInfo: String? = nil, amiVersion: String? = nil, applications: [Application]? = nil, autoScalingRole: String? = nil, bootstrapActions: [BootstrapActionConfig]? = nil, configurations: [Configuration]? = nil, customAmiId: String? = nil, ebsRootVolumeSize: Int? = nil, instances: JobFlowInstancesConfig, jobFlowRole: String? = nil, kerberosAttributes: KerberosAttributes? = nil, logUri: String? = nil, name: String, newSupportedProducts: [SupportedProductConfig]? = nil, releaseLabel: String? = nil, repoUpgradeOnBoot: RepoUpgradeOnBoot? = nil, scaleDownBehavior: ScaleDownBehavior? = nil, securityConfiguration: String? = nil, serviceRole: String? = nil, steps: [StepConfig]? = nil, supportedProducts: [String]? = nil, tags: [Tag]? = nil, visibleToAllUsers: Bool? = nil) {
@@ -3510,48 +3648,48 @@ extension EMR {
         }
 
         public func validate(name: String) throws {
-            try validate(additionalInfo, name:"additionalInfo", parent: name, max: 10280)
-            try validate(additionalInfo, name:"additionalInfo", parent: name, min: 0)
-            try validate(additionalInfo, name:"additionalInfo", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
-            try validate(amiVersion, name:"amiVersion", parent: name, max: 256)
-            try validate(amiVersion, name:"amiVersion", parent: name, min: 0)
-            try validate(amiVersion, name:"amiVersion", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
-            try validate(autoScalingRole, name:"autoScalingRole", parent: name, max: 10280)
-            try validate(autoScalingRole, name:"autoScalingRole", parent: name, min: 0)
-            try validate(autoScalingRole, name:"autoScalingRole", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
-            try bootstrapActions?.forEach {
+            try validate(self.additionalInfo, name:"additionalInfo", parent: name, max: 10280)
+            try validate(self.additionalInfo, name:"additionalInfo", parent: name, min: 0)
+            try validate(self.additionalInfo, name:"additionalInfo", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
+            try validate(self.amiVersion, name:"amiVersion", parent: name, max: 256)
+            try validate(self.amiVersion, name:"amiVersion", parent: name, min: 0)
+            try validate(self.amiVersion, name:"amiVersion", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
+            try validate(self.autoScalingRole, name:"autoScalingRole", parent: name, max: 10280)
+            try validate(self.autoScalingRole, name:"autoScalingRole", parent: name, min: 0)
+            try validate(self.autoScalingRole, name:"autoScalingRole", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
+            try self.bootstrapActions?.forEach {
                 try $0.validate(name: "\(name).bootstrapActions[]")
             }
-            try validate(customAmiId, name:"customAmiId", parent: name, max: 256)
-            try validate(customAmiId, name:"customAmiId", parent: name, min: 0)
-            try validate(customAmiId, name:"customAmiId", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
-            try instances.validate(name: "\(name).instances")
-            try validate(jobFlowRole, name:"jobFlowRole", parent: name, max: 10280)
-            try validate(jobFlowRole, name:"jobFlowRole", parent: name, min: 0)
-            try validate(jobFlowRole, name:"jobFlowRole", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
-            try kerberosAttributes?.validate(name: "\(name).kerberosAttributes")
-            try validate(logUri, name:"logUri", parent: name, max: 10280)
-            try validate(logUri, name:"logUri", parent: name, min: 0)
-            try validate(logUri, name:"logUri", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
-            try validate(name, name:"name", parent: name, max: 256)
-            try validate(name, name:"name", parent: name, min: 0)
-            try validate(name, name:"name", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
-            try newSupportedProducts?.forEach {
+            try validate(self.customAmiId, name:"customAmiId", parent: name, max: 256)
+            try validate(self.customAmiId, name:"customAmiId", parent: name, min: 0)
+            try validate(self.customAmiId, name:"customAmiId", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
+            try self.instances.validate(name: "\(name).instances")
+            try validate(self.jobFlowRole, name:"jobFlowRole", parent: name, max: 10280)
+            try validate(self.jobFlowRole, name:"jobFlowRole", parent: name, min: 0)
+            try validate(self.jobFlowRole, name:"jobFlowRole", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
+            try self.kerberosAttributes?.validate(name: "\(name).kerberosAttributes")
+            try validate(self.logUri, name:"logUri", parent: name, max: 10280)
+            try validate(self.logUri, name:"logUri", parent: name, min: 0)
+            try validate(self.logUri, name:"logUri", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
+            try validate(self.name, name:"name", parent: name, max: 256)
+            try validate(self.name, name:"name", parent: name, min: 0)
+            try validate(self.name, name:"name", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
+            try self.newSupportedProducts?.forEach {
                 try $0.validate(name: "\(name).newSupportedProducts[]")
             }
-            try validate(releaseLabel, name:"releaseLabel", parent: name, max: 256)
-            try validate(releaseLabel, name:"releaseLabel", parent: name, min: 0)
-            try validate(releaseLabel, name:"releaseLabel", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
-            try validate(securityConfiguration, name:"securityConfiguration", parent: name, max: 10280)
-            try validate(securityConfiguration, name:"securityConfiguration", parent: name, min: 0)
-            try validate(securityConfiguration, name:"securityConfiguration", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
-            try validate(serviceRole, name:"serviceRole", parent: name, max: 10280)
-            try validate(serviceRole, name:"serviceRole", parent: name, min: 0)
-            try validate(serviceRole, name:"serviceRole", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
-            try steps?.forEach {
+            try validate(self.releaseLabel, name:"releaseLabel", parent: name, max: 256)
+            try validate(self.releaseLabel, name:"releaseLabel", parent: name, min: 0)
+            try validate(self.releaseLabel, name:"releaseLabel", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
+            try validate(self.securityConfiguration, name:"securityConfiguration", parent: name, max: 10280)
+            try validate(self.securityConfiguration, name:"securityConfiguration", parent: name, min: 0)
+            try validate(self.securityConfiguration, name:"securityConfiguration", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
+            try validate(self.serviceRole, name:"serviceRole", parent: name, max: 10280)
+            try validate(self.serviceRole, name:"serviceRole", parent: name, min: 0)
+            try validate(self.serviceRole, name:"serviceRole", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
+            try self.steps?.forEach {
                 try $0.validate(name: "\(name).steps[]")
             }
-            try supportedProducts?.forEach {
+            try self.supportedProducts?.forEach {
                 try validate($0, name: "supportedProducts[]", parent: name, max: 256)
                 try validate($0, name: "supportedProducts[]", parent: name, min: 0)
                 try validate($0, name: "supportedProducts[]", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
@@ -3677,7 +3815,7 @@ extension EMR {
         }
 
         public func validate(name: String) throws {
-            try trigger.validate(name: "\(name).trigger")
+            try self.trigger.validate(name: "\(name).trigger")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -3701,7 +3839,7 @@ extension EMR {
         }
 
         public func validate(name: String) throws {
-            try cloudWatchAlarmDefinition.validate(name: "\(name).cloudWatchAlarmDefinition")
+            try self.cloudWatchAlarmDefinition.validate(name: "\(name).cloudWatchAlarmDefinition")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -3726,14 +3864,14 @@ extension EMR {
         }
 
         public func validate(name: String) throws {
-            try args?.forEach {
+            try self.args?.forEach {
                 try validate($0, name: "args[]", parent: name, max: 10280)
                 try validate($0, name: "args[]", parent: name, min: 0)
                 try validate($0, name: "args[]", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
             }
-            try validate(path, name:"path", parent: name, max: 10280)
-            try validate(path, name:"path", parent: name, min: 0)
-            try validate(path, name:"path", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
+            try validate(self.path, name:"path", parent: name, max: 10280)
+            try validate(self.path, name:"path", parent: name, min: 0)
+            try validate(self.path, name:"path", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -3781,7 +3919,7 @@ extension EMR {
         }
 
         public func validate(name: String) throws {
-            try jobFlowIds.forEach {
+            try self.jobFlowIds.forEach {
                 try validate($0, name: "jobFlowIds[]", parent: name, max: 10280)
                 try validate($0, name: "jobFlowIds[]", parent: name, min: 0)
                 try validate($0, name: "jobFlowIds[]", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
@@ -3802,7 +3940,7 @@ extension EMR {
 
         /// Identifiers of the job flows to receive the new visibility setting.
         public let jobFlowIds: [String]
-        /// Whether the specified clusters are visible to all IAM users of the AWS account associated with the cluster. If this value is set to True, all IAM users of that AWS account can view and, if they have the proper IAM policy permissions set, manage the clusters. If it is set to False, only the IAM user that created a cluster can view and manage it.
+        ///  This member will be deprecated.  Whether the specified clusters are visible to all IAM users of the AWS account associated with the cluster. If this value is set to True, all IAM users of that AWS account can view and, if they have the proper IAM policy permissions set, manage the clusters. If it is set to False, only the IAM user that created a cluster can view and manage it.
         public let visibleToAllUsers: Bool
 
         public init(jobFlowIds: [String], visibleToAllUsers: Bool) {
@@ -3811,7 +3949,7 @@ extension EMR {
         }
 
         public func validate(name: String) throws {
-            try jobFlowIds.forEach {
+            try self.jobFlowIds.forEach {
                 try validate($0, name: "jobFlowIds[]", parent: name, max: 10280)
                 try validate($0, name: "jobFlowIds[]", parent: name, min: 0)
                 try validate($0, name: "jobFlowIds[]", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
@@ -3894,8 +4032,8 @@ extension EMR {
         }
 
         public func validate(name: String) throws {
-            try validate(blockDurationMinutes, name:"blockDurationMinutes", parent: name, min: 0)
-            try validate(timeoutDurationMinutes, name:"timeoutDurationMinutes", parent: name, min: 0)
+            try validate(self.blockDurationMinutes, name:"blockDurationMinutes", parent: name, min: 0)
+            try validate(self.timeoutDurationMinutes, name:"timeoutDurationMinutes", parent: name, min: 0)
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -3978,10 +4116,10 @@ extension EMR {
         }
 
         public func validate(name: String) throws {
-            try hadoopJarStep.validate(name: "\(name).hadoopJarStep")
-            try validate(name, name:"name", parent: name, max: 256)
-            try validate(name, name:"name", parent: name, min: 0)
-            try validate(name, name:"name", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
+            try self.hadoopJarStep.validate(name: "\(name).hadoopJarStep")
+            try validate(self.name, name:"name", parent: name, max: 256)
+            try validate(self.name, name:"name", parent: name, min: 0)
+            try validate(self.name, name:"name", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -4212,14 +4350,14 @@ extension EMR {
         }
 
         public func validate(name: String) throws {
-            try args?.forEach {
+            try self.args?.forEach {
                 try validate($0, name: "args[]", parent: name, max: 10280)
                 try validate($0, name: "args[]", parent: name, min: 0)
                 try validate($0, name: "args[]", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
             }
-            try validate(name, name:"name", parent: name, max: 256)
-            try validate(name, name:"name", parent: name, min: 0)
-            try validate(name, name:"name", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
+            try validate(self.name, name:"name", parent: name, max: 256)
+            try validate(self.name, name:"name", parent: name, min: 0)
+            try validate(self.name, name:"name", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -4263,7 +4401,7 @@ extension EMR {
         }
 
         public func validate(name: String) throws {
-            try jobFlowIds.forEach {
+            try self.jobFlowIds.forEach {
                 try validate($0, name: "jobFlowIds[]", parent: name, max: 10280)
                 try validate($0, name: "jobFlowIds[]", parent: name, min: 0)
                 try validate($0, name: "jobFlowIds[]", parent: name, pattern: "[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*")
