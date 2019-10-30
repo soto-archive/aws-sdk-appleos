@@ -97,8 +97,8 @@ However, operations that require inspection or use of the response require code 
 The recommended manner to interact with futures is chaining.
 
 ```swift
+import AWSSDKSwiftCore
 import S3 //ensure this module is specified as a dependency in your package.swift
-import NIO
 
 let bucket = "my-bucket"
 
@@ -108,20 +108,22 @@ let s3 = S3(
     region: .uswest2
 )
 
-// Create Bucket, Put an Object, Get the Object
-let createBucketRequest = S3.CreateBucketRequest(bucket: bucket)
+func createPutGetObject() {
+    // Create Bucket, Put an Object, Get the Object
+    let createBucketRequest = S3.CreateBucketRequest(bucket: bucket)
 
-s3.createBucket(createBucketRequest).then { response -> Future<S3.PutObjectOutput> in
-    // Upload text file to the s3
-    let bodyData = "hello world".data(using: .utf8)!
-    let putObjectRequest = S3.PutObjectRequest(acl: .publicRead, bucket: bucket, contentLength: Int64(bodyData.count), body: bodyData, key: "hello.txt")
-    return s3.putObject(putObjectRequest)
-}.then { response -> Future<S3.GetObjectOutput> in
-    let getObjectRequest = S3.GetObjectRequest(bucket: bucket, key: "hello.txt")
-    return s3.getObject(getObjectRequest)
-}.whenSuccess { response in
-    if let body = response.body {
-        print(String(data: body, encoding: .utf8))
+    s3.createBucket(createBucketRequest).then { response -> Future<S3.PutObjectOutput> in
+        // Upload text file to the s3
+        let bodyData = "hello world".data(using: .utf8)!
+        let putObjectRequest = S3.PutObjectRequest(acl: .publicRead, body: bodyData, bucket: bucket, contentLength: Int64(bodyData.count), key: "hello.txt")
+        return s3.putObject(putObjectRequest)
+    }.flatMap { response -> Future<S3.GetObjectOutput> in
+        let getObjectRequest = S3.GetObjectRequest(bucket: bucket, key: "hello.txt")
+        return s3.getObject(getObjectRequest)
+    }.whenSuccess { response in
+        if let body = response.body {
+            print(String(data: body, encoding: .utf8)!)
+        }
     }
 }
 ```
