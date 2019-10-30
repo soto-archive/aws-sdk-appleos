@@ -108,11 +108,11 @@ let s3 = S3(
     region: .uswest2
 )
 
-func createPutGetObject() {
+func createPutGetObject() throws {
     // Create Bucket, Put an Object, Get the Object
     let createBucketRequest = S3.CreateBucketRequest(bucket: bucket)
 
-    s3.createBucket(createBucketRequest).then { response -> Future<S3.PutObjectOutput> in
+    let response = s3.createBucket(createBucketRequest).then { response -> Future<S3.PutObjectOutput> in
         // Upload text file to the s3
         let bodyData = "hello world".data(using: .utf8)!
         let putObjectRequest = S3.PutObjectRequest(acl: .publicRead, body: bodyData, bucket: bucket, contentLength: Int64(bodyData.count), key: "hello.txt")
@@ -120,44 +120,16 @@ func createPutGetObject() {
     }.flatMap { response -> Future<S3.GetObjectOutput> in
         let getObjectRequest = S3.GetObjectRequest(bucket: bucket, key: "hello.txt")
         return s3.getObject(getObjectRequest)
-    }.whenSuccess { response in
+    }
+    
+    response.whenSuccess { response in
         if let body = response.body {
             print(String(data: body, encoding: .utf8)!)
         }
     }
+    try _ = response.wait()
 }
 ```
 
-Or you can use the nested method
-
-
-```swift
-import S3 //ensure this module is specified as a dependency in your package.swift
-
-let bucket = "my-bucket"
-
-let s3 = S3(
-    accessKeyId: "Your-Access-Key",
-    secretAccessKey: "Your-Secret-Key",
-    region: .uswest1
-)
-
-// Create Bucket, Put an Object, Get the Object
-let createBucketRequest = S3.CreateBucketRequest(bucket: bucket)
-
-s3.createBucket(createBucketRequest).whenSuccess { response in
-    let bodyData = "hello world".data(using: .utf8)!
-    let putObjectRequest = S3.PutObjectRequest(acl: .publicRead, key: "hello.txt", body: bodyData, contentLength: Int64(bodyData.count), bucket: bucket)
-
-    s3.putObject(putObjectRequest).whenSuccess { response in
-        let getObjectRequest = S3.GetObjectRequest(bucket: bucket, key: "hello.txt")
-        s3.getObject(getObjectRequest).whenSuccess { response in
-            if let body = response.body {
-                print(String(data: body, encoding: .utf8))
-            }
-        }
-    }
-}
-```
 ## License
 `aws-sdk-swift` is released under the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0). See LICENSE for details.
